@@ -1,0 +1,18 @@
+{
+  "name": "aec-tech-landing-pages",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "build:index": "cd src && npx vite build --outDir ../dist",
+    "build:leadgen": "cd leadgen/src && npx vite build --outDir ../../dist/leadgen",
+    "build:websites": "cd websites/src && npx vite build --outDir ../../dist/websites",
+    "build:automation": "cd automation/src && npx vite build --outDir ../../dist/automation",
+    "build:aec": "cd aec && npx vite build --outDir ../dist/aec",
+    "build": "npm run build:index && npm run build:leadgen && npm run build:websites && npm run build:automation && npm run build:aec"
+  },
+  "dependencies": {
+    "preact": "^10.29.0",
+    "vite": "^7.3.1",
+    "@preact/preset-vite": "^2.10.3"
+  }
+}
