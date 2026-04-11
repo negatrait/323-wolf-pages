@@ -33,7 +33,33 @@ export function Pricing() {
 
       <Section dark={false}>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-          {PRICING_TIERS.map((t, i) => <PricingCard key={i} {...t} />)}
+          {PRICING_TIERS.map((t, i) =>
+            i === 0 ? (
+              <div class="relative rounded-2xl p-8 border border-dark-600 bg-dark-800 flex flex-col">
+                <h3 class="text-xl font-bold text-white mb-2">{t.name}</h3>
+                <div class="mb-6">
+                  <span class="text-4xl font-bold text-white">{t.price}</span>
+                  <span class="text-dark-300 ml-1">{t.period}</span>
+                </div>
+                <ul class="space-y-3 mb-8 flex-1">
+                  {t.features.map((f, j) => (
+                    <li key={j} class="flex items-start gap-2 text-dark-200">
+                      <span class="material-symbols-outlined text-primary text-lg mt-0.5">check_circle</span>
+                      <span>{f}</span>
+                    </li>
+                  ))}
+                </ul>
+                <div class="w-full flex justify-center">
+                  <stripe-buy-button
+                    buy-button-id="buy_btn_1TL1fdRwOWmEpz2T1T3mjxrH"
+                    publishable-key="pk_live_51TErNvRwOWmEpz2TcswFzGMqk3O9mIx5IO2vLbBonrXpTW5tanWGU6rutRs1O5Kkqspxr3N37epfs0wmo08asi8F00ukCfXYla"
+                  />
+                </div>
+              </div>
+            ) : (
+              <PricingCard key={i} {...t} />
+            )
+          )}
         </div>
       </Section>
 
