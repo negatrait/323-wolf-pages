@@ -20,8 +20,8 @@ export function Privacy() {
           <div class="prose prose-invert max-w-none space-y-8 text-dark-300 leading-relaxed">
             <div>
               <h2 class="text-xl font-semibold text-white mb-3">1. Introduction</h2>
-              <p>Sivussa Oy ("we", "us", or "our") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our SEO/GEO/AEO audit service ("the Service").</p>
-              <p class="mt-2"><strong>Controller:</strong> Sivussa Oy<br /><strong>Business ID:</strong> 2101028-3<br /><strong>Email:</strong> sivussa@sivussa.com<br /><strong>Website:</strong> https://sivussa.com</p>
+              <p>Sivussa ("we", "us", or "our") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our SEO/GEO/AEO audit service ("the Service").</p>
+              <p class="mt-2"><strong>Controller:</strong> Sivussa<br /><strong>Business ID:</strong> 2101028-3<br /><strong>Email:</strong> sivussa@sivussa.com<br /><strong>Website:</strong> https://sivussa.com</p>
             </div>
 
             <div>
@@ -93,7 +93,7 @@ export function Privacy() {
             <div>
               <h2 class="text-xl font-semibold text-white mb-3">10. Contact</h2>
               <p>For privacy inquiries: <a href="mailto:sivussa@sivussa.com" class="text-primary hover:underline">sivussa@sivussa.com</a></p>
-              <p class="mt-1">Sivussa Oy, Helsinki, Finland</p>
+              <p class="mt-1">Sivussa, Helsinki, Finland</p>
             </div>
           </div>
         </div>

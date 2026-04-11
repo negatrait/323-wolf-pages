@@ -20,7 +20,7 @@ export function Terms() {
           <div class="prose prose-invert max-w-none space-y-8 text-dark-300 leading-relaxed">
             <div>
               <h2 class="text-xl font-semibold text-white mb-3">1. Acceptance of Terms</h2>
-              <p>By accessing or using Sivussa ("the Service"), operated by Sivussa Oy ("we", "us", or "our"), you agree to be bound by these Terms of Service. If you disagree with any part, you must not access the Service.</p>
+              <p>By accessing or using Sivussa ("the Service"), operated by Sivussa ("we", "us", or "our"), you agree to be bound by these Terms of Service. If you disagree with any part, you must not access the Service.</p>
             </div>
 
             <div>
@@ -51,7 +51,7 @@ export function Terms() {
 
             <div>
               <h2 class="text-xl font-semibold text-white mb-3">6. Intellectual Property</h2>
-              <p>Audit results and remediation plans generated for your site are yours to use. The Sivussa platform, AI models, and underlying technology remain the property of Sivussa Oy.</p>
+              <p>Audit results and remediation plans generated for your site are yours to use. The Sivussa platform, AI models, and underlying technology remain the property of Sivussa.</p>
             </div>
 
             <div>
@@ -82,7 +82,7 @@ export function Terms() {
             <div>
               <h2 class="text-xl font-semibold text-white mb-3">12. Contact</h2>
               <p>For questions about these Terms: <a href="mailto:sivussa@sivussa.com" class="text-primary hover:underline">sivussa@sivussa.com</a></p>
-              <p class="mt-1">Sivussa Oy, Helsinki, Finland</p>
+              <p class="mt-1">Sivussa, Helsinki, Finland</p>
             </div>
           </div>
         </div>

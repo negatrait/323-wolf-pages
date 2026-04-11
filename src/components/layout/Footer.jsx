@@ -36,7 +36,7 @@ export function Footer() {
           </div>
         </div>
         <div class="mt-8 pt-8 border-t border-dark-600 text-center text-sm text-dark-400">
-          © 2026 Sivussa Oy. All rights reserved.
+          © 2026 Sivussa. All rights reserved.
         </div>
       </div>
     </footer>
