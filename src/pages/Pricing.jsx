@@ -62,7 +62,7 @@ const TIERS = [
 const PRICING_FAQ = [
   { question: 'Can I cancel anytime?', answer: 'Yes. No contracts. Cancel and you won\'t be charged again. Your current period runs to completion.' },
   { question: 'Can I switch plans?', answer: 'Yes. Upgrade or downgrade anytime. Prorated billing applies.' },
-  { question: 'Do you offer refunds?', answer: 'Full refund within 14 days. No questions asked. Email support@sivussa.com.' },
+  { question: 'Do you offer refunds?', answer: 'Full refund within 14 days. No questions asked. Email sivussa@sivussa.com.' },
   { question: 'Can I audit multiple sites?', answer: 'Each site requires a separate subscription. Contact us for volume discounts.' },
   { question: 'What payment methods do you accept?', answer: 'Credit and debit cards via Stripe. Apple Pay and Google Pay supported.' },
   { question: 'What makes this different from Semrush or Ahrefs?', answer: 'They audit. We audit AND fix. They give you a checklist — you do the work. We give you copy-paste ready solutions — our AI does the work.' },
@@ -184,7 +184,7 @@ export function Pricing() {
       <Section>
         <div class="max-w-2xl mx-auto text-center">
           <h2 class="text-2xl font-bold text-white mb-4">14-day money-back guarantee</h2>
-          <p class="text-dark-300">Get your fix plan. Implement it. If you're not satisfied within 14 days, email support@sivussa.com for a full refund within 24 hours. No fine print. No questions asked.</p>
+          <p class="text-dark-300">Get your fix plan. Implement it. If you're not satisfied within 14 days, email sivussa@sivussa.com for a full refund within 24 hours. No fine print. No questions asked.</p>
         </div>
       </Section>
 

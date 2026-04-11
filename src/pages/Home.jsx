@@ -137,7 +137,7 @@ export function Home() {
       <Section dark={false}>
         <div class="max-w-2xl mx-auto text-center">
           <h2 class="text-2xl font-bold text-white mb-4">14-day money-back guarantee</h2>
-          <p class="text-dark-300">Sign up. Get your fix plan. Implement it. If you're not satisfied within 14 days, email 323-wolf@sivussa.com for a full refund. No fine print. No questions asked.</p>
+          <p class="text-dark-300">Sign up. Get your fix plan. Implement it. If you're not satisfied within 14 days, email sivussa@sivussa.com for a full refund. No fine print. No questions asked.</p>
         </div>
       </Section>
 
