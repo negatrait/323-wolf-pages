@@ -17,7 +17,7 @@ export function Footer() {
             <ul class="space-y-2 text-sm text-dark-300">
               <li><a href="/about" class="hover:text-primary transition-colors">About</a></li>
               <li><a href="/faq" class="hover:text-primary transition-colors">FAQ</a></li>
-              <li><a href="/blog" class="hover:text-primary transition-colors">Blog</a></li>
+              <li><a href="https://blog.sivussa.com" class="hover:text-primary transition-colors">Blog</a></li>
             </ul>
           </div>
           <div>

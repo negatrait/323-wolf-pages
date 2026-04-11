@@ -3,7 +3,7 @@ export const NAV_LINKS = [
   { label: 'Pricing', href: '/pricing' },
   { label: 'About', href: '/about' },
   { label: 'FAQ', href: '/faq' },
-  { label: 'Blog', href: '/blog' },
+  { label: 'Blog', href: 'https://blog.sivussa.com' },
 ];
 
 export const CTA_LINK = { label: 'Get Started', href: '/#audit-form' };
