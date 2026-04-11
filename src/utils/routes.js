@@ -1,0 +1,19 @@
+export const NAV_LINKS = [
+  { label: 'How It Works', href: '/how-it-works' },
+  { label: 'Pricing', href: '/pricing' },
+  { label: 'About', href: '/about' },
+  { label: 'FAQ', href: '/faq' },
+  { label: 'Blog', href: '/blog' },
+];
+
+export const CTA_LINK = { label: 'Get Started', href: '/#audit-form' };
+
+export const ROUTE_LABELS = {
+  '/how-it-works': 'How It Works',
+  '/pricing': 'Pricing',
+  '/about': 'About',
+  '/faq': 'FAQ',
+  '/privacy': 'Privacy Policy',
+  '/terms': 'Terms of Service',
+  '/blog': 'Blog',
+};

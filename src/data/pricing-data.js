@@ -1,0 +1,48 @@
+export const PRICING_TIERS = [
+  {
+    name: 'One-shot',
+    price: '€99',
+    period: 'one-time',
+    popular: false,
+    ctaText: 'Get Your Fix Plan',
+    ctaHref: '/#audit-form',
+    features: [
+      'Full SEO/GEO/AEO audit',
+      'AI-written remediation plan for every issue',
+      'Code snippets, content, schema — ready to paste',
+      'PDF report',
+      'Email support',
+    ],
+  },
+  {
+    name: 'Quarterly',
+    price: '€89',
+    period: '/quarter',
+    popular: false,
+    ctaText: 'Get Started',
+    ctaHref: '/#audit-form',
+    features: [
+      'Audit + fix plan every 90 days',
+      'AI-written fixes for every issue',
+      'Progress tracking',
+      'PDF and DOCX reports',
+      'Priority support',
+    ],
+  },
+  {
+    name: 'Monthly',
+    price: '€79',
+    period: '/month',
+    popular: true,
+    ctaText: 'Get Started',
+    ctaHref: '/#audit-form',
+    features: [
+      'Audit + fix plan every month',
+      'AI-written fixes for every issue',
+      'Progress tracking with delta reports',
+      'PDF and DOCX reports',
+      'Priority support',
+      'API access',
+    ],
+  },
+];
