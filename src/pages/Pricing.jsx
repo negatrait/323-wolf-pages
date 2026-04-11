@@ -1,10 +1,63 @@
 import { Head } from '../components/seo/Head';
 import { Section } from '../components/common/Section';
 import { BreadcrumbNav } from '../components/layout/BreadcrumbNav';
-import { PricingCard } from '../components/content/PricingCard';
 import { Accordion } from '../components/common/Accordion';
 import { AuditForm } from '../components/forms/AuditForm';
-import { PRICING_TIERS } from '../data/pricing-data';
+
+const STRIPE_URLS = {
+  'one-shot': 'https://buy.stripe.com/cNi7sN0Kv3phb500GPcbC01',
+  'quarterly': 'https://buy.stripe.com/3cIdRbal52ld7SO4X5cbC02',
+  'monthly': 'https://buy.stripe.com/5kQ9AV64P5xpehc3T1cbC03',
+};
+
+const TIERS = [
+  {
+    name: 'One-shot',
+    price: '€99',
+    period: 'one-time',
+    popular: false,
+    ctaText: 'Get Started — €99',
+    ctaHref: STRIPE_URLS['one-shot'],
+    features: [
+      'Full SEO/GEO/AEO audit',
+      'AI-written remediation plan for every issue',
+      'Code snippets, content, schema — ready to paste',
+      'PDF report',
+      'Email support',
+    ],
+  },
+  {
+    name: 'Quarterly',
+    price: '€99',
+    period: '/quarter',
+    popular: false,
+    ctaText: 'Get Started — €99/qtr',
+    ctaHref: STRIPE_URLS['quarterly'],
+    features: [
+      'Audit + fix plan every 90 days',
+      'AI-written fixes for every issue',
+      'Progress tracking',
+      'PDF and DOCX reports',
+      'Priority support',
+    ],
+  },
+  {
+    name: 'Monthly',
+    price: '€89',
+    period: '/month',
+    popular: true,
+    ctaText: 'Get Started — €89/mo',
+    ctaHref: STRIPE_URLS['monthly'],
+    features: [
+      'Audit + fix plan every month',
+      'AI-written fixes for every issue',
+      'Progress tracking with delta reports',
+      'PDF and DOCX reports',
+      'Priority support',
+      'API access',
+    ],
+  },
+];
 
 const PRICING_FAQ = [
   { question: 'Can I cancel anytime?', answer: 'Yes. No contracts. Cancel and you won\'t be charged again. Your current period runs to completion.' },
@@ -20,46 +73,49 @@ export function Pricing() {
     <>
       <Head
         title="Pricing — Simple Plans, No Hidden Fees"
-        description="From €79/month. Full SEO + GEO + AEO audits with AI-written fix plans. Cheaper than Ahrefs, more complete than Semrush."
+        description="From €89/month. Full SEO + GEO + AEO audits with AI-written fix plans. Cheaper than Ahrefs, more complete than Semrush."
         canonical="https://sivussa.com/pricing"
       />
       <Section>
         <BreadcrumbNav currentPage="Pricing" />
         <div class="max-w-4xl mx-auto text-center">
-          <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">Your junior SEO team — for <span class="text-primary">€79/month</span></h1>
+          <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">Your junior SEO team — for <span class="text-primary">€89/month</span></h1>
           <p class="text-xl text-dark-300 mb-16">AI specialists audit your site and write every fix. Review, copy-paste, done.</p>
         </div>
       </Section>
 
       <Section dark={false}>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-          {PRICING_TIERS.map((t, i) =>
-            i === 0 ? (
-              <div class="relative rounded-2xl p-8 border border-dark-600 bg-dark-800 flex flex-col">
-                <h3 class="text-xl font-bold text-white mb-2">{t.name}</h3>
-                <div class="mb-6">
-                  <span class="text-4xl font-bold text-white">{t.price}</span>
-                  <span class="text-dark-300 ml-1">{t.period}</span>
-                </div>
-                <ul class="space-y-3 mb-8 flex-1">
-                  {t.features.map((f, j) => (
-                    <li key={j} class="flex items-start gap-2 text-dark-200">
-                      <span class="material-symbols-outlined text-primary text-lg mt-0.5">check_circle</span>
-                      <span>{f}</span>
-                    </li>
-                  ))}
-                </ul>
-                <div class="w-full flex justify-center">
-                  <stripe-buy-button
-                    buy-button-id="buy_btn_1TL1fdRwOWmEpz2T1T3mjxrH"
-                    publishable-key="pk_live_51TErNvRwOWmEpz2TcswFzGMqk3O9mIx5IO2vLbBonrXpTW5tanWGU6rutRs1O5Kkqspxr3N37epfs0wmo08asi8F00ukCfXYla"
-                  />
-                </div>
+          {TIERS.map((t) => (
+            <div key={t.name} class={`relative rounded-2xl p-8 border flex flex-col ${t.popular ? 'border-primary shadow-glow bg-dark-800' : 'border-dark-600 bg-dark-800'}`}>
+              {t.popular && (
+                <span class="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-primary text-dark-900 text-xs font-bold rounded-full">
+                  MOST POPULAR
+                </span>
+              )}
+              <h3 class="text-xl font-bold text-white mb-2">{t.name}</h3>
+              <div class="mb-6">
+                <span class="text-4xl font-bold text-white">{t.price}</span>
+                {t.period && <span class="text-dark-300 ml-1">{t.period}</span>}
               </div>
-            ) : (
-              <PricingCard key={i} {...t} />
-            )
-          )}
+              <ul class="space-y-3 mb-8 flex-1">
+                {t.features.map((f, i) => (
+                  <li key={i} class="flex items-start gap-2 text-dark-200">
+                    <span class="material-symbols-outlined text-primary text-lg mt-0.5">check_circle</span>
+                    <span>{f}</span>
+                  </li>
+                ))}
+              </ul>
+              <a
+                href={t.ctaHref}
+                target="_blank"
+                rel="noopener"
+                class="w-full block text-center px-8 py-4 bg-gradient-to-br from-primary to-[#6EDE69] text-dark-900 font-black uppercase tracking-widest text-sm hover:shadow-[0_0_20px_rgba(0,255,65,0.15)] transition-all"
+              >
+                {t.ctaText}
+              </a>
+            </div>
+          ))}
         </div>
       </Section>
 
@@ -72,8 +128,8 @@ export function Pricing() {
               <tr class="border-b border-dark-600">
                 <th class="text-left py-3 px-4 text-dark-300">Feature</th>
                 <th class="text-center py-3 px-4 text-dark-300">One-shot €99</th>
-                <th class="text-center py-3 px-4 text-dark-300">Quarterly €89/qtr</th>
-                <th class="text-center py-3 px-4 text-primary font-semibold">Monthly €79/mo</th>
+                <th class="text-center py-3 px-4 text-dark-300">Quarterly €99/qtr</th>
+                <th class="text-center py-3 px-4 text-primary font-semibold">Monthly €89/mo</th>
               </tr>
             </thead>
             <tbody class="text-dark-200">
@@ -113,7 +169,7 @@ export function Pricing() {
             { name: 'Semrush', price: '$1,428/yr', desc: 'Comprehensive audit. Zero AI-written fixes. 200 issues and you figure it out.' },
             { name: 'Ahrefs', price: '$1,548/yr', desc: 'Great backlink data. No GEO. No AEO. No fix plans.' },
             { name: 'Sitebulb', price: '$336/yr', desc: 'Desktop tool. Technical SEO only. No local. No AI answers. No solutions.' },
-            { name: 'Sivussa', price: '€79/mo', desc: 'Full SEO + GEO + AEO. Every issue comes with a copy-paste ready fix by AI specialists.', highlight: true },
+            { name: 'Sivussa', price: '€89/mo', desc: 'Full SEO + GEO + AEO. Every issue comes with a copy-paste ready fix by AI specialists.', highlight: true },
           ].map((c, i) => (
             <div key={i} class={`rounded-2xl p-6 border ${c.highlight ? 'border-primary bg-dark-800' : 'border-dark-600 bg-dark-900'}`}>
               <h3 class={`text-lg font-bold mb-1 ${c.highlight ? 'text-primary' : 'text-white'}`}>{c.name}</h3>

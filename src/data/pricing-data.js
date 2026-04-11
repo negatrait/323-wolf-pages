@@ -4,8 +4,8 @@ export const PRICING_TIERS = [
     price: '€99',
     period: 'one-time',
     popular: false,
-    ctaText: 'Get Your Fix Plan',
-    ctaHref: '/#audit-form',
+    ctaText: 'Get Started — €99',
+    ctaHref: 'https://buy.stripe.com/cNi7sN0Kv3phb500GPcbC01',
     features: [
       'Full SEO/GEO/AEO audit',
       'AI-written remediation plan for every issue',
@@ -16,11 +16,11 @@ export const PRICING_TIERS = [
   },
   {
     name: 'Quarterly',
-    price: '€89',
+    price: '€99',
     period: '/quarter',
     popular: false,
-    ctaText: 'Get Started',
-    ctaHref: '/#audit-form',
+    ctaText: 'Get Started — €99/qtr',
+    ctaHref: 'https://buy.stripe.com/3cIdRbal52ld7SO4X5cbC02',
     features: [
       'Audit + fix plan every 90 days',
       'AI-written fixes for every issue',
@@ -31,11 +31,11 @@ export const PRICING_TIERS = [
   },
   {
     name: 'Monthly',
-    price: '€79',
+    price: '€89',
     period: '/month',
     popular: true,
-    ctaText: 'Get Started',
-    ctaHref: '/#audit-form',
+    ctaText: 'Get Started — €89/mo',
+    ctaHref: 'https://buy.stripe.com/5kQ9AV64P5xpehc3T1cbC03',
     features: [
       'Audit + fix plan every month',
       'AI-written fixes for every issue',
