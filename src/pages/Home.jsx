@@ -48,7 +48,7 @@ export function Home() {
           </p>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
-              <h3 class="text-lg font-semibold text-white mb-4">🔍 SEO — Search engines can't read your site</h3>
+              <h3 class="text-lg font-semibold text-white mb-4">SEO — Search engines can't read your site</h3>
               <ul class="space-y-2 text-dark-300 text-sm">
                 <li>• No structured data? We write the JSON-LD.</li>
                 <li>• Missing meta descriptions? We draft them.</li>
@@ -56,7 +56,7 @@ export function Home() {
               </ul>
             </div>
             <div>
-              <h3 class="text-lg font-semibold text-white mb-4">📍 GEO — You're invisible locally</h3>
+              <h3 class="text-lg font-semibold text-white mb-4">GEO — You're invisible locally</h3>
               <ul class="space-y-2 text-dark-300 text-sm">
                 <li>• No Google Business Profile? We walk you through setup.</li>
                 <li>• Inconsistent NAP data? We show you what to correct.</li>
@@ -64,7 +64,7 @@ export function Home() {
               </ul>
             </div>
             <div>
-              <h3 class="text-lg font-semibold text-white mb-4">🤖 AEO — AI assistants don't know you exist</h3>
+              <h3 class="text-lg font-semibold text-white mb-4">AEO — AI assistants don't know you exist</h3>
               <ul class="space-y-2 text-dark-300 text-sm">
                 <li>• No FAQ content? We write Q&A for your niche.</li>
                 <li>• No structured answers? We build the schema.</li>
