@@ -3,11 +3,10 @@ import { Section } from '../components/common/Section';
 import { AuditForm } from '../components/forms/AuditForm';
 import { PricingCard } from '../components/content/PricingCard';
 import { FeatureCard } from '../components/content/FeatureCard';
-import { TestimonialCard } from '../components/content/TestimonialCard';
 import { StepCard } from '../components/content/StepCard';
 import { Accordion } from '../components/common/Accordion';
 import { PRICING_TIERS } from '../data/pricing-data';
-import { FEATURES, TESTIMONIALS } from '../data/features-data';
+import { FEATURES } from '../data/features-data';
 import { FAQ_ITEMS } from '../data/faq-data';
 import { organizationJsonLd, websiteJsonLd, softwareAppJsonLd } from '../utils/seo';
 
@@ -30,31 +29,15 @@ export function Home() {
             <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
               Your website is invisible. <span class="text-primary">We'll fix it.</span>
             </h1>
-            <p class="text-lg md:text-xl text-dark-300 mb-4">
-              AI specialists audit your site and write every fix for you. Review the plan, copy-paste, done. A junior SEO team for €79/month.
+            <p class="text-lg md:text-xl text-dark-300 mb-10">
+              AI specialists audit your site and write every fix for you. Review the plan, copy-paste, done. Starting at €89/month.
             </p>
-            <div class="flex justify-center gap-6 text-sm text-dark-400 mb-10">
-              <span>2,847 sites analyzed</span>
-              <span>•</span>
-              <span>AI-written fix plans</span>
-              <span>•</span>
-              <span>Results in 15 min</span>
-            </div>
           </div>
           <div id="audit-form" class="max-w-2xl mx-auto scroll-mt-20">
             <AuditForm variant="hero" />
           </div>
         </div>
       </section>
-
-      {/* Social Proof */}
-      <Section dark={false}>
-        <h2 class="text-2xl font-bold text-white text-center mb-10">Businesses that stopped being invisible</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          {TESTIMONIALS.map((t, i) => <TestimonialCard key={i} {...t} />)}
-        </div>
-        <p class="text-center text-dark-400 text-sm">500+ businesses • Average improvement: +3.2 points</p>
-      </Section>
 
       {/* Problem */}
       <Section>
@@ -130,7 +113,7 @@ export function Home() {
           {[
             { title: 'Small Businesses', desc: 'Plumbers, restaurants, salons. You need customers to find you online. Sivussa is your junior SEO team.' },
             { title: 'Freelancers & Solopreneurs', desc: 'Designers, developers, consultants. Your portfolio is your resume. If clients can\'t find you, you don\'t exist.' },
-            { title: 'Agencies & Consultants', desc: 'Manage 10-50 clients. Scale your SEO services without hiring more staff. Branded reports, recurring audits.' },
+            { title: 'Agencies & Consultants', desc: 'Manage 10-50 client sites. Run audits, get fix plans, deliver results without hiring more staff.' },
             { title: 'E-commerce Stores', desc: 'Product pages need to rank. Local store needs Maps presence. Products need to appear in AI answers.' },
           ].map((c, i) => (
             <div key={i} class="rounded-2xl p-6 bg-dark-900 border border-dark-600">
@@ -154,7 +137,7 @@ export function Home() {
       <Section dark={false}>
         <div class="max-w-2xl mx-auto text-center">
           <h2 class="text-2xl font-bold text-white mb-4">14-day money-back guarantee</h2>
-          <p class="text-dark-300">Sign up. Get your fix plan. Implement it. If you're not satisfied within 14 days, email support@sivussa.com for a full refund. No fine print. No questions asked.</p>
+          <p class="text-dark-300">Sign up. Get your fix plan. Implement it. If you're not satisfied within 14 days, email 323-wolf@sivussa.com for a full refund. No fine print. No questions asked.</p>
         </div>
       </Section>
 
