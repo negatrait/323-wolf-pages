@@ -12,7 +12,7 @@ cards:
   - title: "Entrepreneurs & Bloggers"
     description: "You create great content, but structural issues keep it buried. We identify what's blocking your organic reach and give you copy-paste ready fixes to clear the path."
   - title: "SaaS Businesses"
-    description: "Your product needs discovery. You're already paying for infrastructure — don't also pay for visibility. We find and clear the structural blockers preventing organic traffic."
+    description: "Your product needs discovery. You're already paying for infrastructure — maybe for visibility. We find and clear the structural blockers preventing organic traffic and the impact of paid relevance."
 ---
 
-## For everyone with a website
+## You have a website - we're here for you at Sivussa
