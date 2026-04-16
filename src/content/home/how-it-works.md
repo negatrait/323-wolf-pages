@@ -6,13 +6,13 @@ steps:
     description: "Choose a one-time audit or subscribe for recurring audits. Payments and subscription data handled via Stripe."
   - number: 2
     title: "Identify the issues"
-    description: "Our AI-native team crawls your site, checks your geographic visibility, evaluates content for AI readiness, and identifies what's preventing your ranking from rising. This is handled by ranking for the most influential remedies - we're not dumping a 100-page list of minor nits in your inbox."
+    description: "Our team crawls your site, checks geographic visibility, evaluates AI readiness, and identifies what's holding you back. We focus on impactful issues, not a 100-page list of minor items."
   - number: 3
-    title: "Copy-paste ready"
-    description: "PDF report with scored findings and copy-paste ready recommendations."
+    title: "Get your report"
+    description: "PDF report with scored findings and specific recommendations delivered to your email."
   - number: 4
-    title: "Gain visibility, organically"
-    description: "Apply the recommendations to clear the blockers. Run follow-up audits to track your organic traffic growth without paying search providers for extra visibility. Which would you rather: 5000 a month for visibility on a site that has the breaks on? Might be a good idea to check and fix the blockers."
+    title: "Apply and track"
+    description: "Implement the recommendations. Run follow-up audits to track your progress. Clear the brakes before stepping on the gas."
 comparison:
   other: '"Your meta description is missing." (Your problem now.)'
   sivussa: '"Your meta description is missing on these pages. Here\'s why it matters, here's how you fix it."'
