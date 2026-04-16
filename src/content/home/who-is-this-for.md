@@ -2,17 +2,17 @@
 title: "For everyone with a website"
 cards:
   - title: "Small to Large Companies"
-    description: "Whether you're a local shop or an enterprise, you need customers to find you. Sivussa provides the audit and recommendations."
+    description: "You built a website and pay for hosting, but customers aren't finding you. Structural blockers are suppressing your rankings. We identify and clear them so you gain organic traffic without paying for visibility."
   - title: "Freelancers & Solopreneurs"
-    description: "Designers, developers, consultants. Your portfolio is your resume. If clients can't find you, you don't exist."
+    description: "Your portfolio is your resume. If clients can't find you through organic search, you don't exist. We uncover the structural blockers preventing your ranking from rising and give you copy-paste ready fixes."
   - title: "SEO Professionals"
-    description: "Manage client sites efficiently. Run audits, get recommendations, deliver results faster."
+    description: "Your clients want organic traffic, not another ad budget. We identify structural blockers quickly and provide copy-paste ready recommendations you can implement directly."
   - title: "E-commerce Stores"
-    description: "Product pages need to rank. Local store needs Maps presence. Products need to appear in AI answers."
+    description: "Product pages need rank. Paying for placement adds up. We find the structural blockers holding back your organic visibility and clear them with specific, actionable recommendations."
   - title: "Entrepreneurs & Bloggers"
-    description: "Your content needs visibility. We help you reach the right audience through search, maps, and AI answers."
+    description: "You create great content, but structural issues keep it buried. We identify what's blocking your organic reach and give you copy-paste ready fixes to clear the path."
   - title: "SaaS Businesses"
-    description: "Your product needs to be discovered. We help you appear in search results and AI recommendations."
+    description: "Your product needs discovery. You're already paying for infrastructure — don't also pay for visibility. We find and clear the structural blockers preventing organic traffic."
 ---
 
 ## For everyone with a website
