@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'preact/hooks';
 import { useLocation } from 'preact-iso';
-import { NAV_LINKS, CTA_LINK } from '../../utils/routes';
+import { NAV_LINKS } from '../../utils/routes';
 
 export function Nav() {
   const location = useLocation();
@@ -45,9 +45,6 @@ export function Nav() {
                 {link.label}
               </a>
             ))}
-            <a href={CTA_LINK.href} class="ml-2 px-4 py-2 bg-primary text-dark-900 font-semibold rounded-lg hover:bg-primary-dark transition-colors text-sm">
-              {CTA_LINK.label}
-            </a>
           </div>
 
           {/* Mobile hamburger */}
@@ -85,15 +82,6 @@ export function Nav() {
                 </a>
               ))}
             </nav>
-            <div class="mt-8">
-              <a
-                href={CTA_LINK.href}
-                onClick={() => setMobileOpen(false)}
-                class="block w-full text-center px-4 py-3 bg-primary text-dark-900 font-semibold rounded-lg hover:bg-primary-dark transition-colors"
-              >
-                {CTA_LINK.label}
-              </a>
-            </div>
           </div>
         </>
       )}

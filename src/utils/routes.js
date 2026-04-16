@@ -6,8 +6,6 @@ export const NAV_LINKS = [
   { label: 'Blog', href: 'https://blog.sivussa.com' },
 ];
 
-export const CTA_LINK = { label: 'Get Started', href: '/#audit-form' };
-
 export const ROUTE_LABELS = {
   '/how-it-works': 'How It Works',
   '/pricing': 'Pricing',

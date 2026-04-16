@@ -2,7 +2,6 @@ import { Head } from '../components/seo/Head';
 import { Section } from '../components/common/Section';
 import { BreadcrumbNav } from '../components/layout/BreadcrumbNav';
 import { Accordion } from '../components/common/Accordion';
-import { AuditForm } from '../components/forms/AuditForm';
 
 const STRIPE_URLS = {
   'one-shot': 'https://buy.stripe.com/cNi7sN0Kv3phb500GPcbC01',
@@ -20,10 +19,10 @@ const TIERS = [
     ctaHref: STRIPE_URLS['one-shot'],
     features: [
       'Full SEO/GEO/AEO audit',
-      'AI-written remediation plan for every issue',
-      'Code snippets, content, schema — ready to paste',
+      'Prioritized recommendations',
+      'Expert guidance for every issue',
       'PDF report',
-      'Email support',
+      'Email delivery',
     ],
   },
   {
@@ -34,11 +33,12 @@ const TIERS = [
     ctaText: 'Get Started — €99/qtr',
     ctaHref: STRIPE_URLS['quarterly'],
     features: [
-      'Audit + fix plan every 90 days',
-      'AI-written fixes for every issue',
-      'Progress tracking',
-      'PDF and DOCX reports',
-      'Priority support',
+      'Audit every 90 days',
+      'Prioritized recommendations',
+      'Expert guidance',
+      'PDF report',
+      'Email delivery',
+      'Track your progress',
     ],
   },
   {
@@ -49,12 +49,12 @@ const TIERS = [
     ctaText: 'Get Started — €89/mo',
     ctaHref: STRIPE_URLS['monthly'],
     features: [
-      'Audit + fix plan every month',
-      'AI-written fixes for every issue',
-      'Progress tracking with delta reports',
-      'PDF and DOCX reports',
-      'Priority support',
-      'API access',
+      'Audit every month',
+      'Prioritized recommendations',
+      'Expert guidance',
+      'PDF report',
+      'Email delivery',
+      'Track your progress',
     ],
   },
 ];
@@ -62,10 +62,9 @@ const TIERS = [
 const PRICING_FAQ = [
   { question: 'Can I cancel anytime?', answer: 'Yes. No contracts. Cancel and you won\'t be charged again. Your current period runs to completion.' },
   { question: 'Can I switch plans?', answer: 'Yes. Upgrade or downgrade anytime. Prorated billing applies.' },
-  { question: 'Do you offer refunds?', answer: 'Full refund within 14 days. No questions asked. Email sivussa@sivussa.com.' },
   { question: 'Can I audit multiple sites?', answer: 'Each site requires a separate subscription. Contact us for volume discounts.' },
   { question: 'What payment methods do you accept?', answer: 'Credit and debit cards via Stripe. Apple Pay and Google Pay supported.' },
-  { question: 'What makes this different from Semrush or Ahrefs?', answer: 'They audit. We audit AND fix. They give you a checklist — you do the work. We give you copy-paste ready solutions — our AI does the work.' },
+  { question: 'What makes this different from Semrush or Ahrefs?', answer: 'They audit. We audit AND provide prioritized recommendations. They give you a checklist — you figure out what to do. We give you expert guidance on what to fix first.' },
 ];
 
 export function Pricing() {
@@ -73,14 +72,14 @@ export function Pricing() {
     <>
       <Head
         title="Pricing — Simple Plans, No Hidden Fees"
-        description="From €89/month. Full SEO + GEO + AEO audits with AI-written fix plans. Cheaper than Ahrefs, more complete than Semrush."
+        description="From €89/month. Full SEO + GEO + AEO audits with prioritized recommendations. Simple, transparent pricing."
         canonical="https://sivussa.com/pricing"
       />
       <Section>
         <BreadcrumbNav currentPage="Pricing" />
         <div class="max-w-4xl mx-auto text-center">
-          <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">Your junior SEO team — for <span class="text-primary">€89/month</span></h1>
-          <p class="text-xl text-dark-300 mb-16">AI specialists audit your site and write every fix. Review, copy-paste, done.</p>
+          <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">Simple pricing. <span class="text-primary">No hidden fees.</span></h1>
+          <p class="text-xl text-dark-300 mb-16">AI specialists audit your site and provide expert recommendations. Get prioritized, actionable guidance.</p>
         </div>
       </Section>
 
@@ -135,16 +134,15 @@ export function Pricing() {
             <tbody class="text-dark-200">
               {[
                 ['Full SEO/GEO/AEO audit', true, true, true],
-                ['AI-written fix plan', true, true, true],
-                ['Code snippets ready to paste', true, true, true],
+                ['Prioritized recommendations', true, true, true],
+                ['Expert guidance', true, true, true],
+                ['Specific recommendations for your site', true, true, true],
                 ['Content suggestions', true, true, true],
-                ['Schema markup written for you', true, true, true],
-                ['Progress tracking', false, true, true],
-                ['Delta reports (what changed)', false, false, true],
-                ['PDF download', true, true, true],
-                ['DOCX download', false, true, true],
-                ['Support', 'Email', 'Priority', 'Priority'],
-                ['API access', false, false, true],
+                ['Schema markup guidance', true, true, true],
+                ['Track your progress', false, true, true],
+                ['PDF report', true, true, true],
+                ['Email delivery', true, true, true],
+                ['Support', 'Email', 'Email', 'Email'],
                 ['Audit frequency', 'Once', 'Every 90 days', 'Every month'],
               ].map(([label, ...vals], i) => (
                 <tr key={i} class="border-b border-dark-700">
@@ -166,10 +164,10 @@ export function Pricing() {
         <h2 class="text-2xl font-bold text-white text-center mb-8">Why this is different</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
           {[
-            { name: 'Semrush', price: '$1,428/yr', desc: 'Comprehensive audit. Zero AI-written fixes. 200 issues and you figure it out.' },
-            { name: 'Ahrefs', price: '$1,548/yr', desc: 'Great backlink data. No GEO. No AEO. No fix plans.' },
-            { name: 'Sitebulb', price: '$336/yr', desc: 'Desktop tool. Technical SEO only. No local. No AI answers. No solutions.' },
-            { name: 'Sivussa', price: '€89/mo', desc: 'Full SEO + GEO + AEO. Every issue comes with a copy-paste ready fix by AI specialists.', highlight: true },
+            { name: 'Semrush', price: '$1,428/yr', desc: 'Comprehensive audit. Zero prioritized recommendations. 200 issues and you figure out what to do.' },
+            { name: 'Ahrefs', price: '$1,548/yr', desc: 'Great backlink data. No GEO. No AEO. No recommendations.' },
+            { name: 'Sitebulb', price: '$336/yr', desc: 'Desktop tool. Technical SEO only. No local. No AI answers. No guidance.' },
+            { name: 'Sivussa', price: '€89/mo', desc: 'Full SEO + GEO + AEO. Every issue comes with prioritized, expert recommendations by AI specialists.', highlight: true },
           ].map((c, i) => (
             <div key={i} class={`rounded-2xl p-6 border ${c.highlight ? 'border-primary bg-dark-800' : 'border-dark-600 bg-dark-900'}`}>
               <h3 class={`text-lg font-bold mb-1 ${c.highlight ? 'text-primary' : 'text-white'}`}>{c.name}</h3>
@@ -180,16 +178,8 @@ export function Pricing() {
         </div>
       </Section>
 
-      {/* Guarantee */}
-      <Section>
-        <div class="max-w-2xl mx-auto text-center">
-          <h2 class="text-2xl font-bold text-white mb-4">14-day money-back guarantee</h2>
-          <p class="text-dark-300">Get your fix plan. Implement it. If you're not satisfied within 14 days, email sivussa@sivussa.com for a full refund within 24 hours. No fine print. No questions asked.</p>
-        </div>
-      </Section>
-
       {/* FAQ */}
-      <Section dark={false}>
+      <Section>
         <h2 class="text-2xl font-bold text-white text-center mb-8">Pricing FAQ</h2>
         <div class="max-w-3xl mx-auto">
           {PRICING_FAQ.map((item, i) => (
@@ -199,10 +189,17 @@ export function Pricing() {
       </Section>
 
       {/* CTA */}
-      <Section>
+      <Section dark={false}>
         <div class="max-w-3xl mx-auto text-center">
-          <h2 class="text-3xl font-bold text-white mb-4">Stop paying for checklists. Get fix plans.</h2>
-          <AuditForm variant="inline" />
+          <h2 class="text-3xl font-bold text-white mb-4">Stop paying for checklists. Get recommendations.</h2>
+          <a
+            href={STRIPE_URLS['one-shot']}
+            target="_blank"
+            rel="noopener"
+            class="inline-block px-8 py-4 bg-primary text-dark-900 font-bold rounded-lg hover:bg-primary-dark transition-colors"
+          >
+            Get Your Audit — €99
+          </a>
         </div>
       </Section>
     </>
