@@ -9,15 +9,15 @@ steps:
     description: "Our AI-native team crawls your site, checks your geographic visibility, evaluates content for AI readiness, and identifies what's preventing your ranking from rising. This is handled by ranking for the most influential remedies - we're not dumping a 100-page list of minor nits in your inbox."
   - number: 3
     title: "Copy-paste ready"
-    description: "Receive a detailed PDF report with scored findings and copy-paste ready recommendations to clear the structural blockers blocking your organic traffic."
+    description: "PDF report with scored findings and copy-paste ready recommendations."
   - number: 4
-    title: "Gain organic visibility"
-    description: "Apply the recommendations to clear the blockers. Run follow-up audits to track your organic traffic growth without paying search providers for extra visibility."
+    title: "Gain visibility, organically"
+    description: "Apply the recommendations to clear the blockers. Run follow-up audits to track your organic traffic growth without paying search providers for extra visibility. Which would you rather: 5000 a month for visibility on a site that has the breaks on? Might be a good idea to check and fix the blockers."
 comparison:
   other: '"Your meta description is missing." (Your problem now.)'
-  sivussa: '"Your meta description is missing on these pages. Here\'s why it matters and the copy-paste ready text to add."'
+  sivussa: '"Your meta description is missing on these pages. Here\'s why it matters, here's how you fix it."'
 ---
 
 ## How it works
 
-Follow these four steps to identify what's blocking your site and start gaining organic traffic.
+Follow these four steps to lift the traffic breaks on your site.
