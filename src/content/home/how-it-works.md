@@ -6,18 +6,18 @@ steps:
     description: "Choose a one-time audit or subscribe for recurring audits. Payment via Stripe."
   - number: 2
     title: "AI specialists analyze"
-    description: "AI agents crawl your site, check your Google Business Profile, evaluate content for AI readiness, and score SEO, GEO, AEO."
+    description: "Our AI-native team crawls your site, checks your Google Business Profile, evaluates content for AI readiness, and scores SEO, GEO, AEO."
   - number: 3
-    title: "Get your report"
-    description: "Receive a detailed PDF report with scored findings and prioritized, actionable recommendations."
+    title: "Get your fix plan"
+    description: "Receive a detailed PDF report with scored findings and copy-paste ready recommendations for site content and structural elements."
   - number: 4
     title: "Implement and improve"
-    description: "Use the recommendations to fix issues. Run follow-up audits to track your progress."
+    description: "Apply the recommendations to gain visibility. Run follow-up audits to track your organic traffic growth."
 comparison:
   other: '"Your meta description is missing." (Your problem now.)'
-  sivussa: '"Your meta description is missing on these pages. Here\'s why it matters and how to write an effective one for your target keyword."'
+  sivussa: '"Your meta description is missing on these pages. Here\'s why it matters and the copy-paste ready text to add."'
 ---
 
 ## How it works
 
-Follow these four steps to get your visibility audit and start improving your website's discoverability.
+Follow these four steps to get your visibility audit and start gaining organic traffic.
