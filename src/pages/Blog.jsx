@@ -1,65 +1,13 @@
 import { useState, useEffect } from 'preact/hooks';
 import { Head } from '../components/seo/Head';
 import { BreadcrumbNav } from '../components/layout/BreadcrumbNav';
-
-const CATEGORIES = ['ALL', 'SEO BASICS', 'AUDIT INSIGHTS', 'LOCAL SEARCH'];
-
-const STATIC_POSTS = [
-  {
-    title: 'How AI SEO Agents Write Fixes Your Developer Can Paste in 5 Minutes',
-    category: 'AUDIT INSIGHTS',
-    excerpt: 'Traditional SEO tools dump 200 issues on you and wish you luck. AI agents flip the model — they write the JSON-LD, meta tags, and schema markup for your specific site.',
-    date: 'Apr 2026',
-    readTime: '5 MIN READ',
-    link: 'https://blog.sivussa.com',
-  },
-  {
-    title: 'Why Your Google Business Profile Isn\'t Showing Up (And the Exact Fix)',
-    category: 'LOCAL SEARCH',
-    excerpt: 'Three out of four local businesses have incomplete or incorrect Google Business Profiles. That means Google Maps skips them entirely.',
-    date: 'Apr 2026',
-    readTime: '6 MIN READ',
-    link: 'https://blog.sivussa.com',
-  },
-  {
-    title: 'How to Get ChatGPT and Perplexity to Cite Your Website',
-    category: 'SEO BASICS',
-    excerpt: 'AI answer engines are the new search frontier. If your content isn\'t structured for AI citation, ChatGPT and Perplexity will reference your competitors instead.',
-    date: 'Mar 2026',
-    readTime: '7 MIN READ',
-    link: 'https://blog.sivussa.com',
-  },
-  {
-    title: 'SEO Audit vs SEO Remediation: Why the Fix Matters More Than the Finding',
-    category: 'AUDIT INSIGHTS',
-    excerpt: 'An audit tells you what\'s broken. Remediation actually fixes it. Most businesses pay for audits and never implement the changes because they\'re too technical.',
-    date: 'Mar 2026',
-    readTime: '5 MIN READ',
-    link: 'https://blog.sivussa.com',
-  },
-  {
-    title: 'The Complete JSON-LD Guide for Small Business Websites',
-    category: 'SEO BASICS',
-    excerpt: 'Structured data is the single highest-impact SEO fix for most small businesses. Here\'s what to add, where to put it, and ready-to-use templates for 10 common business types.',
-    date: 'Mar 2026',
-    readTime: '8 MIN READ',
-    link: 'https://blog.sivussa.com',
-  },
-  {
-    title: 'Voice Search in 2026: How AI Agents Optimize for Siri and Google Assistant',
-    category: 'LOCAL SEARCH',
-    excerpt: 'Voice queries are longer, more conversational, and heavily local. "Hey Siri, find a plumber near me" returns one result — not ten.',
-    date: 'Feb 2026',
-    readTime: '6 MIN READ',
-    link: 'https://blog.sivussa.com',
-  },
-];
+import { BLOG_CONFIG } from '../data/blog-content';
 
 export function Blog() {
   const [activeCategory, setActiveCategory] = useState('ALL');
   const [searchQuery, setSearchQuery] = useState('');
 
-  const filtered = STATIC_POSTS.filter(p => {
+  const filtered = BLOG_CONFIG.posts.filter(p => {
     const matchCat = activeCategory === 'ALL' || p.category === activeCategory;
     const matchSearch = !searchQuery || p.title.toLowerCase().includes(searchQuery.toLowerCase()) || p.excerpt.toLowerCase().includes(searchQuery.toLowerCase());
     return matchCat && matchSearch;
@@ -86,18 +34,18 @@ export function Blog() {
         {/* Hero */}
         <section class="pb-16 pt-4 border-b border-dark-700/30">
           <h1 class="text-[5rem] md:text-[10rem] font-black leading-[0.8] tracking-tighter text-dark-100 mb-8">
-            INSIGHTS
+            {BLOG_CONFIG.title}
           </h1>
           <div class="flex flex-col md:flex-row md:items-end justify-between gap-8">
             <div class="max-w-xl">
               <p class="text-dark-300 text-lg leading-relaxed">
-                Precision-engineered intelligence for the GEO era. Technical breakdowns of search protocols, algorithmic shifts, and data optimization.
+                {BLOG_CONFIG.description}
               </p>
             </div>
             <div class="w-full md:w-96 relative">
               <input
                 class="w-full bg-dark-600 border-none border-b-2 border-transparent focus:border-primary focus:ring-0 text-dark-100 placeholder:text-dark-500 text-[0.6875rem] font-bold uppercase tracking-widest py-4 px-0 outline-none"
-                placeholder="Search articles..."
+                placeholder={BLOG_CONFIG.searchPlaceholder}
                 type="text"
                 value={searchQuery}
                 onInput={(e) => setSearchQuery(e.target.value)}
@@ -110,7 +58,7 @@ export function Blog() {
         {/* Filters */}
         <nav class="py-12 overflow-x-auto whitespace-nowrap">
           <div class="flex gap-4">
-            {CATEGORIES.map(cat => (
+            {BLOG_CONFIG.categories.map(cat => (
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
@@ -161,12 +109,12 @@ export function Blog() {
         {/* Load More */}
         <div class="flex justify-center pb-24">
           <a
-            href="https://blog.sivussa.com"
+            href={BLOG_CONFIG.loadMoreLink}
             target="_blank"
             rel="noopener"
             class="bg-gradient-to-br from-primary to-[#6EDE69] text-dark-900 px-12 py-4 text-[0.6875rem] font-black uppercase tracking-[0.2em] hover:shadow-[0_0_20px_rgba(0,255,65,0.15)] transition-all"
           >
-            LOAD MORE INSIGHTS
+            {BLOG_CONFIG.loadMoreText}
           </a>
         </div>
       </div>
