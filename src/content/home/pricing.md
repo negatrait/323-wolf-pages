@@ -10,9 +10,6 @@ tiers:
     cta_href: "https://buy.stripe.com/cNi7sN0Kv3phb500GPcbC01"
     features:
       - "Audit once"
-      - "Prioritized remedies"
-      - "PDF report"
-      - "Email delivery"
   - name: "Quarterly"
     price: "€99"
     period: "/quarter"
@@ -21,9 +18,6 @@ tiers:
     cta_href: "https://buy.stripe.com/3cIdRbal52ld7SO4X5cbC02"
     features:
       - "Audit every 90 days"
-      - "Prioritized remedies"
-      - "PDF report"
-      - "Email delivery"
   - name: "Monthly"
     price: "€89"
     period: "/month"
@@ -32,9 +26,6 @@ tiers:
     cta_href: "https://buy.stripe.com/5kQ9AV64P5xpehc3T1cbC03"
     features:
       - "Audit every month"
-      - "Prioritized remedies"
-      - "PDF report"
-      - "Email delivery"
 terms:
   - timing: "By proceeding to payment, you request that Sivussa begin performing the audit service immediately after successful payment."
   - consumers: "If you are a consumer, once the service has been fully performed, your right of withdrawal may no longer apply to the extent permitted by applicable law."
