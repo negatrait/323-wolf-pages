@@ -52,7 +52,7 @@ export default function contentPlugin() {
               const title = textMatch[1].trim();
               const desc = textMatch[2].trim();
               const iconMap = {
-                'Full Search/Geo/AI engine audit': 'search',
+                'Full visibility audit': 'search',
                 'Prioritized findings': 'assignment',
                 'Specific guidance': 'psychology',
                 'PDF report': 'email',

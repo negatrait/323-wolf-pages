@@ -71,7 +71,7 @@ export function HowItWorks() {
         <h2 class="text-2xl font-bold text-white text-center mb-10">What you get</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
           {[
-            { title: 'Full SEO/GEO/AEO audit', desc: 'Comprehensive analysis across search engines, local maps, and AI answers.' },
+            { title: 'Full visibility audit', desc: 'Comprehensive analysis across search engines, geolocation services, and AI summaries.' },
             { title: 'Prioritized findings', desc: 'Issues ranked by impact so you know what to fix first.' },
             { title: 'Expert recommendations', desc: 'AI-powered guidance for every issue found.' },
             { title: 'Competitor comparison', desc: 'See how you perform against top-ranking competitors.' },
@@ -93,7 +93,7 @@ export function HowItWorks() {
       <Section>
         <div class="max-w-3xl mx-auto text-center">
           <h2 class="text-3xl font-bold text-white mb-4">Ready for a real audit with actionable recommendations?</h2>
-          <p class="text-dark-300 mb-8">Get a comprehensive SEO/GEO/AEO audit with prioritized guidance.</p>
+          <p class="text-dark-300 mb-8">Get a comprehensive visibility audit with prioritized guidance.</p>
           <a
             href={STRIPE_ONE_SHOT}
             target="_blank"

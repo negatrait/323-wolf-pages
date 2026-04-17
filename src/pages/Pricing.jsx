@@ -19,7 +19,7 @@ const TIERS = [
     ctaText: 'Get Started — €99',
     ctaHref: STRIPE_URLS['one-shot'],
     features: [
-      'Full SEO/GEO/AEO audit',
+      'Full visibility audit',
       'Prioritized recommendations',
       'Expert guidance for every issue',
       'PDF report',
@@ -134,7 +134,7 @@ export function Pricing() {
             </thead>
             <tbody class="text-dark-200">
               {[
-                ['Full SEO/GEO/AEO audit', true, true, true],
+                ['Full visibility audit', true, true, true],
                 ['Prioritized recommendations', true, true, true],
                 ['Expert guidance', true, true, true],
                 ['Specific recommendations for your site', true, true, true],

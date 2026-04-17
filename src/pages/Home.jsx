@@ -41,7 +41,7 @@ export function Home() {
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="max-w-3xl mx-auto text-center">
             <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
-              {HOME_HERO.title} <span class="text-primary">{HOME_HERO.subtitle}</span>
+              {HOME_HERO.title}{" "}<span class="text-primary">{HOME_HERO.subtitle}</span>
             </h1>
             <p class="text-lg md:text-xl text-dark-300 mb-10" dangerouslySetInnerHTML={{ __html: HOME_HERO.content }} />
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
