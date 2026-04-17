@@ -1,5 +1,6 @@
 ---
-title: "For everyone with a website"
+title: "You have a website?"
+subtitle: " We're here for you at Sivussa."
 cards:
   - title: "Small to Large Companies"
     description: "You built a website and pay for hosting, but customers aren't finding you. Without organic discovery, your marketing dollars are wasted on ads while your site remains invisible in search results."
