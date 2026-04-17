@@ -16,7 +16,6 @@ export default function contentPlugin() {
     },
     load(id) {
       if (id === resolvedVirtualModuleId) {
-        // This runs at build time
         const contentDir = path.resolve(process.cwd(), 'src/content');
 
         function loadMd(filePath) {
@@ -27,7 +26,36 @@ export default function contentPlugin() {
           return { frontmatter, html, raw: content };
         }
 
-        // Home page - Hero
+        // Helper: strip all HTML tags from a string
+        function strip(html) {
+          return html.replace(/<[^>]+>/g, '').trim();
+        }
+
+        // Helper: extract text from <li> items, stripping inner tags
+        function extractLiItems(html) {
+          const items = [];
+          const re = /<li>(.+?)<\/li>/g;
+          let m;
+          while ((m = re.exec(html)) !== null) {
+            items.push(strip(m[1]));
+          }
+          return items;
+        }
+
+        // Helper: extract paragraphs from html
+        function extractParagraphs(html) {
+          const ps = [];
+          const re = /<p>(.+?)<\/p>/gs;
+          let m;
+          while ((m = re.exec(html)) !== null) {
+            ps.push(m[1]);
+          }
+          return ps;
+        }
+
+        // ===== HOME PAGE =====
+
+        // Hero
         const hero = loadMd('home/hero.md');
         const HOME_HERO = {
           title: hero.frontmatter.title,
@@ -41,74 +69,54 @@ export default function contentPlugin() {
           seo_description: hero.frontmatter.seo_description,
         };
 
-        // Home page - What You Get
+        // What You Get
         const whatYouGet = loadMd('home/what-you-get.md');
-        const whatYouGetItems = [];
-        const lines = whatYouGet.html.split('\n');
-        for (const line of lines) {
-          if (line.trim().startsWith('<li>')) {
-            const textMatch = line.match(/<li><strong>([^<]+)<\/strong>:?\s*(.+?)<\/li>/);
-            if (textMatch) {
-              const title = textMatch[1].trim();
-              const desc = textMatch[2].trim();
-              const iconMap = {
-                'Full visibility audit': 'search',
-                'Prioritized findings': 'assignment',
-                'Specific guidance': 'psychology',
-                'PDF report': 'email',
-              };
-              whatYouGetItems.push({
-                icon: iconMap[title] || 'check_circle',
-                title,
-                desc,
-              });
-            }
-          }
-        }
-        const subscriberMatch = whatYouGet.html.match(/<p><strong>For subscribers:<\/strong>(.+?)<\/p>/s);
+        const whatYouGetItems = extractLiItems(whatYouGet.html).map(text => {
+          // Format: "Bold Title: Description" (tags already stripped)
+          const colonIdx = text.indexOf(':');
+          if (colonIdx === -1) return { icon: 'check_circle', title: text, desc: '' };
+          const title = text.slice(0, colonIdx).trim();
+          const desc = text.slice(colonIdx + 1).trim();
+          const iconMap = {
+            'Full visibility audit': 'search',
+            'Prioritized findings': 'assignment',
+            'Specific guidance': 'psychology',
+            'PDF report': 'email',
+          };
+          return { icon: iconMap[title] || 'check_circle', title, desc };
+        });
+
+        // Subscriber note: find paragraph containing "For subscribers" (after stripping tags)
+        const subscriberParas = extractParagraphs(whatYouGet.html);
+        const subscriberNote = subscriberParas.find(p => strip(p).toLowerCase().startsWith('for subscribers'));
         const HOME_WHAT_YOU_GET = {
           title: whatYouGet.frontmatter.title,
           items: whatYouGetItems,
-          subscriberNote: subscriberMatch ? subscriberMatch[1].trim() : '',
+          subscriberNote: subscriberNote ? strip(subscriberNote).replace(/^For subscribers:\s*/i, '') : '',
         };
 
-        // Home page - Problem
+        // Problem
         const problem = loadMd('home/problem.md');
         const problemSections = [];
         const sectionRegex = /<h2>(SEO|GEO|AEO)[^<]*<\/h2>\s*<ul>(.+?)<\/ul>/gs;
-        let match;
-        while ((match = sectionRegex.exec(problem.html)) !== null) {
-          const type = match[1];
-          const listHtml = match[2];
-          const items = [];
-          const itemRegex = /<li>(.+?)<\/li>/g;
-          let itemMatch;
-          while ((itemMatch = itemRegex.exec(listHtml)) !== null) {
-            items.push(itemMatch[1].replace(/<strong>(.+?)<\/strong>/g, '$1').trim());
-          }
-          const titles = {
-            SEO: 'SEO — Structural blockers hide your site from search engines',
-            GEO: 'GEO — Local invisibility keeps customers away',
-            AEO: 'AEO — AI assistants can\'t answer questions about you',
-          };
-          const headingMatch = match[0].match(/<h2>([^<]+)<\/h2>/);
-          problemSections.push({
-            title: headingMatch ? headingMatch[1].trim() : type,
-            items,
-          });
+        let sectionMatch;
+        while ((sectionMatch = sectionRegex.exec(problem.html)) !== null) {
+          const headingText = sectionMatch[0].match(/<h2>([^<]+)<\/h2>/)?.[1]?.trim() || sectionMatch[1];
+          const items = extractLiItems(sectionMatch[2]);
+          problemSections.push({ title: headingText, items });
         }
-        const introMatch = problem.html.match(/<p>(.+?)<\/p>/s);
-        const problemIntro = introMatch
-          ? introMatch[1].replace(/<strong>(.+?)<\/strong>/g, '<strong class="text-white">$1</strong>')
-          : '';
+
+        // Intro: first paragraph(s) before first h2
+        const problemIntroRaw = problem.html.split(/<h2>/)[0];
+        const problemIntroHtml = marked.parse(problemIntroRaw);
         const HOME_PROBLEM = {
           title: problem.frontmatter.title,
           subtitle: problem.frontmatter.subtitle,
-          intro: problemIntro,
+          intro: problemIntroHtml,
           sections: problemSections,
         };
 
-        // Home page - How It Works
+        // How It Works
         const howItWorks = loadMd('home/how-it-works.md');
         const HOME_HOW_IT_WORKS = {
           title: howItWorks.frontmatter.title,
@@ -116,7 +124,7 @@ export default function contentPlugin() {
           comparison: howItWorks.frontmatter.comparison,
         };
 
-        // Home page - Features
+        // Features
         const features = loadMd('home/features.md');
         const HOME_FEATURES = {
           title: features.frontmatter.title,
@@ -124,7 +132,7 @@ export default function contentPlugin() {
         };
         const FEATURES = features.frontmatter.features;
 
-        // Home page - Who Is This For
+        // Who Is This For
         const whoIsThisFor = loadMd('home/who-is-this-for.md');
         const HOME_WHO_IS_THIS_FOR = {
           title: whoIsThisFor.frontmatter.title,
@@ -134,7 +142,7 @@ export default function contentPlugin() {
           })),
         };
 
-        // Home page - Pricing
+        // Pricing
         const pricing = loadMd('home/pricing.md');
         const HOME_PRICING = {
           title: pricing.frontmatter.title,
@@ -150,21 +158,19 @@ export default function contentPlugin() {
           features: t.features,
         }));
 
-        // Home page - FAQ
+        // FAQ
         const faq = loadMd('faq.md');
-        const HOME_FAQ = {
-          title: faq.frontmatter.title,
-        };
+        const HOME_FAQ = { title: faq.frontmatter.title };
 
-        // Home page - Final CTA
+        // Final CTA
         const HOME_FINAL_CTA = {
           title: 'Stop guessing. Start with a real audit.',
-          subtitle: 'Get a comprehensive SEO/GEO/AEO audit with prioritized recommendations.',
+          subtitle: 'Get a comprehensive visibility audit with prioritized recommendations.',
           cta: hero.frontmatter.cta_primary,
           cta_href: hero.frontmatter.cta_primary_href,
         };
 
-        // About page
+        // ===== ABOUT PAGE =====
         const about = loadMd('about.md');
         const linesAbout = about.raw.split('\n');
         let currentSection = null;
@@ -176,11 +182,8 @@ export default function contentPlugin() {
 
         for (let i = 0; i < linesAbout.length; i++) {
           const line = linesAbout[i];
-
           if (line.startsWith('## ')) {
-            if (currentSection) {
-              aboutSections.push(currentSection);
-            }
+            if (currentSection) aboutSections.push(currentSection);
             currentSection = {
               title: line.replace('## ', '').trim(),
               content: '',
@@ -194,24 +197,14 @@ export default function contentPlugin() {
             if (line.startsWith('### ')) {
               const subLine = line.replace('### ', '').trim();
               if (subLine === 'Short term' || subLine === 'Medium term' || subLine === 'Long term') {
-                currentSection.timeline.push({
-                  title: subLine,
-                  content: '',
-                });
+                currentSection.timeline.push({ title: subLine, content: '' });
               } else if (subLine.includes('Agent')) {
-                currentSection.agents.push({
-                  title: subLine,
-                  desc: '',
-                });
+                currentSection.agents.push({ title: subLine, desc: '' });
               }
             } else if (line.match(/^\d{2}\.\s/)) {
               const valueMatch = line.match(/^(\d{2})\.\s+\*\*([^*]+)\*\*/);
               if (valueMatch) {
-                currentSection.values.push({
-                  num: valueMatch[1],
-                  title: valueMatch[2],
-                  desc: '',
-                });
+                currentSection.values.push({ num: valueMatch[1], title: valueMatch[2], desc: '' });
               }
             } else if (line.trim()) {
               const text = line.trim();
@@ -229,10 +222,7 @@ export default function contentPlugin() {
             }
           }
         }
-
-        if (currentSection) {
-          aboutSections.push(currentSection);
-        }
+        if (currentSection) aboutSections.push(currentSection);
 
         aboutSections.forEach(s => {
           s.content = s.content.trim();
@@ -242,55 +232,27 @@ export default function contentPlugin() {
           s.timeline.forEach(t => { t.content = t.content.trim(); t.contentHtml = marked.parse(t.content); });
         });
 
-        const mappedAboutSections = aboutSections.map(s => {
-          if (s.title === 'Our approach') {
-            return {
-              title: s.title,
-              subtitle: 'they fix',
-              intro: 'We built Sivussa to solve one problem: the gap between finding issues and actually clearing them.',
-              agents: s.agents,
-            };
-          } else if (s.title === 'Built in Finland') {
-            return {
-              title: s.title,
-              content: s.content,
-              contentHtml: s.contentHtml,
-            };
-          } else if (s.title === 'Our Values') {
-            return {
-              title: s.title,
-              values: s.values,
-            };
-          } else if (s.title === 'What we\'re building') {
-            return {
-              title: s.title,
-              timeline: s.timeline,
-            };
-          } else if (s.title === 'Questions? Want to say hello?') {
-            return {
-              title: s.title,
-              email: s.email,
-            };
-          } else {
-            return {
-              title: s.title,
-              content: s.content,
-              contentHtml: s.contentHtml,
-            };
-          }
-        });
-
-        const expectedAboutSections = mappedAboutSections;
-
         const ABOUT = {
           title: about.frontmatter.title,
           subtitle: about.frontmatter.subtitle,
           intro: 'We believe every business deserves visibility — not just the ones with €5,000/month agency budgets.',
-          sections: expectedAboutSections,
+          sections: aboutSections.map(s => {
+            if (s.title === 'Our approach') {
+              return { title: s.title, subtitle: 'they fix', intro: 'We built Sivussa to solve one problem: the gap between finding issues and actually clearing them.', agents: s.agents };
+            } else if (s.title === 'Our Values') {
+              return { title: s.title, values: s.values };
+            } else if (s.title === 'What we\'re building') {
+              return { title: s.title, timeline: s.timeline };
+            } else if (s.title === 'Questions? Want to say hello?') {
+              return { title: s.title, email: s.email };
+            } else {
+              return { title: s.title, content: s.content, contentHtml: s.contentHtml };
+            }
+          }),
           email: 'sivussa@sivussa.com',
         };
 
-        // Blog config
+        // ===== BLOG =====
         const blog = loadMd('blog/index.md');
         const BLOG_CONFIG = {
           title: blog.frontmatter.title,
@@ -300,85 +262,32 @@ export default function contentPlugin() {
           loadMoreText: blog.frontmatter.load_more_text,
           loadMoreLink: blog.frontmatter.load_more_link,
           posts: [
-            {
-              title: 'How AI SEO Agents Write Fixes Your Developer Can Paste in 5 Minutes',
-              category: 'AUDIT INSIGHTS',
-              excerpt: 'Traditional SEO tools dump 200 issues on you and wish you luck. AI agents flip the model — they write the JSON-LD, meta tags, and schema markup for your specific site.',
-              date: 'Apr 2026',
-              readTime: '5 MIN READ',
-              link: 'https://blog.sivussa.com',
-            },
-            {
-              title: 'Why Your Google Business Profile Isn\'t Showing Up (And the Exact Fix)',
-              category: 'LOCAL SEARCH',
-              excerpt: 'Three out of four local businesses have incomplete or incorrect Google Business Profiles. That means Google Maps skips them entirely.',
-              date: 'Apr 2026',
-              readTime: '6 MIN READ',
-              link: 'https://blog.sivussa.com',
-            },
-            {
-              title: 'How to Get ChatGPT and Perplexity to Cite Your Website',
-              category: 'SEO BASICS',
-              excerpt: 'AI answer engines are the new search frontier. If your content isn\'t structured for AI citation, ChatGPT and Perplexity will reference your competitors instead.',
-              date: 'Mar 2026',
-              readTime: '7 MIN READ',
-              link: 'https://blog.sivussa.com',
-            },
-            {
-              title: 'SEO Audit vs SEO Remediation: Why the Fix Matters More Than the Finding',
-              category: 'AUDIT INSIGHTS',
-              excerpt: 'An audit tells you what\'s broken. Remediation actually fixes it. Most businesses pay for audits and never implement the changes because they\'re too technical.',
-              date: 'Mar 2026',
-              readTime: '5 MIN READ',
-              link: 'https://blog.sivussa.com',
-            },
-            {
-              title: 'The Complete JSON-LD Guide for Small Business Websites',
-              category: 'SEO BASICS',
-              excerpt: 'Structured data is the single highest-impact SEO fix for most small businesses. Here\'s what to add, where to put it, and ready-to-use templates for 10 common business types.',
-              date: 'Mar 2026',
-              readTime: '8 MIN READ',
-              link: 'https://blog.sivussa.com',
-            },
-            {
-              title: 'Voice Search in 2026: How AI Agents Optimize for Siri and Google Assistant',
-              category: 'LOCAL SEARCH',
-              excerpt: 'Voice queries are longer, more conversational, and heavily local. "Hey Siri, find a plumber near me" returns one result — not ten.',
-              date: 'Feb 2026',
-              readTime: '6 MIN READ',
-              link: 'https://blog.sivussa.com',
-            },
+            { title: 'How AI SEO Agents Write Fixes Your Developer Can Paste in 5 Minutes', category: 'AUDIT INSIGHTS', excerpt: 'Traditional SEO tools dump 200 issues on you and wish you luck. AI agents flip the model — they write the JSON-LD, meta tags, and schema markup for your specific site.', date: 'Apr 2026', readTime: '5 MIN READ', link: 'https://blog.sivussa.com' },
+            { title: 'Why Your Google Business Profile Isn\'t Showing Up (And the Exact Fix)', category: 'LOCAL SEARCH', excerpt: 'Three out of four local businesses have incomplete or incorrect Google Business Profiles. That means Google Maps skips them entirely.', date: 'Apr 2026', readTime: '6 MIN READ', link: 'https://blog.sivussa.com' },
+            { title: 'How to Get ChatGPT and Perplexity to Cite Your Website', category: 'SEO BASICS', excerpt: 'AI answer engines are the new search frontier. If your content isn\'t structured for AI citation, ChatGPT and Perplexity will reference your competitors instead.', date: 'Mar 2026', readTime: '7 MIN READ', link: 'https://blog.sivussa.com' },
+            { title: 'SEO Audit vs SEO Remediation: Why the Fix Matters More Than the Finding', category: 'AUDIT INSIGHTS', excerpt: 'An audit tells you what\'s broken. Remediation actually fixes it. Most businesses pay for audits and never implement the changes because they\'re too technical.', date: 'Mar 2026', readTime: '5 MIN READ', link: 'https://blog.sivussa.com' },
+            { title: 'The Complete JSON-LD Guide for Small Business Websites', category: 'SEO BASICS', excerpt: 'Structured data is the single highest-impact SEO fix for most small businesses. Here\'s what to add, where to put it, and ready-to-use templates for 10 common business types.', date: 'Mar 2026', readTime: '8 MIN READ', link: 'https://blog.sivussa.com' },
+            { title: 'Voice Search in 2026: How AI Agents Optimize for Siri and Google Assistant', category: 'LOCAL SEARCH', excerpt: 'Voice queries are longer, more conversational, and heavily local. "Hey Siri, find a plumber near me" returns one result — not ten.', date: 'Feb 2026', readTime: '6 MIN READ', link: 'https://blog.sivussa.com' },
           ],
         };
 
-        // Footer
+        // ===== FOOTER & NAV =====
         const footer = loadMd('footer.md');
         const FOOTER_SECTIONS = footer.frontmatter.sections;
         const FOOTER_COPYRIGHT = footer.frontmatter.copyright;
 
-        // Navigation
         const nav = loadMd('nav.md');
         const NAV_CONFIG = nav.frontmatter;
 
-        // FAQ items
+        // ===== FAQ =====
         const FAQ_ITEMS = faq.frontmatter.faqs;
 
-        // Privacy Policy
-        const privacyPolicy = loadMd('home/sivussa_privacy_policy.md');
-        const PRIVACY_POLICY = { html: privacyPolicy.html };
-
-        // Terms of Service
-        const termsOfService = loadMd('home/sivussa_terms_of_service.md');
-        const TERMS_OF_SERVICE = { html: termsOfService.html };
-
-        // Open Source Notices
-        const openSourceNotices = loadMd('home/sivussa_open_source_notices.md');
-        const OPEN_SOURCE_NOTICES = { html: openSourceNotices.html };
-
-        // Pricing terms
+        // ===== LEGAL PAGES =====
+        const PRIVACY_POLICY = { html: loadMd('home/sivussa_privacy_policy.md').html };
+        const TERMS_OF_SERVICE = { html: loadMd('home/sivussa_terms_of_service.md').html };
+        const OPEN_SOURCE_NOTICES = { html: loadMd('home/sivussa_open_source_notices.md').html };
         const PRICING_TERMS = pricing.frontmatter.terms || [];
 
-        // Return the module code
         return `
 export const HOME_HERO = ${JSON.stringify(HOME_HERO)};
 export const HOME_WHAT_YOU_GET = ${JSON.stringify(HOME_WHAT_YOU_GET)};
