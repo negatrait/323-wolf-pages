@@ -1,6 +1,6 @@
 ---
-title: "AI-native team of SEO specialists"
-subtitle: "We find problems, we find the solutions. You forward them to your technical team or DIY."
+title: "AI-native team of SEO specialists."
+subtitle: " We find the problems, we find the solutions. You forward them to your technical team or DIY."
 features:
   - title: "Copy-Paste Ready Recommendations"
     description: "Every issue comes with specific guidance you can implement directly. Clear instructions you can apply immediately."
