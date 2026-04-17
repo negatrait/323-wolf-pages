@@ -1,4 +1,4 @@
-import { FOOTER_SECTIONS, FOOTER_COPYRIGHT } from '../../data/footer-content';
+import { FOOTER_SECTIONS, FOOTER_COPYRIGHT } from '../../data/load-content';
 
 export function Footer() {
   return (

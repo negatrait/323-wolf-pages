@@ -14,8 +14,10 @@ steps:
     title: "Apply and track"
     description: "Implement the recommendations. Run follow-up audits to track your progress. Clear the brakes before stepping on the gas."
 comparison:
-  other: '"Your meta description is missing." (Your problem now.)'
-  sivussa: '"Your meta description is missing on these pages. Here\'s why it matters, here's how you fix it."'
+  other: >-
+    "Your meta description is missing." (Your problem now.)
+  sivussa: >-
+    "Your meta description is missing on these pages. Here's why it matters, here's how you fix it."
 ---
 
 ## How it works

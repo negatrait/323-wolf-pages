@@ -2,7 +2,7 @@ import { Head } from '../components/seo/Head';
 import { Section } from '../components/common/Section';
 import { BreadcrumbNav } from '../components/layout/BreadcrumbNav';
 import { organizationJsonLd } from '../utils/seo';
-import { ABOUT } from '../data/about-content';
+import { ABOUT } from '../data/load-content';
 
 export function About() {
   return (

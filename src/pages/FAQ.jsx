@@ -2,7 +2,7 @@ import { Head } from '../components/seo/Head';
 import { Section } from '../components/common/Section';
 import { BreadcrumbNav } from '../components/layout/BreadcrumbNav';
 import { Accordion } from '../components/common/Accordion';
-import { FAQ_ITEMS } from '../data/faq-data';
+import { FAQ_ITEMS } from '../data/load-content';
 import { faqPageJsonLd } from '../utils/seo';
 
 const CATEGORIES = ['General', 'Pricing', 'How It Works', 'Technical'];

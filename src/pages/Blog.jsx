@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'preact/hooks';
 import { Head } from '../components/seo/Head';
 import { BreadcrumbNav } from '../components/layout/BreadcrumbNav';
-import { BLOG_CONFIG } from '../data/blog-content';
+import { BLOG_CONFIG } from '../data/load-content';
 
 export function Blog() {
   const [activeCategory, setActiveCategory] = useState('ALL');

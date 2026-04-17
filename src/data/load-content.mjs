@@ -1,0 +1,20 @@
+// This file imports from the virtual content module generated at build time
+export {
+  HOME_HERO,
+  HOME_WHAT_YOU_GET,
+  HOME_PROBLEM,
+  HOME_HOW_IT_WORKS,
+  HOME_FEATURES,
+  HOME_WHO_IS_THIS_FOR,
+  HOME_PRICING,
+  HOME_FAQ,
+  HOME_FINAL_CTA,
+  ABOUT,
+  BLOG_CONFIG,
+  FOOTER_SECTIONS,
+  FOOTER_COPYRIGHT,
+  NAV_CONFIG,
+  FAQ_ITEMS,
+  PRICING_TIERS,
+  FEATURES,
+} from 'virtual:content';

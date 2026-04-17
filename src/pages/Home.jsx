@@ -4,9 +4,11 @@ import { PricingCard } from '../components/content/PricingCard';
 import { FeatureCard } from '../components/content/FeatureCard';
 import { StepCard } from '../components/content/StepCard';
 import { Accordion } from '../components/common/Accordion';
-import { PRICING_TIERS } from '../data/pricing-data';
-import { FEATURES } from '../data/features-data';
-import { FAQ_ITEMS } from '../data/faq-data';
+import {
+  PRICING_TIERS,
+  FEATURES,
+  FAQ_ITEMS,
+} from '../data/load-content';
 import { organizationJsonLd, websiteJsonLd, softwareAppJsonLd } from '../utils/seo';
 import {
   HOME_HERO,
@@ -18,7 +20,7 @@ import {
   HOME_PRICING,
   HOME_FAQ,
   HOME_FINAL_CTA,
-} from '../data/home-content';
+} from '../data/load-content';
 
 const STRIPE_ONE_SHOT = HOME_HERO.cta_primary_href;
 
@@ -28,8 +30,8 @@ export function Home() {
   return (
     <>
       <Head
-        title="Sivussa — Find out if your website is invisible to customers"
-        description="Sivussa scans your website and shows you exactly why customers can't find you — and what to fix first. Built for small businesses."
+        title={HOME_HERO.seo_title || "Sivussa — Find out if your website is invisible to customers"}
+        description={HOME_HERO.seo_description || "Sivussa scans your website and shows you exactly why customers can't find you — and what to fix first. Built for small businesses."}
         canonical="https://sivussa.com/"
         structuredData={structuredData}
       />
