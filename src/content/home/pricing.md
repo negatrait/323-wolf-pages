@@ -6,7 +6,7 @@ tiers:
     price: "€99"
     period: "one-time"
     popular: false
-    cta_text: "Get Started — €99"
+    cta_text: "Purchase — €99"
     cta_href: "https://buy.stripe.com/cNi7sN0Kv3phb500GPcbC01"
     features:
       - "Audit once"
@@ -14,7 +14,7 @@ tiers:
     price: "€99"
     period: "/quarter"
     popular: false
-    cta_text: "Get Started — €99/qtr"
+    cta_text: "Purchase — €99/qtr"
     cta_href: "https://buy.stripe.com/3cIdRbal52ld7SO4X5cbC02"
     features:
       - "Audit every 90 days"
@@ -22,7 +22,7 @@ tiers:
     price: "€89"
     period: "/month"
     popular: false
-    cta_text: "Get Started — €89/mo"
+    cta_text: "Purchase — €89/mo"
     cta_href: "https://buy.stripe.com/5kQ9AV64P5xpehc3T1cbC03"
     features:
       - "Audit every month"
