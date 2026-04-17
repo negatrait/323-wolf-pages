@@ -15,7 +15,7 @@ sections:
       - label: "FAQ"
         href: "/faq"
       - label: "Blog"
-        href: "https://blog.sivussa.com"
+        href: "/blog"
   - title: "Legal"
     links:
       - label: "Privacy Policy"
