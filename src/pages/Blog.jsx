@@ -77,7 +77,7 @@ export function Blog() {
         {/* Blog Grid */}
         <section class="grid grid-cols-1 md:grid-cols-3 gap-px bg-dark-600/20 mb-20">
           {filtered.length > 0 ? filtered.map((post, i) => (
-            <article key={i} class="bg-dark-900 group p-6 md:p-8 flex flex-col h-full border-b md:border-b-0 border-dark-600/20">
+            <a key={i} href={`/blog/${post.slug}`} class="bg-dark-900 group p-6 md:p-8 flex flex-col h-full border-b md:border-b-0 border-dark-600/20 hover:bg-dark-800 transition-colors">
               <div class="aspect-video w-full mb-8 overflow-hidden bg-dark-700 relative">
                 <div class="w-full h-full bg-dark-700 flex items-center justify-center">
                   <span class="material-symbols-outlined text-4xl text-dark-500">article</span>
@@ -98,7 +98,7 @@ export function Blog() {
                 <span class="text-[0.625rem] uppercase tracking-widest font-bold text-dark-400">{post.date}</span>
                 <span class="text-[0.625rem] uppercase tracking-widest font-bold text-dark-400">{post.readTime}</span>
               </div>
-            </article>
+            </a>
           )) : (
             <div class="col-span-1 md:col-span-3 py-20 text-center">
               <p class="text-dark-400">No articles found.</p>
@@ -107,16 +107,18 @@ export function Blog() {
         </section>
 
         {/* Load More */}
-        <div class="flex justify-center pb-24">
-          <a
-            href={BLOG_CONFIG.loadMoreLink}
-            target="_blank"
-            rel="noopener"
-            class="bg-gradient-to-br from-primary to-[#6EDE69] text-dark-900 px-12 py-4 text-[0.6875rem] font-black uppercase tracking-[0.2em] hover:shadow-[0_0_20px_rgba(0,255,65,0.15)] transition-all"
-          >
-            {BLOG_CONFIG.loadMoreText}
-          </a>
-        </div>
+        {BLOG_CONFIG.loadMoreLink && (
+          <div class="flex justify-center pb-24">
+            <a
+              href={BLOG_CONFIG.loadMoreLink}
+              target="_blank"
+              rel="noopener"
+              class="bg-gradient-to-br from-primary to-[#6EDE69] text-dark-900 px-12 py-4 text-[0.6875rem] font-black uppercase tracking-[0.2em] hover:shadow-[0_0_20px_rgba(0,255,65,0.15)] transition-all"
+            >
+              {BLOG_CONFIG.loadMoreText}
+            </a>
+          </div>
+        )}
       </div>
     </>
   );

@@ -5,6 +5,8 @@ import { HowItWorks } from './pages/HowItWorks';
 import { Pricing } from './pages/Pricing';
 import { About } from './pages/About';
 import { FAQ } from './pages/FAQ';
+import { Blog } from './pages/Blog';
+import { BlogPost } from './pages/BlogPost';
 import { Privacy } from './pages/Privacy';
 import { Terms } from './pages/Terms';
 import { OpenSourceNotices } from './pages/OpenSourceNotices';
@@ -20,6 +22,8 @@ export function App() {
           <Pricing path="/pricing" />
           <About path="/about" />
           <FAQ path="/faq" />
+          <Blog path="/blog" />
+          <BlogPost path="/blog/:slug" />
           <Privacy path="/privacy" />
           <Terms path="/terms" />
           <OpenSourceNotices path="/open-source-notices" />

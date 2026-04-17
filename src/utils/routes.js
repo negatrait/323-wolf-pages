@@ -3,7 +3,7 @@ export const NAV_LINKS = [
   { label: 'Pricing', href: '/pricing' },
   { label: 'About', href: '/about' },
   { label: 'FAQ', href: '/faq' },
-  { label: 'Blog', href: 'https://blog.sivussa.com' },
+  { label: 'Blog', href: '/blog' },
   { label: 'Manage Subscription', href: 'https://billing.stripe.com/p/login/bJe00l64P8JBc9489hcbC00' },
 ];
 

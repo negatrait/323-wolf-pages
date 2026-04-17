@@ -254,6 +254,38 @@ export default function contentPlugin() {
 
         // ===== BLOG =====
         const blog = loadMd('blog/index.md');
+
+        // Load blog posts dynamically
+        const postsDir = path.join(contentDir, 'blog/posts');
+        const postFiles = fs.readdirSync(postsDir).filter(f => f.endsWith('.md'));
+        const posts = postFiles.map(filename => {
+          const slug = filename.replace('.md', '');
+          const post = loadMd(path.join('blog/posts', filename));
+          return {
+            slug,
+            title: post.frontmatter.title,
+            description: post.frontmatter.description,
+            date: post.frontmatter.date,
+            category: post.frontmatter.category,
+            readTime: post.frontmatter.readTime,
+            html: post.html,
+            excerpt: post.html.replace(/<[^>]+>/g, '').substring(0, 200) + '...',
+          };
+        }).sort((a, b) => new Date(b.date) - new Date(a.date));
+
+        // Build BLOG_POSTS_MAP for individual post pages
+        const blogPostsMap = {};
+        for (const post of posts) {
+          blogPostsMap[post.slug] = {
+            title: post.title,
+            description: post.description,
+            date: post.date,
+            category: post.category,
+            readTime: post.readTime,
+            html: post.html,
+          };
+        }
+
         const BLOG_CONFIG = {
           title: blog.frontmatter.title,
           description: blog.frontmatter.description,
@@ -261,14 +293,7 @@ export default function contentPlugin() {
           searchPlaceholder: blog.frontmatter.search_placeholder,
           loadMoreText: blog.frontmatter.load_more_text,
           loadMoreLink: blog.frontmatter.load_more_link,
-          posts: [
-            { title: 'How AI SEO Agents Write Fixes Your Developer Can Paste in 5 Minutes', category: 'AUDIT INSIGHTS', excerpt: 'Traditional SEO tools dump 200 issues on you and wish you luck. AI agents flip the model — they write the JSON-LD, meta tags, and schema markup for your specific site.', date: 'Apr 2026', readTime: '5 MIN READ', link: 'https://blog.sivussa.com' },
-            { title: 'Why Your Google Business Profile Isn\'t Showing Up (And the Exact Fix)', category: 'LOCAL SEARCH', excerpt: 'Three out of four local businesses have incomplete or incorrect Google Business Profiles. That means Google Maps skips them entirely.', date: 'Apr 2026', readTime: '6 MIN READ', link: 'https://blog.sivussa.com' },
-            { title: 'How to Get ChatGPT and Perplexity to Cite Your Website', category: 'SEO BASICS', excerpt: 'AI answer engines are the new search frontier. If your content isn\'t structured for AI citation, ChatGPT and Perplexity will reference your competitors instead.', date: 'Mar 2026', readTime: '7 MIN READ', link: 'https://blog.sivussa.com' },
-            { title: 'SEO Audit vs SEO Remediation: Why the Fix Matters More Than the Finding', category: 'AUDIT INSIGHTS', excerpt: 'An audit tells you what\'s broken. Remediation actually fixes it. Most businesses pay for audits and never implement the changes because they\'re too technical.', date: 'Mar 2026', readTime: '5 MIN READ', link: 'https://blog.sivussa.com' },
-            { title: 'The Complete JSON-LD Guide for Small Business Websites', category: 'SEO BASICS', excerpt: 'Structured data is the single highest-impact SEO fix for most small businesses. Here\'s what to add, where to put it, and ready-to-use templates for 10 common business types.', date: 'Mar 2026', readTime: '8 MIN READ', link: 'https://blog.sivussa.com' },
-            { title: 'Voice Search in 2026: How AI Agents Optimize for Siri and Google Assistant', category: 'LOCAL SEARCH', excerpt: 'Voice queries are longer, more conversational, and heavily local. "Hey Siri, find a plumber near me" returns one result — not ten.', date: 'Feb 2026', readTime: '6 MIN READ', link: 'https://blog.sivussa.com' },
-          ],
+          posts,
         };
 
         // ===== FOOTER & NAV =====
@@ -300,6 +325,7 @@ export const HOME_FAQ = ${JSON.stringify(HOME_FAQ)};
 export const HOME_FINAL_CTA = ${JSON.stringify(HOME_FINAL_CTA)};
 export const ABOUT = ${JSON.stringify(ABOUT)};
 export const BLOG_CONFIG = ${JSON.stringify(BLOG_CONFIG)};
+export const BLOG_POSTS_MAP = ${JSON.stringify(blogPostsMap)};
 export const FOOTER_SECTIONS = ${JSON.stringify(FOOTER_SECTIONS)};
 export const FOOTER_COPYRIGHT = ${JSON.stringify(FOOTER_COPYRIGHT)};
 export const NAV_CONFIG = ${JSON.stringify(NAV_CONFIG)};
