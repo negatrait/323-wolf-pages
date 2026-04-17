@@ -1,3 +1,4 @@
+@import './styles/highlight.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -15,4 +16,15 @@ body {
 /* Material Symbols config */
 .material-symbols-outlined {
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+/* Ensure hljs background wins inside prose */
+.prose pre:has(code.hljs) {
+  background: #282c34;
+  padding: 0;
+  border: 1px solid #3e4451;
+  border-radius: 0.5rem;
+}
+.prose pre:has(code.hljs) code {
+  background: transparent;
 }

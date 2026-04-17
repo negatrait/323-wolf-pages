@@ -1,7 +1,21 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
-import { marked } from 'marked';
+import { Marked } from 'marked';
+import hljs from 'highlight.js';
+
+const marked = new Marked({
+  renderer: {
+    code({ text, lang }) {
+      const language = lang && hljs.getLanguage(lang) ? lang : undefined;
+      const { value } = language
+        ? hljs.highlight(text, { language })
+        : hljs.highlightAuto(text);
+      const langClass = language ? ` language-${language}` : '';
+      return `<pre><code class="hljs${langClass}">${value}</code></pre>`;
+    }
+  }
+});
 
 export default function contentPlugin() {
   const virtualModuleId = 'virtual:content';
