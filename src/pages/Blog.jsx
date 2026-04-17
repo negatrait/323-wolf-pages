@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'preact/hooks';
 import { Head } from '../components/seo/Head';
+import { Section } from '../components/common/Section';
 import { BreadcrumbNav } from '../components/layout/BreadcrumbNav';
 import { BLOG_CONFIG } from '../data/load-content';
 
@@ -21,15 +22,8 @@ export function Blog() {
         canonical="https://sivussa.com/blog"
       />
 
-      <div class="max-w-7xl mx-auto px-6 md:px-8">
-        {/* Breadcrumb */}
-        <nav class="py-8">
-          <ul class="flex items-center gap-2 text-[0.6875rem] font-medium uppercase tracking-[0.1em] text-dark-300">
-            <li><a href="/" class="hover:text-primary transition-colors">Home</a></li>
-            <li><span class="material-symbols-outlined text-[10px]">chevron_right</span></li>
-            <li class="text-primary">Blog</li>
-          </ul>
-        </nav>
+      <Section>
+        <BreadcrumbNav currentPage="Blog" />
 
         {/* Hero */}
         <section class="pb-16 pt-4 border-b border-dark-700/30">
@@ -119,7 +113,7 @@ export function Blog() {
             </a>
           </div>
         )}
-      </div>
+      </Section>
     </>
   );
 }
