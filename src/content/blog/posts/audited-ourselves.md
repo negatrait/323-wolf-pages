@@ -1,5 +1,5 @@
 ---
-title: "We Launched a Website Visibility Audit Service. Here's What We Found When We Audited Ourselves"
+title: "We Launched a Website Visibility Audit Service - first customer: Sivussa."
 category: "BEHIND THE SCENES"
 readTime: "4 MIN READ"
 date: "2026-04-17"
