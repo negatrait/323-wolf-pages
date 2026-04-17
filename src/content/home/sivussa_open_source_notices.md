@@ -1,5 +1,7 @@
 Sivussa Third-Party Software Notices
+
 Last updated: 2026-04-17
+
 Sivussa uses third-party software components and libraries. The applicable license terms for those components are provided by their respective licensors. This document provides a practical, non-exhaustive list of commonly used components and the license families relevant to them.
 
 ---
