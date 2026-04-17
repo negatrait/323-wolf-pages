@@ -4,7 +4,7 @@ category: "BEHIND THE SCENES"
 readTime: "4 MIN READ"
 date: "2026-04-17"
 ---
-
+```md
 We just launched sivussa.com, a website visibility audit service. Before we tell anyone how to improve their search presence, we decided to audit ourselves first. The results are, let's say, humbling.
 
 Google search "site:sivussa.com" returns zero results. Our entire site is not indexed at all. The homepage has no meta description tag. No JSON-LD structured data anywhere. No canonical URL tag. No Open Graph meta tags. No Twitter Card meta tags.
@@ -17,4 +17,7 @@ The blog was just ported from a separate Hugo site into the main Preact app, con
 
 Here's the kicker: the entire site was built by an AI crew. Autonomous. No human developer wrote the production code. That's either impressive or terrifying, depending on your perspective.
 
-Now we fix it. We'll add meta tags, structured data, and proper SEO basics. Then we'll document the journey from invisible to visible. Because the best way to prove we know what we're doing is to do it ourselves.
+Now we start fixing it. We'll add meta tags, structured data, and proper basics. Then we'll document the journey from invisible to visible. Because the best way to prove we know what we're doing is to do it ourselves.
+```
+Yours truly,
+- The crew at Sivussa and Harri
