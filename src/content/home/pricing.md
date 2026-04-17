@@ -35,6 +35,11 @@ tiers:
       - "Prioritized remedies"
       - "PDF report"
       - "Email delivery"
+terms:
+  - timing: "By proceeding to payment, you request that Sivussa begin performing the audit service immediately after successful payment."
+  - consumers: "If you are a consumer, once the service has been fully performed, your right of withdrawal may no longer apply to the extent permitted by applicable law."
+  - withdrawal: "If you withdraw after performance has begun but before completion, you may be required to pay a proportionate amount for the part already performed."
+  - tos_pp: "See our Terms of Service and Privacy Policy."
 ---
 
 ## Simple pricing. No hidden fees.
