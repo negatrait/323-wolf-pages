@@ -3,12 +3,10 @@
 **Last updated:** 2026-04-17
 
 **Controller**  
-[LEGAL COMPANY NAME] ("**Sivussa**", "**we**", "**us**", "**our**")  
-Business ID (Y‑tunnus): [BUSINESS ID]  
-Address: [STREET ADDRESS], [POSTAL CODE] Helsinki, Finland  
+Harri Ahokas ("**Sivussa**", "**we**", "**us**", "**our**")  
+Business ID (Y‑tunnus): 2101028-3  
+Address: Inglaksenrinne 11, 02780 Espoo, Finland  
 Email: **sivussa@sivussa.com**
-
-> **Important note:** Replace the bracketed placeholders before publishing. This Privacy Policy is drafted to match the currently described Sivussa service model: public-information website audits, payment collection via Stripe, subscription management through Stripe’s Customer Portal, and AI-assisted report generation using only the minimum information required to perform the service.
 
 ---
 
@@ -328,6 +326,6 @@ If you have questions about this Privacy Policy or want to exercise your rights,
 
 or write to:
 
-**[LEGAL COMPANY NAME]**  
-[STREET ADDRESS]  
-[POSTAL CODE] Helsinki, Finland
+**Harri Ahokas**  
+Inglaksenrinne 11
+02780 Espoo, Finland
