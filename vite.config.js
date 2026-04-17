@@ -20,6 +20,7 @@ export default defineConfig({
           '/blog/5-seo-mistakes-small-business',
           '/blog/structured-data-seo-guide',
           '/blog/core-web-vitals-guide',
+          '/blog/audited-ourselves',
           '/privacy',
           '/terms',
           '/open-source-notices',
