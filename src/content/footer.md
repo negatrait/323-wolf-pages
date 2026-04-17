@@ -28,7 +28,7 @@ sections:
     links:
       - label: "sivussa@sivussa.com"
         href: "mailto:sivussa@sivussa.com"
-      - label: "Helsinki, Finland"
+      - label: "Espoo, Finland"
         href: null
 copyright: "© 2026 Sivussa. All rights reserved."
 ---
