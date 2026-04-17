@@ -10,7 +10,7 @@ export function HowItWorks() {
     <>
       <Head
         title="How Sivussa Works — 4 Simple Steps"
-        description="Purchase your audit, get your free SEO/GEO/AEO analysis, and watch your visibility improve. No credit card required for free trials."
+        description="Purchase your audit, AI specialists analyze your site, get a scored PDF report with copy-paste ready remedies. Starting at EUR 99."
         canonical="https://sivussa.com/how-it-works"
       />
       <Section>
