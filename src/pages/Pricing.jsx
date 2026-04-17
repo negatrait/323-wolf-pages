@@ -119,6 +119,29 @@ export function Pricing() {
         </div>
       </Section>
 
+      {/* Legal Terms - EU right of withdrawal, must appear near purchase buttons */}
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 mb-8">
+        <div class="text-xs text-dark-500 space-y-1">
+          {PRICING_TERMS.map((term, i) => (
+            <p key={i}>
+              {i === 3 ? (
+                <span dangerouslySetInnerHTML={{
+                  __html: term.tos_pp.replace(
+                    'Terms of Service',
+                    '<a href="/terms" class="text-primary hover:underline">Terms of Service</a>'
+                  ).replace(
+                    'Privacy Policy',
+                    ' <a href="/privacy" class="text-primary hover:underline">Privacy Policy</a>'
+                  )
+                }} />
+              ) : (
+                term.timing || term.consumers || term.withdrawal
+              )}
+            </p>
+          ))}
+        </div>
+      </div>
+
       {/* Feature comparison */}
       <Section>
         <h2 class="text-2xl font-bold text-white text-center mb-8">What you get</h2>
@@ -185,29 +208,6 @@ export function Pricing() {
         <div class="max-w-3xl mx-auto">
           {PRICING_FAQ.map((item, i) => (
             <Accordion key={i} question={item.question} answer={item.answer} />
-          ))}
-        </div>
-      </Section>
-
-      {/* Legal Terms */}
-      <Section>
-        <div class="max-w-3xl mx-auto text-xs text-dark-500 space-y-2">
-          {PRICING_TERMS.map((term, i) => (
-            <p key={i}>
-              {i === 3 ? (
-                <span dangerouslySetInnerHTML={{
-                  __html: term.tos_pp.replace(
-                    'Terms of Service',
-                    '<a href="/terms" class="text-primary hover:underline">Terms of Service</a>'
-                  ).replace(
-                    'Privacy Policy',
-                    ' <a href="/privacy" class="text-primary hover:underline">Privacy Policy</a>'
-                  )
-                }} />
-              ) : (
-                term.timing || term.consumers || term.withdrawal
-              )}
-            </p>
           ))}
         </div>
       </Section>
