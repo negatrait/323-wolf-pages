@@ -359,6 +359,21 @@ export default function contentPlugin() {
         // FAQ items
         const FAQ_ITEMS = faq.frontmatter.faqs;
 
+        // Privacy Policy
+        const privacyPolicy = loadMd('home/sivussa_privacy_policy.md');
+        const PRIVACY_POLICY = { html: privacyPolicy.html };
+
+        // Terms of Service
+        const termsOfService = loadMd('home/sivussa_terms_of_service.md');
+        const TERMS_OF_SERVICE = { html: termsOfService.html };
+
+        // Open Source Notices
+        const openSourceNotices = loadMd('home/sivussa_open_source_notices.md');
+        const OPEN_SOURCE_NOTICES = { html: openSourceNotices.html };
+
+        // Pricing terms
+        const PRICING_TERMS = pricing.frontmatter.terms || [];
+
         // Return the module code
         return `
 export const HOME_HERO = ${JSON.stringify(HOME_HERO)};
@@ -378,6 +393,10 @@ export const NAV_CONFIG = ${JSON.stringify(NAV_CONFIG)};
 export const FAQ_ITEMS = ${JSON.stringify(FAQ_ITEMS)};
 export const PRICING_TIERS = ${JSON.stringify(PRICING_TIERS)};
 export const FEATURES = ${JSON.stringify(FEATURES)};
+export const PRIVACY_POLICY = ${JSON.stringify(PRIVACY_POLICY)};
+export const TERMS_OF_SERVICE = ${JSON.stringify(TERMS_OF_SERVICE)};
+export const OPEN_SOURCE_NOTICES = ${JSON.stringify(OPEN_SOURCE_NOTICES)};
+export const PRICING_TERMS = ${JSON.stringify(PRICING_TERMS)};
 `;
       }
     },

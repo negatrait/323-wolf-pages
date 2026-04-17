@@ -7,6 +7,7 @@ import { About } from './pages/About';
 import { FAQ } from './pages/FAQ';
 import { Privacy } from './pages/Privacy';
 import { Terms } from './pages/Terms';
+import { OpenSourceNotices } from './pages/OpenSourceNotices';
 import { NotFound } from './pages/NotFound';
 
 export function App() {
@@ -21,6 +22,7 @@ export function App() {
           <FAQ path="/faq" />
           <Privacy path="/privacy" />
           <Terms path="/terms" />
+          <OpenSourceNotices path="/open-source-notices" />
           <NotFound default />
         </Router>
       </Layout>

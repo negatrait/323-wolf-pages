@@ -22,6 +22,8 @@ sections:
         href: "/privacy"
       - label: "Terms of Service"
         href: "/terms"
+      - label: "Open Source Notices"
+        href: "/open-source-notices"
   - title: "Contact"
     links:
       - label: "sivussa@sivussa.com"

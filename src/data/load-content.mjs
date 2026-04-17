@@ -17,4 +17,8 @@ export {
   FAQ_ITEMS,
   PRICING_TIERS,
   FEATURES,
+  PRIVACY_POLICY,
+  TERMS_OF_SERVICE,
+  OPEN_SOURCE_NOTICES,
+  PRICING_TERMS,
 } from 'virtual:content';

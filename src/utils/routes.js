@@ -14,5 +14,6 @@ export const ROUTE_LABELS = {
   '/faq': 'FAQ',
   '/privacy': 'Privacy Policy',
   '/terms': 'Terms of Service',
+  '/open-source-notices': 'Open Source Notices',
   '/blog': 'Blog',
 };
