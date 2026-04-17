@@ -276,10 +276,7 @@ export default function contentPlugin() {
           }
         });
 
-        const expectedAboutSections = [
-          { title: 'Most tools just audit. We think that\'s not enough.', content: aboutIntro },
-          ...mappedAboutSections,
-        ];
+        const expectedAboutSections = mappedAboutSections;
 
         const ABOUT = {
           title: about.frontmatter.title,
