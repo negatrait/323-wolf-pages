@@ -65,7 +65,7 @@ export default function contentPlugin() {
             }
           }
         }
-        const subscriberMatch = whatYouGet.html.match(/<p>For subscribers:(.+?)<\/p>/s);
+        const subscriberMatch = whatYouGet.html.match(/<p><strong>For subscribers:<\/strong>(.+?)<\/p>/s);
         const HOME_WHAT_YOU_GET = {
           title: whatYouGet.frontmatter.title,
           items: whatYouGetItems,
