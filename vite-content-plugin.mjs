@@ -75,7 +75,7 @@ export default function contentPlugin() {
         // Home page - Problem
         const problem = loadMd('home/problem.md');
         const problemSections = [];
-        const sectionRegex = /<h3>(SEO|GEO|AEO)[^<]*<\/h3>\s*<ul>(.+?)<\/ul>/gs;
+        const sectionRegex = /<h2>(SEO|GEO|AEO)[^<]*<\/h2>\s*<ul>(.+?)<\/ul>/gs;
         let match;
         while ((match = sectionRegex.exec(problem.html)) !== null) {
           const type = match[1];
@@ -91,8 +91,9 @@ export default function contentPlugin() {
             GEO: 'GEO — Local invisibility keeps customers away',
             AEO: 'AEO — AI assistants can\'t answer questions about you',
           };
+          const headingMatch = match[0].match(/<h2>([^<]+)<\/h2>/);
           problemSections.push({
-            title: titles[type],
+            title: headingMatch ? headingMatch[1].trim() : type,
             items,
           });
         }
