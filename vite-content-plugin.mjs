@@ -47,7 +47,7 @@ export default function contentPlugin() {
         const lines = whatYouGet.html.split('\n');
         for (const line of lines) {
           if (line.trim().startsWith('<li>')) {
-            const textMatch = line.match(/<li>\*\*([^*]+)\*\*:?\s*(.+?)<\/li>/);
+            const textMatch = line.match(/<li><strong>([^<]+)<\/strong>:?\s*(.+?)<\/li>/);
             if (textMatch) {
               const title = textMatch[1].trim();
               const desc = textMatch[2].trim();

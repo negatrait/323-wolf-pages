@@ -1,5 +1,5 @@
-import { hydrate, h } from 'preact';
+import { hydrate } from 'preact-iso';
 import { App } from './app.jsx';
 import './index.css';
 
-hydrate(h(App), document.getElementById('app'));
+hydrate(<App />);
