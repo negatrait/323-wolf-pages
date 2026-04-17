@@ -25,12 +25,10 @@ export function About() {
       <Section dark={false}>
         <div class="max-w-4xl mx-auto">
           <h2 class="text-2xl font-bold text-white mb-6">{ABOUT.sections[0].title}</h2>
-          <p class="text-dark-300 leading-relaxed mb-6">
-            {ABOUT.sections[0].content.split('\n\n')[0]}
-          </p>
-          <p class="text-dark-300 leading-relaxed">
-            {ABOUT.sections[0].content.split('\n\n')[1]}
-          </p>
+          <div class="prose prose-invert max-w-none">
+            <p class="text-dark-300 leading-relaxed mb-6" dangerouslySetInnerHTML={{ __html: ABOUT.sections[0].contentHtml.split('</p>')[0] + '</p>' }} />
+            <p class="text-dark-300 leading-relaxed" dangerouslySetInnerHTML={{ __html: ABOUT.sections[0].contentHtml.split('</p>').slice(1).join('</p>') }} />
+          </div>
         </div>
       </Section>
 
@@ -44,7 +42,7 @@ export function About() {
             {ABOUT.sections[1].agents.map((a, i) => (
               <div key={i} class="rounded-xl p-5 bg-dark-800 border border-dark-600">
                 <h3 class="text-primary font-semibold mb-2">{a.title}</h3>
-                <p class="text-dark-300 text-sm">{a.desc}</p>
+                <p class="text-dark-300 text-sm" dangerouslySetInnerHTML={{ __html: a.descHtml }} />
               </div>
             ))}
           </div>
@@ -54,11 +52,12 @@ export function About() {
       <Section dark={false}>
         <div class="max-w-4xl mx-auto">
           <h2 class="text-2xl font-bold text-white mb-6">{ABOUT.sections[2].title}</h2>
-          {ABOUT.sections[2].content.split('\n\n').map((para, i) => (
-            <p key={i} class="text-dark-300 leading-relaxed mb-4">
-              {para}
-            </p>
-          ))}
+          <div class="prose prose-invert max-w-none">
+            {ABOUT.sections[2].contentHtml.split('</p>').reduce((acc, chunk, i, arr) => {
+              if (i < arr.length - 1) acc.push(<p key={i} class="text-dark-300 leading-relaxed mb-4" dangerouslySetInnerHTML={{ __html: chunk + '</p>' }} />);
+              return acc;
+            }, [])}
+          </div>
         </div>
       </Section>
 
@@ -71,7 +70,7 @@ export function About() {
                 <span class="text-primary font-bold text-lg">{v.num}</span>
                 <div>
                   <h3 class="text-white font-semibold mb-1">{v.title}</h3>
-                  <p class="text-dark-300 text-sm">{v.desc}</p>
+                  <p class="text-dark-300 text-sm" dangerouslySetInnerHTML={{ __html: v.descHtml }} />
                 </div>
               </div>
             ))}
@@ -86,7 +85,7 @@ export function About() {
             {ABOUT.sections[4].timeline.map((item, i) => (
               <div key={i}>
                 <h3 class="text-primary font-semibold mb-2">{item.title}</h3>
-                <p class="text-dark-300 text-sm">{item.content}</p>
+                <p class="text-dark-300 text-sm" dangerouslySetInnerHTML={{ __html: item.contentHtml }} />
               </div>
             ))}
           </div>

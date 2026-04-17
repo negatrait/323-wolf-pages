@@ -235,9 +235,10 @@ export default function contentPlugin() {
 
         aboutSections.forEach(s => {
           s.content = s.content.trim();
-          s.agents.forEach(a => a.desc = a.desc.trim());
-          s.values.forEach(v => v.desc = v.desc.trim());
-          s.timeline.forEach(t => t.content = t.content.trim());
+          s.contentHtml = marked.parse(s.content);
+          s.agents.forEach(a => { a.desc = a.desc.trim(); a.descHtml = marked.parse(a.desc); });
+          s.values.forEach(v => { v.desc = v.desc.trim(); v.descHtml = marked.parse(v.desc); });
+          s.timeline.forEach(t => { t.content = t.content.trim(); t.contentHtml = marked.parse(t.content); });
         });
 
         const mappedAboutSections = aboutSections.map(s => {
@@ -252,6 +253,7 @@ export default function contentPlugin() {
             return {
               title: s.title,
               content: s.content,
+              contentHtml: s.contentHtml,
             };
           } else if (s.title === 'Our Values') {
             return {
@@ -272,6 +274,7 @@ export default function contentPlugin() {
             return {
               title: s.title,
               content: s.content,
+              contentHtml: s.contentHtml,
             };
           }
         });
