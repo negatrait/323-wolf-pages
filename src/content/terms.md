@@ -58,4 +58,4 @@ We may update these Terms periodically. Significant changes will be communicated
 
 For questions about these Terms: [sivussa@sivussa.com](mailto:sivussa@sivussa.com)
 
-Sivussa, Helsinki, Finland
+Sivussa, Espoo, Finland
