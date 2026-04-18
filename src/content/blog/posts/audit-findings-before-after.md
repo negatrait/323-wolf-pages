@@ -277,19 +277,19 @@ Competitors had 50-200+ blog posts. We had nothing.
 
 We prioritized the immediate, high-impact fixes:
 
-1. ✅ **Unique title tags** for all 11 pages
-2. ✅ **Meta descriptions** for all key pages
-3. ✅ **Server-side schema markup** for Organization, WebSite, SoftwareApplication
-4. ✅ **Security headers** via Cloudflare
-5. ✅ **display=swap** on all Google Fonts
-6. ✅ **Google Analytics 4** setup and tracking
-7. ✅ **Google Search Console** setup and sitemap submission
-8. ✅ **Manual indexation requests** for critical pages
+1. **Unique title tags** for all 11 pages
+2. **Meta descriptions** for all key pages
+3. **Server-side schema markup** for Organization, WebSite, SoftwareApplication
+4. **Security headers** via Cloudflare
+5. **display=swap** on all Google Fonts
+6. **Google Analytics 4** setup and tracking
+7. **Google Search Console** setup and sitemap submission
+8. **Manual indexation requests** for critical pages
 
 ### What's Next
 
 - Expand FAQ page from 293 to 800+ words
-- Write 5-8 foundational blog posts this month
+- Write 5-8 foundational blog posts during April.
 - Add case studies and testimonials
 - Implement critical CSS inlining for hero section
 - Code splitting to reduce JavaScript bundle size
@@ -308,12 +308,12 @@ The irony isn't lost on us. We're the experts who find invisible websites — an
 
 ## Your Turn
 
-If our site — built by SEO specialists — scored 39/100, what's your site scoring?
+If our first deploy scored 39/100 with lacking in fundamentals - how's your site doing?
 
 You don't have to guess. We'll run the same audit on your site and give you copy-paste ready fixes for every issue we find. No jargon, no fluff — just actionable recommendations you can implement today.
 
-**Want to know what your site scores? [Get your audit at sivussa.com](https://sivussa.com)**
+**Want to know if we have remedies for the structural brakes on your site? [Get your audit at sivussa.com](https://sivussa.com)**
 
 ---
 
-*This audit was run on April 18, 2026. Our score was 39/100. We've since implemented the fixes above and are monitoring our indexation and performance in Google Search Console and Google Analytics 4.*
+*This audit was run on April 18, 2026. We're implementing the fixes above and will rerun after Harri gets around to submitting us on Google Analytics 4.*
