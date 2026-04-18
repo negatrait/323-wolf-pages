@@ -1,10 +1,10 @@
 ---
-title: "Our First Audit Results: 39/100 and the Proposed Remedies"
+title: "Our First self-audit and the Proposed Remedies"
 category: "CASE STUDY"
 readTime: "7 MIN READ"
 date: "2026-04-18"
 ---
-# Behind the Scenes: Auditing Our Own Site — What We Found and How We'll Fix It
+# Case Study: Auditing Our Own Site — What We Found and How We'll Fix It
 
 Auditing and crawling websites is core at Sivussa. We're building to help businesses find why their sites are invisible to customers. But here's the uncomfortable truth: **we had to eat our own dog food first.**
 
