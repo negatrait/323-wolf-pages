@@ -4,23 +4,23 @@ category: "BEHIND THE SCENES"
 readTime: "6 MIN READ"
 date: "2026-04-18"
 ---
-# Behind the Scenes: Auditing Our Own Site — What We Found and How We Fixed It
+# Behind the Scenes: Auditing Our Own Site — What We Found and How We'll Fix It
 
-We talk a lot about website audits at Sivussa. We help businesses find why their sites are invisible to customers. But here's the uncomfortable truth: **we had to eat our own dog food first.**
+Auditing and crawling websites is core at Sivussa. We're building to help businesses find why their sites are invisible to customers. But here's the uncomfortable truth: **we had to eat our own dog food first.**
 
 Last week, we ran our first real audit on sivussa.com itself. The results were... humbling.
 
 **Our score: 39 out of 100.**
 
-That's not a typo. We built a tool to find invisible websites, and our own site was practically invisible. Here's what broke, why it mattered, and the exact fixes we implemented.
+That metric doesn't really tell anything substantially specific, it's meant to guide our agents when they choose which way to turn when reviewing the reconnaisance data from the first crawls and how to aim their attention - but it tells something about what we neglected. We built a tool to find invisible websites, and our own site was practically invisible. Here's what broke, why it matters, and the exact remedy proposals from the report.
 
 ---
 
 ## The Wake-Up Call: Zero Indexed Pages
 
-The single most shocking finding? **Our site had zero pages indexed in Google.**
+The site had just been submitted to Google for indexing a few days earlier, and it takes some time for that to propagate (also why we're not offering a weekly plan or anything) but still: **Our site had zero pages indexed in Google.**
 
-When we searched `site:sivussa.com`, Google returned 0 results. Our site didn't exist in search results. Competitors were capturing all the organic traffic for "SEO audit," "website audit findings," and "fix SEO issues" — while we were nowhere to be found.
+When we searched `site:sivussa.com`, Google returned 0 results. Our site didn't exist in search results. Traditional audit services are capturing all the organic traffic for "SEO audit," "website audit findings," and "fix SEO issues" — while we were nowhere to be found.
 
 This wasn't a technical glitch. It was a cascade of foundational failures that we'd ignored while building the product.
 
