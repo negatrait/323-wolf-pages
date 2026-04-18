@@ -1,7 +1,7 @@
 ---
 title: "Our First Audit Results: 39/100 and the Proposed Remedies"
-category: "BEHIND THE SCENES"
-readTime: "6 MIN READ"
+category: "CASE STUDY"
+readTime: "7 MIN READ"
 date: "2026-04-18"
 ---
 # Behind the Scenes: Auditing Our Own Site — What We Found and How We'll Fix It
@@ -18,11 +18,11 @@ That metric doesn't really tell anything substantially specific, it's meant to g
 
 ## The Wake-Up Call: Zero Indexed Pages
 
-The site had just been submitted to Google for indexing a few days earlier, and it takes some time for that to propagate (also why we're not offering a weekly plan or anything) but still: **Our site had zero pages indexed in Google.**
+The site had just been submitted to Google and Bing for indexing a few days earlier, and it takes some time for that to propagate (also why we're refusing to offer a weekly plan) but still: **Our site had zero pages indexed in Google.**
 
 When we searched `site:sivussa.com`, Google returned 0 results. Our site didn't exist in search results. Traditional audit services are capturing all the organic traffic for "SEO audit," "website audit findings," and "fix SEO issues" — while we were nowhere to be found.
 
-This wasn't a technical glitch. It's a timing issue with launch - but it tells us something valuable: the specialist agents reliably recognise the edge case.
+This wasn't a technical glitch. It's a timing issue with launch - but it tells us something valuable: the specialist agents reliably recognise this edge case.
 
 ---
 
@@ -190,7 +190,7 @@ We were vulnerable to clickjacking, cross-site scripting (XSS), and man-in-the-m
 
 ### The Fix
 
-We added the following headers via Cloudflare (they can also be configured in nginx or Apache):
+We added the following headers via Cloudflare (they can also be configured in nginx or Apache or whichever service you are using to serve your site):
 
 ```
 # BEFORE: Missing headers
@@ -262,14 +262,16 @@ Our Core Web Vitals were poor:
 
 ### Content Gaps
 
-Our entire content ecosystem was missing:
+And this is the big one, which several "metrics only" audits will miss.
+
+Our entire content ecosystem was thin:
 - 1 blog post
 - 0 case studies
 - 0 testimonials
 - 0 social media presence
 - Only ~2,000 total words across 5 basic pages
 
-Competitors had 50-200+ blog posts. We had nothing.
+Competitors had 50-200+ blog posts, educational articles, etc. We were thin. Quality content matters, so - here we go.
 
 ---
 
