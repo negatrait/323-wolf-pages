@@ -1,5 +1,5 @@
 ---
-title: "Our First Audit Results: 39/100 and the Fixes We Applied"
+title: "Our First Audit Results: 39/100 and the Proposed Remedies"
 category: "BEHIND THE SCENES"
 readTime: "6 MIN READ"
 date: "2026-04-18"
@@ -76,11 +76,11 @@ If you clicked through to our site from search results, you'd see only our title
 </head>
 ```
 
-We were throwing away free clicks.
+We are throwing away free clicks without proper meta tags - the basics again.
 
 ### The Fix
 
-We added unique meta descriptions to every key page, keeping them under 155 characters:
+Add unique meta descriptions to every key page, keeping them under 155 characters:
 
 ```html
 <!-- AFTER: Homepage -->
@@ -93,7 +93,7 @@ We added unique meta descriptions to every key page, keeping them under 155 char
 <meta name="description" content="Answers to common questions about Sivussa audits: what they cover, pricing, delivery time, technical requirements, and more.">
 ```
 
-**Impact:** Search results now show compelling descriptions. Users know what to expect before clicking. Expected CTR improvement: 20-40%.
+**Impact:** Search results now show compelling descriptions. Users know what to expect before clicking. Expect more click through rates.
 
 ---
 
@@ -101,7 +101,7 @@ We added unique meta descriptions to every key page, keeping them under 155 char
 
 We had structured data (JSON-LD schemas) for Organization, WebSite, and SoftwareApplication. But there was a problem: **Google couldn't read it.**
 
-The schemas were injected via JavaScript, not present in the initial HTML:
+The schemas were injected via JavaScript, not present in the initial HTML (ouch):
 
 ```html
 <!-- BEFORE: No JSON-LD in the initial HTML -->
@@ -109,15 +109,15 @@ The schemas were injected via JavaScript, not present in the initial HTML:
   <meta charset="UTF-8">
   <title>Sivussa — Find out if your website is invisible to customers</title>
   <script type="module" crossorigin src="/assets/index-BmW_d4oM.js"></script>
-  <!-- Schemas loaded dynamically by React, after initial render -->
+  <!-- Schemas loaded dynamically by Preact, after initial render -->
 </head>
 ```
 
-Search engines prioritize HTML content. Client-side schemas are often missed or deprioritized. AI engines like ChatGPT, Perplexity, and Claude definitely couldn't read them.
+Search engines prioritize HTML content. Client-side schemas are often missed or deprioritized. AI engines like ChatGPT, Perplexity, and Claude definitely don't execute arbitrary javascript without sandboxing just to see what might happen.
 
 ### The Fix
 
-We moved all structured data to server-side rendering, adding it directly to the HTML head:
+Move all structured data to server-side rendering, or build time rendering, adding it directly to the HTML head:
 
 ```html
 <!-- AFTER: Server-side rendered JSON-LD -->
@@ -186,7 +186,7 @@ We moved all structured data to server-side rendering, adding it directly to the
 
 ## Finding #4: Missing Critical Security Headers
 
-We were vulnerable to clickjacking, cross-site scripting (XSS), and man-in-the-middle attacks. Modern browsers expect security headers — we had none.
+We were vulnerable to clickjacking, cross-site scripting (XSS), and man-in-the-middle attacks. Modern browsers expect security headers — ours were lacking.
 
 ### The Fix
 
