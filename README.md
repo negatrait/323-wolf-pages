@@ -18,6 +18,7 @@ Before modifying existing codebase oe generating new code, you must read the cor
 
 [Preact](https://github.com/preactjs/preact)
 [Preact-iso](https://github.com/preactjs/preact-iso)
+[Preact-preset-vite](https://github.com/preactjs/preset-vite)
 
 This is strict, because we want to avoid unnecessary dependency bloat and sprawling codebase.
 
