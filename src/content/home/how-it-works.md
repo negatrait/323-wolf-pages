@@ -1,5 +1,7 @@
 ---
 title: "How it works"
+seo_title: "How Sivussa Works — 4 Simple Steps to Better Visibility"
+seo_description: "Learn how Sivussa audits your website. Purchase audit, identify issues, get report with prioritized fixes, apply and track progress. Simple 4-step process."
 steps:
   - number: 1
     title: "Purchase your audit"
