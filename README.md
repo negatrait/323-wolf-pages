@@ -26,8 +26,8 @@ This is the single source of truth for what HTML search engines see.
 ### Rules
 
 - **All SEO metadata MUST be in the prerender pipeline** (page components, content frontmatter, or Layout). NOT in post-build scripts, NOT in client-side JS.
-- **JSON-LD schemas MUST be in prerendered HTML** — not loaded via JavaScript after hydration
-- **Titles and descriptions come from content frontmatter** (`seo_title`, `seo_description` fields) or set in page components
+- **JSON-LD schemas MUST be in prerendered HTML** — not loaded via JavaScript after hydration.
+- **Titles and descriptions come from content frontmatter** (`seo_title`, `seo_description` fields), hardcoded in JS/JSX is forbidden.
 - **The prerender script renders the entire app tree** — Layout wraps all pages, so global meta changes go in Layout
 
 ## Content System
@@ -46,12 +46,12 @@ All page content lives in `src/content/` as Markdown with frontmatter:
 2. Add the route in `src/app.jsx`
 3. Add content markdown in `src/content/` if needed
 4. Add the route to `additionalPrerenderRoutes` in `vite.config.js`
-5. Add `seo_title` and `seo_description` in content frontmatter or page component
+5. Add `seo_title` and `seo_description` in content frontmatter
 
-## What NOT to do
+## What to avoid
 
-- ❌ Post-build scripts that inject HTML into dist/ (use prerender pipeline)
-- ❌ Client-side-only JSON-LD (must be in prerendered HTML)
-- ❌ `wrangler pages deploy dist` (push to origin/main, CF Pages builds)
-- ❌ Untracked files in the repo (commit or delete)
-- ❌ Dead code / disabled files (delete, don't rename to .disabled)
+- Post-build scripts that inject HTML into dist/ (use prerender pipeline)
+- Client-side-only JSON-LD (must be in prerendered HTML)
+- `wrangler pages deploy dist` (push to origin/main, CF Pages builds CI/CD)
+- Untracked files in the repo (commit or delete)
+- Dead code / disabled files (delete, don't rename to .disabled)
