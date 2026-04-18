@@ -6,6 +6,7 @@ description: "Precision-engineered intelligence for the GEO era. Technical break
 categories:
   - "ALL"
   - "BEHIND THE SCENES"
+  - "CASE STUDY"
 search_placeholder: "Search articles..."
 load_more_text: "LOAD MORE INSIGHTS"
 load_more_link: "https://www.sivussa.com/blog"
