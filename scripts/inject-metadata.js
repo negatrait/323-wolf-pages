@@ -5,6 +5,34 @@ const __dirname = path.resolve();
 const distDir = path.join(__dirname, 'dist');
 const contentDir = path.join(__dirname, 'src/content');
 
+// Additional JSON-LD schemas
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Sivussa',
+  url: 'https://sivussa.com',
+  description: 'AI-powered SEO, GEO, and AEO audit tool for small businesses.',
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: 'https://sivussa.com/search?q={search_term_string}',
+    'query-input': 'required name=search_term_string'
+  }
+};
+
+const softwareAppSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'Sivussa',
+  applicationCategory: 'BusinessApplication',
+  operatingSystem: 'Web',
+  offers: [
+    { '@type': 'Offer', price: '99', priceCurrency: 'EUR', description: 'One-shot Plan' },
+    { '@type': 'Offer', price: '99', priceCurrency: 'EUR', description: 'Quarterly Plan' },
+    { '@type': 'Offer', price: '89', priceCurrency: 'EUR', description: 'Monthly Plan' }
+  ],
+  description: 'AI-powered SEO, GEO, and AEO audits with prioritized recommendations.'
+};
+
 // Page metadata mapping
 const pageMetadata = {
   '/': {
@@ -113,6 +141,40 @@ function injectMetadata(html, metadata) {
   return newHtml;
 }
 
+function injectSchemas(html, route) {
+  // Only add WebSite and SoftwareApplication schemas to the homepage
+  if (route !== '/') {
+    return html;
+  }
+
+  // Check if WebSite schema already exists
+  if (html.includes('"@type": "WebSite"')) {
+    console.log('  ℹ️  WebSite schema already exists');
+  } else {
+    // Find the last </script> in the head and insert after it
+    const websiteSchemaHtml = `\n  <script type="application/ld+json">\n  ${JSON.stringify(websiteSchema, null, 2)}\n  </script>`;
+    html = html.replace(
+      /(<\/script>\s*)(<link rel=)/,
+      `$1${websiteSchemaHtml}\n$2`
+    );
+    console.log('  ✅ Added WebSite schema');
+  }
+
+  // Check if SoftwareApplication schema already exists
+  if (html.includes('"@type": "SoftwareApplication"')) {
+    console.log('  ℹ️  SoftwareApplication schema already exists');
+  } else {
+    const softwareSchemaHtml = `\n  <script type="application/ld+json">\n  ${JSON.stringify(softwareAppSchema, null, 2)}\n  </script>`;
+    html = html.replace(
+      /(<\/script>\s*)(<link rel=)/,
+      `$1${softwareSchemaHtml}\n$2`
+    );
+    console.log('  ✅ Added SoftwareApplication schema');
+  }
+
+  return html;
+}
+
 function processFile(filePath, route) {
   const metadata = pageMetadata[route];
   if (!metadata) {
@@ -121,7 +183,8 @@ function processFile(filePath, route) {
   }
 
   const html = fs.readFileSync(filePath, 'utf-8');
-  const newHtml = injectMetadata(html, metadata);
+  let newHtml = injectMetadata(html, metadata);
+  newHtml = injectSchemas(newHtml, route);
   fs.writeFileSync(filePath, newHtml, 'utf-8');
   console.log(`✅ Injected metadata for: ${route}`);
 }
