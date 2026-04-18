@@ -14,9 +14,10 @@ Sivussa.com is a Preact SPA with build-time prerendering, deployed on Cloudflare
 
 ### References
 
-Before modifying existing codebase oe generating new code, read the corrwct references:
+Before modifying existing codebase oe generating new code, you must read the corrwct references:
 
-[Preact][https://github.com/preactjs/preact]
+[Preact](https://github.com/preactjs/preact)
+[Preact-iso]()
 
 ## Prerender Pipeline
 
