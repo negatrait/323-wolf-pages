@@ -3,9 +3,9 @@ title: "AI-native team of SEO specialists"
 subtitle: "We bridge the gap between finding issues and clearing them."
 ---
 
-SEO tools usially simply point out problems. We provide solutions instead.
+SEO tools usually simply point out problems. We provide solutions instead.
 
-## We believe a thorough audit has less value than a bunch of actionable instructions.
+## We believe a thorough audit has less value than a couple of actionable instructions.
 
 Nearly every product on the market does the same thing: audit your site, generate a list of issues, and leave you to figure out the fixes. You built a website, you pay for hosting, but you're not visible. Paying search providers or agencies adds more cost, while structural issues in your site hinder the organic traffic.
 
@@ -41,7 +41,7 @@ We started Sivussa because we needed this service for ourselves: needed the visi
    You don't need 100 metrics. You need specific recommendations you can implement.
 
 03. **Transparency always**
-   No hidden fees. No surprise charges. No selling your data. What you see is what you get.
+   No hidden fees. No surprise charges. No selling your data. No hiding the fact we're AI native. What you see is what you get.
 
 04. **Privacy first**
    Your data is yours. We only see and need what you provide in public.
@@ -55,7 +55,7 @@ We started Sivussa because we needed this service for ourselves: needed the visi
 Launch. Help businesses identify and clear issues with specific recommendations. Prove that addressing what matters works better than endless checklists.
 
 ### Medium term
-Expand specialist agents, even more specialised than now. Build more tools for them. Get better data. Learn. Adapt.
+Expand specialist agents, even more specialised than now. Build more tools for them. Get better data. Learn, adapt, improve the actionable recommendations.
 
 ### Long term
 Become the go-to AI SEO team for everyone who wants visibility without ad spend. Make clearing issues as easy as spell-check.
