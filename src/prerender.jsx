@@ -42,7 +42,7 @@ const pageMetadata = {
     canonical: 'https://sivussa.com/how-it-works'
   },
   '/pricing': {
-    title: 'Pricing — SEO Audit Plans | One-time, Quarterly & Monthly',
+    title: 'Pricing — SEO Remedy Plans | One-time or Recurring',
     description: 'Affordable SEO, GEO, and AEO audits. One-time €99, quarterly €99, monthly €89. Prioritized recommendations, PDF reports, expert guidance.',
     canonical: 'https://sivussa.com/pricing'
   },
