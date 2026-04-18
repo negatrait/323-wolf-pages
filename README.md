@@ -1,4 +1,4 @@
-# 323-Wolf Pages Architecture
+# 323-Wolf Pages on Cloudflare
 
 ## Overview
 
