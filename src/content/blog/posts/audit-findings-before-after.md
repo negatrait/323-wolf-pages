@@ -12,7 +12,7 @@ Last week, we ran our first real audit on sivussa.com itself. The results were..
 
 **Our score: 39 out of 100.**
 
-That metric doesn't really tell anything substantially specific, it's meant to guide our agents when they choose which way to turn when reviewing the reconnaisance data from the first crawls and how to aim their attention - but it tells something about what we neglected. We built a tool to find invisible websites, and our own site was practically invisible. Here's what broke, why it matters, and the exact remedy proposals from the report.
+That metric doesn't really tell anything substantially specific, it's meant to guide our agents when they choose which way to turn when reviewing the reconnaisance data from the first crawls and how to aim their attention (each specialist gets their own metric and 38/100 is an aggregate) - but it tells something about what we neglected. We built a tool to find invisible websites, and our own site was practically invisible. Here's what broke, why it matters, and the exact remedy proposals from the report.
 
 ---
 
@@ -22,24 +22,24 @@ The site had just been submitted to Google for indexing a few days earlier, and 
 
 When we searched `site:sivussa.com`, Google returned 0 results. Our site didn't exist in search results. Traditional audit services are capturing all the organic traffic for "SEO audit," "website audit findings," and "fix SEO issues" — while we were nowhere to be found.
 
-This wasn't a technical glitch. It was a cascade of foundational failures that we'd ignored while building the product.
+This wasn't a technical glitch. It's a timing issue with launch - but it tells us something valuable: the specialist agents reliably recognise the edge case.
 
 ---
 
 ## Finding #1: Every Page Had the Same Title Tag
 
-Google uses title tags to understand what each page is about. Ours? All 11 pages shared identical titles:
+This one we have no excuse for. Google uses title tags to understand what each page is about. Our site? All 11 pages shared identical titles:
 
 ```html
 <!-- BEFORE: Every page on the site -->
 <title>Sivussa — Find out if your website is invisible to customers</title>
 ```
 
-From the homepage to pricing to FAQ to blog — search engines couldn't tell the difference. Users saw identical snippets in results. Neither knew what to expect when clicking.
+From the homepage to pricing to FAQ to blog — search engines couldn't tell the difference. Users see identical snippets in results. Neither knows what to expect when clicking. Btw: it might be surprising to know, this is more common than you'd initially think.
 
 ### The Fix
 
-We created unique, descriptive titles for each page under 60 characters:
+Create unique, descriptive titles for each page under 60 characters. The remedy is straight from the report:
 
 ```html
 <!-- AFTER: Homepage -->
@@ -58,7 +58,7 @@ We created unique, descriptive titles for each page under 60 characters:
 <title>Blog — SEO Insights & Visibility Tips | Sivussa</title>
 ```
 
-**Impact:** Search engines now understand each page's purpose. Users see relevant, clickable titles in results. Expected CTR improvement: 20-40%.
+**Impact:** Search engines now understand each page's purpose. Users see relevant, clickable titles in results. Expect improvements in click through rates after the fix.
 
 ---
 
