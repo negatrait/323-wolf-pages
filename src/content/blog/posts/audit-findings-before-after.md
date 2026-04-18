@@ -229,7 +229,7 @@ The Inter font had `display=swap`, but Material+Symbols+Outlined didn't. This ca
 
 ### The Fix
 
-We added `display=swap` to all Google Fonts:
+Add `display=swap` to all Google Fonts:
 
 ```html
 <!-- AFTER: All fonts with display=swap -->
@@ -239,17 +239,17 @@ We added `display=swap` to all Google Fonts:
 
 **What display=swap does:** It tells the browser to use a fallback font immediately, then swap in the custom font once it loads. Users see text right away instead of waiting.
 
-**Impact:** LCP reduced by 500-1000ms. CLS (Cumulative Layout Shift) reduced by 30% from reduced font reflow. This was a 5-minute fix with massive impact.
+**Impact:** LCP reduced by 500-1000ms. CLS (Cumulative Layout Shift) reduced by 30% from reduced font reflow. This is a 5-minute fix with massive impact (indexing prioritises sites that work smoothly).
 
 ---
 
-## Other Critical Issues We Found
+## Other Critical Issues Found
 
 Beyond these five fixes, the audit revealed deeper problems:
 
 ### No Analytics or Search Console Setup
 
-We had **zero analytics** implementation. No Google Analytics 4. No Plausible. No Fathom. We were flying blind — couldn't measure visitors, conversions, or ROI.
+**Zero analytics** implementation. No Google Analytics 4. No Plausible. No Fathom. We were flying blind — couldn't measure visitors, conversions, or ROI.
 
 We also had no Google Search Console property. We couldn't see search performance, indexing issues, or coverage reports. Google is the #1 traffic source, and we had zero visibility into it.
 
@@ -263,7 +263,7 @@ Our Core Web Vitals were poor:
 ### Content Gaps
 
 Our entire content ecosystem was missing:
-- 0 blog posts
+- 1 blog post
 - 0 case studies
 - 0 testimonials
 - 0 social media presence
