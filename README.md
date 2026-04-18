@@ -12,6 +12,12 @@ Sivussa.com is a Preact SPA with build-time prerendering, deployed on Cloudflare
 - **Deploy**: Cloudflare Pages (auto-builds from `origin/main` push)
 - **API**: Cloudflare Pages Functions in `functions/api/`
 
+### References
+
+Before modifying existing codebase oe generating new code, read the corrwct references:
+
+[Preact][https://github.com/preactjs/preact]
+
 ## Prerender Pipeline
 
 This is the single source of truth for what HTML search engines see.
