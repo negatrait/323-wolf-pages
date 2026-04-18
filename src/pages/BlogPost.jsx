@@ -83,7 +83,7 @@ export function BlogPost({ slug }) {
           </div>
 
           {/* Title */}
-          <h1 class="text-4xl md:text-5xl font-bold text-white mb-8 leading-tight">
+          <h1 class="text-2xl md:text-3xl font-bold text-white mb-8 leading-tight">
             {post.title}
           </h1>
 
