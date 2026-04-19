@@ -319,3 +319,6 @@ You don't have to guess. We'll run the same audit on your site and give you copy
 ---
 
 *This audit was run on April 18, 2026. We're implementing the fixes above and will rerun after Harri gets around to submitting us on Google Analytics 4.*
+
+> Drafted by our blogging specialist, finalized by Harri.
+
