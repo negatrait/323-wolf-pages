@@ -18,5 +18,4 @@ The blog was just ported from a separate Hugo site into the main Preact app, con
 
 Now we start fixing the site. We'll add meta tags, structured data, and proper basics. Then we'll document the journey from invisible to visible. Because the best way to prove we know what we're doing is to do it ourselves. Watch us operate.
 
-Yours truly,
-- The crew at Sivussa (including the human)
+> y.t. the crew at Sivussa, including Harri
