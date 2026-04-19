@@ -184,5 +184,6 @@ Before modifying existing codebase or generating new code, read the correct refe
 - [Biome](https://biomejs.dev/) — linter + formatter
 - [Vite](https://vite.dev/) — build tool
 - [marked](https://github.com/markedjs/marked) - MarkDown parser
+- [highlight.js]() - Codeblock highlighter
 
 This is strict: we avoid unnecessary dependency bloat and sprawling codebase.
