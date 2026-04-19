@@ -17,6 +17,23 @@ const marked = new Marked({
   },
 });
 
+/**
+ * Decode HTML entities that marked produces (&#39; → ', &amp; → &, etc.)
+ * so that preact-render-to-string doesn't double-encode them.
+ */
+function decodeEntities(str) {
+  const map = {
+    '&amp;': '&',
+    '&lt;': '<',
+    '&gt;': '>',
+    '&quot;': '"',
+    '&#39;': "'",
+    '&#x27;': "'",
+    '&apos;': "'",
+  };
+  return str.replace(/&(?:amp|lt|gt|quot|#39|#x27|apos);/g, (m) => map[m]);
+}
+
 export default function contentPlugin() {
   const virtualModuleId = 'virtual:content';
   const resolvedVirtualModuleId = `\0${virtualModuleId}`;
@@ -36,7 +53,7 @@ export default function contentPlugin() {
           const full = path.join(contentDir, filePath);
           const raw = fs.readFileSync(full, 'utf-8');
           const { data: frontmatter, content } = matter(raw);
-          const html = marked.parse(content);
+          const html = decodeEntities(marked.parse(content));
           return { frontmatter, html, raw: content };
         }
 
