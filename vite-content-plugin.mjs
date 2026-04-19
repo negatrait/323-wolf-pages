@@ -4,6 +4,11 @@ import matter from 'gray-matter';
 import hljs from 'highlight.js';
 import { Marked } from 'marked';
 
+/**
+ * Marked escapes apostrophes to &#39; which preact-render-to-string
+ * then double-encodes to &amp;#39;. Override text renderer to only escape
+ * characters that are actually dangerous in HTML text nodes: & < >
+ */
 const marked = new Marked({
   renderer: {
     code({ text, lang }) {
@@ -14,25 +19,15 @@ const marked = new Marked({
       const langClass = language ? ` language-${language}` : '';
       return `<pre><code class="hljs${langClass}">${value}</code></pre>`;
     },
+    text({ text, raw }) {
+      // Only escape HTML-significant chars; leave apostrophes and quotes alone
+      return text
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+    },
   },
 });
-
-/**
- * Decode HTML entities that marked produces (&#39; → ', &amp; → &, etc.)
- * so that preact-render-to-string doesn't double-encode them.
- */
-function decodeEntities(str) {
-  const map = {
-    '&amp;': '&',
-    '&lt;': '<',
-    '&gt;': '>',
-    '&quot;': '"',
-    '&#39;': "'",
-    '&#x27;': "'",
-    '&apos;': "'",
-  };
-  return str.replace(/&(?:amp|lt|gt|quot|#39|#x27|apos);/g, (m) => map[m]);
-}
 
 export default function contentPlugin() {
   const virtualModuleId = 'virtual:content';
@@ -53,7 +48,7 @@ export default function contentPlugin() {
           const full = path.join(contentDir, filePath);
           const raw = fs.readFileSync(full, 'utf-8');
           const { data: frontmatter, content } = matter(raw);
-          const html = decodeEntities(marked.parse(content));
+          const html = marked.parse(content);
           return { frontmatter, html, raw: content };
         }
 
