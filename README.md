@@ -185,5 +185,6 @@ Before modifying existing codebase or generating new code, read the correct refe
 - [Vite](https://vite.dev/) — build tool
 - [marked](https://github.com/markedjs/marked) - MarkDown parser
 - [highlight.js](https://github.com/highlightjs/highlight.js) - syntax highlighter
+- [gray-matter](https://github.com/jonschlinkert/gray-matter) - YAML frontmatter parser
 
 This is strict: we avoid unnecessary dependency bloat and sprawling codebase.
