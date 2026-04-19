@@ -120,28 +120,22 @@ Sivussa.com is a Preact site with build-time prerendering, deployed on Cloudflar
 
 ---
 
-### Phase 2: Prerender consolidation
+### Phase 2: Prerender consolidation ✅ COMPLETE
 
-**Goal**: Replace custom `prerender.jsx` with `@preact/preset-vite` built-in prerender.
+**Goal**: Refactor `prerender.jsx` from a 149-line monolith into lean, separated concerns.
 
-#### Current problem
-`src/prerender.jsx` is ~155 lines that:
-1. Walks routes manually
-2. Renders `<App />` to string via `preact-render-to-string`
-3. Injects per-page metadata (title, description, canonical, JSON-LD) into HTML shell
-4. Writes static HTML files
+#### What was done
+- `src/prerender.jsx` trimmed from 149 → 37 lines (plugin contract only)
+- `src/data/route-meta.js` — single source of truth for per-route metadata
+- `src/components/seo/Head.jsx` — client-side head mutations for SPA navigation
+- `src/utils/seo.js` — JSON-LD schema builders (Organization, WebSite, SoftwareApplication, FAQPage)
+- `vite-content-plugin.mjs` — regex while-loops refactored to `matchAll()`, `node:` protocol imports
 
-#### Why this is redundant
-`@preact/preset-vite` already handles steps 1-2 and 4. The only justification for the custom script is step 3 (per-page `<head>` injection). But that's a component concern, not a prerender concern.
+#### Why the prerender script is still needed
+`@preact/preset-vite` requires a prerender script — it calls your `prerender()` function. The script is the plugin's API contract, not optional. The preset handles route walking and HTML file generation; the script provides the rendered HTML and head elements per route.
 
-#### Migration path
-1. **Move metadata into components**: Each page component sets its own `<title>`, `<meta>`, and JSON-LD via a `<DocumentHead>` component that renders `<head>` children. Preact components can render `<title>` and `<meta>` tags directly — they get hoisted during prerender.
-2. **Use `@preact/preset-vite` built-in prerender**: Remove `prerenderScript` from vite config. The preset walks routes from the router config and renders them.
-3. **Delete `src/prerender.jsx`**.
-4. **Remove `preact-render-to-string` from dependencies** (the preset uses it internally).
-
-#### Risk
-If `@preact/preset-vite`'s prerender doesn't support custom `<head>` injection per route (some setups don't hoist `<title>`/`<meta>` from nested components), we may need a lightweight Vite plugin that transforms the generated HTML to inject head content from frontmatter data. This would still be smaller and more maintainable than the current 155-line script.
+#### Note on `preact-render-to-string`
+Still in dependencies because the prerender script imports it directly. This is correct — the preset does not bundle it for you.
 
 ---
 
