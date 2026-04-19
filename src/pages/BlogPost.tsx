@@ -1,6 +1,6 @@
-import { Head } from '../components/seo/Head';
 import { Section } from '../components/common/Section';
 import { BreadcrumbNav } from '../components/layout/BreadcrumbNav';
+import { Head } from '../components/seo/Head';
 import { BLOG_POSTS_MAP } from '../data/load-content';
 
 export function BlogPost({ slug }) {
@@ -13,7 +13,9 @@ export function BlogPost({ slug }) {
         <Section>
           <div class="max-w-4xl mx-auto py-20 text-center">
             <h1 class="text-4xl font-bold text-white mb-4">Post Not Found</h1>
-            <a href="/blog" class="text-primary hover:underline">← Back to Blog</a>
+            <a href="/blog" class="text-primary hover:underline">
+              ← Back to Blog
+            </a>
           </div>
         </Section>
       </>
@@ -23,7 +25,11 @@ export function BlogPost({ slug }) {
   // Format date nicely
   const formatDate = (dateStr) => {
     const date = new Date(dateStr);
-    return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
   };
 
   // Article schema
@@ -37,20 +43,20 @@ export function BlogPost({ slug }) {
     author: {
       '@type': 'Organization',
       name: 'Sivussa',
-      url: 'https://sivussa.com'
+      url: 'https://sivussa.com',
     },
     publisher: {
       '@type': 'Organization',
       name: 'Sivussa',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://sivussa.com/logo.png'
-      }
+        url: 'https://sivussa.com/logo.png',
+      },
     },
     mainEntityOfPage: {
       '@type': 'WebPage',
-      '@id': `https://sivussa.com/blog/${slug}`
-    }
+      '@id': `https://sivussa.com/blog/${slug}`,
+    },
   };
 
   return (

@@ -1,4 +1,9 @@
-export function buildMeta({ title, description, canonical, ogImage = '/og-default.png' }) {
+export function buildMeta({
+  title,
+  description,
+  canonical,
+  ogImage = '/og-default.png',
+}) {
   return {
     title: `${title} | Sivussa`,
     description,
@@ -16,12 +21,21 @@ export function organizationJsonLd() {
     logo: 'https://sivussa.com/logo.png',
     description: 'AI-powered SEO/GEO/AEO audit tool for small businesses.',
     email: 'sivussa@sivussa.com',
-    address: { '@type': 'PostalAddress', addressLocality: 'Helsinki', addressCountry: 'FI' },
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Helsinki',
+      addressCountry: 'FI',
+    },
   };
 }
 
 export function websiteJsonLd() {
-  return { '@context': 'https://schema.org', '@type': 'WebSite', name: 'Sivussa', url: 'https://sivussa.com' };
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Sivussa',
+    url: 'https://sivussa.com',
+  };
 }
 
 export function faqPageJsonLd(items) {
@@ -44,9 +58,24 @@ export function softwareAppJsonLd() {
     applicationCategory: 'BusinessApplication',
     operatingSystem: 'Web',
     offers: [
-      { '@type': 'Offer', price: '99', priceCurrency: 'EUR', description: 'One-shot Plan' },
-      { '@type': 'Offer', price: '89', priceCurrency: 'EUR', description: 'Quarterly Plan' },
-      { '@type': 'Offer', price: '79', priceCurrency: 'EUR', description: 'Monthly Plan' },
+      {
+        '@type': 'Offer',
+        price: '99',
+        priceCurrency: 'EUR',
+        description: 'One-shot Plan',
+      },
+      {
+        '@type': 'Offer',
+        price: '89',
+        priceCurrency: 'EUR',
+        description: 'Quarterly Plan',
+      },
+      {
+        '@type': 'Offer',
+        price: '79',
+        priceCurrency: 'EUR',
+        description: 'Monthly Plan',
+      },
     ],
   };
 }

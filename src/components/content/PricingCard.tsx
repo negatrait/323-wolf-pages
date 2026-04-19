@@ -1,6 +1,16 @@
-export function PricingCard({ name, price, period, features, popular, ctaText, ctaHref }) {
+export function PricingCard({
+  name,
+  price,
+  period,
+  features,
+  popular,
+  ctaText,
+  ctaHref,
+}) {
   return (
-    <div class={`relative rounded-2xl p-8 border ${popular ? 'border-primary shadow-glow bg-dark-800' : 'border-dark-600 bg-dark-800'} flex flex-col`}>
+    <div
+      class={`relative rounded-2xl p-8 border ${popular ? 'border-primary shadow-glow bg-dark-800' : 'border-dark-600 bg-dark-800'} flex flex-col`}
+    >
       {popular && (
         <span class="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-primary text-dark-900 text-xs font-bold rounded-full">
           MOST POPULAR
@@ -14,7 +24,9 @@ export function PricingCard({ name, price, period, features, popular, ctaText, c
       <ul class="space-y-3 mb-8 flex-1">
         {features.map((f, i) => (
           <li key={i} class="flex items-start gap-2 text-dark-200">
-            <span class="material-symbols-outlined text-primary text-lg mt-0.5">check_circle</span>
+            <span class="material-symbols-outlined text-primary text-lg mt-0.5">
+              check_circle
+            </span>
             <span>{f}</span>
           </li>
         ))}

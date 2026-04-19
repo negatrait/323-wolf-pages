@@ -1,11 +1,15 @@
 export function BreadcrumbNav({ currentPage, extraLink }) {
   return (
     <nav class="text-sm text-dark-400 mb-6">
-      <a href="/" class="hover:text-primary transition-colors">Home</a>
+      <a href="/" class="hover:text-primary transition-colors">
+        Home
+      </a>
       <span class="mx-2">/</span>
       {extraLink && (
         <>
-          <a href={extraLink.href} class="hover:text-primary transition-colors">{extraLink.label}</a>
+          <a href={extraLink.href} class="hover:text-primary transition-colors">
+            {extraLink.label}
+          </a>
           <span class="mx-2">/</span>
         </>
       )}

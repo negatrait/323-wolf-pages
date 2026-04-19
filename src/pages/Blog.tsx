@@ -1,16 +1,19 @@
-import { useState, useEffect } from 'preact/hooks';
-import { Head } from '../components/seo/Head';
+import { useState } from 'preact/hooks';
 import { Section } from '../components/common/Section';
 import { BreadcrumbNav } from '../components/layout/BreadcrumbNav';
+import { Head } from '../components/seo/Head';
 import { BLOG_CONFIG } from '../data/load-content';
 
 export function Blog() {
   const [activeCategory, setActiveCategory] = useState('ALL');
   const [searchQuery, setSearchQuery] = useState('');
 
-  const filtered = BLOG_CONFIG.posts.filter(p => {
+  const filtered = BLOG_CONFIG.posts.filter((p) => {
     const matchCat = activeCategory === 'ALL' || p.category === activeCategory;
-    const matchSearch = !searchQuery || p.title.toLowerCase().includes(searchQuery.toLowerCase()) || p.excerpt.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchSearch =
+      !searchQuery ||
+      p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      p.excerpt.toLowerCase().includes(searchQuery.toLowerCase());
     return matchCat && matchSearch;
   });
 
@@ -44,7 +47,9 @@ export function Blog() {
                 value={searchQuery}
                 onInput={(e) => setSearchQuery(e.target.value)}
               />
-              <span class="absolute right-0 top-4 material-symbols-outlined text-dark-400">search</span>
+              <span class="absolute right-0 top-4 material-symbols-outlined text-dark-400">
+                search
+              </span>
             </div>
           </div>
         </section>
@@ -52,8 +57,9 @@ export function Blog() {
         {/* Filters */}
         <nav class="py-12 overflow-x-auto whitespace-nowrap">
           <div class="flex gap-4">
-            {BLOG_CONFIG.categories.map(cat => (
+            {BLOG_CONFIG.categories.map((cat) => (
               <button
+                type="button"
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
                 class={`px-6 py-2 text-[0.6875rem] font-bold uppercase tracking-widest transition-all ${
@@ -70,30 +76,44 @@ export function Blog() {
 
         {/* Blog Grid */}
         <section class="grid grid-cols-1 md:grid-cols-3 gap-px bg-dark-600/20 mb-20">
-          {filtered.length > 0 ? filtered.map((post, i) => (
-            <a key={i} href={`/blog/${post.slug}`} class="bg-dark-900 group p-6 md:p-8 flex flex-col h-full border-b md:border-b-0 border-dark-600/20 hover:bg-dark-800 transition-colors">
-              <div class="aspect-video w-full mb-8 overflow-hidden bg-dark-700 relative">
-                <div class="w-full h-full bg-dark-700 flex items-center justify-center">
-                  <span class="material-symbols-outlined text-4xl text-dark-500">article</span>
+          {filtered.length > 0 ? (
+            filtered.map((post, i) => (
+              <a
+                key={i}
+                href={`/blog/${post.slug}`}
+                class="bg-dark-900 group p-6 md:p-8 flex flex-col h-full border-b md:border-b-0 border-dark-600/20 hover:bg-dark-800 transition-colors"
+              >
+                <div class="aspect-video w-full mb-8 overflow-hidden bg-dark-700 relative">
+                  <div class="w-full h-full bg-dark-700 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-4xl text-dark-500">
+                      article
+                    </span>
+                  </div>
+                  <div class="absolute top-4 left-4 bg-dark-900/80 backdrop-blur-md px-3 py-1">
+                    <span class="text-[10px] font-black uppercase tracking-widest text-primary">
+                      {post.category}
+                    </span>
+                  </div>
                 </div>
-                <div class="absolute top-4 left-4 bg-dark-900/80 backdrop-blur-md px-3 py-1">
-                  <span class="text-[10px] font-black uppercase tracking-widest text-primary">{post.category}</span>
+                <div class="flex-grow">
+                  <h2 class="text-xl font-bold leading-tight mb-4 group-hover:text-primary transition-colors">
+                    {post.title}
+                  </h2>
+                  <p class="text-dark-300 text-sm leading-relaxed mb-6 line-clamp-3">
+                    {post.excerpt}
+                  </p>
                 </div>
-              </div>
-              <div class="flex-grow">
-                <h2 class="text-xl font-bold leading-tight mb-4 group-hover:text-primary transition-colors">
-                  {post.title}
-                </h2>
-                <p class="text-dark-300 text-sm leading-relaxed mb-6 line-clamp-3">
-                  {post.excerpt}
-                </p>
-              </div>
-              <div class="flex items-center justify-between mt-auto pt-6 border-t border-dark-700/20">
-                <span class="text-[0.625rem] uppercase tracking-widest font-bold text-dark-400">{post.date}</span>
-                <span class="text-[0.625rem] uppercase tracking-widest font-bold text-dark-400">{post.readTime}</span>
-              </div>
-            </a>
-          )) : (
+                <div class="flex items-center justify-between mt-auto pt-6 border-t border-dark-700/20">
+                  <span class="text-[0.625rem] uppercase tracking-widest font-bold text-dark-400">
+                    {post.date}
+                  </span>
+                  <span class="text-[0.625rem] uppercase tracking-widest font-bold text-dark-400">
+                    {post.readTime}
+                  </span>
+                </div>
+              </a>
+            ))
+          ) : (
             <div class="col-span-1 md:col-span-3 py-20 text-center">
               <p class="text-dark-400">No articles found.</p>
             </div>

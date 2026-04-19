@@ -1,12 +1,18 @@
 import { useEffect } from 'preact/hooks';
-import { getRouteMeta } from '../../data/route-meta.js';
+import { getRouteMeta } from '../../data/route-meta';
 
 /**
  * SEO head component. Works in two modes:
  * - SSR (prerender): renders nothing visible, metadata injected via prerender.jsx
  * - Client (SPA navigation): uses useEffect to mutate document.head on route change
  */
-export function Head({ title, description, canonical, ogImage, structuredData }) {
+export function Head({
+  title,
+  description,
+  canonical,
+  ogImage,
+  structuredData,
+}) {
   // Client-side only: update document.head on SPA navigation
   if (typeof window !== 'undefined') {
     // eslint-disable-next-line react-hooks/rules-of-hooks

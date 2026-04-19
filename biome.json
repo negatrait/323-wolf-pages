@@ -23,8 +23,9 @@
   },
   "files": {
     "includes": [
-      "src/",
-      "vite-content-plugin.mjs",
+      "src/**/*.tsx",
+      "src/**/*.ts",
+      "vite-content-plugin.ts",
       "index.html",
       "vite.config.ts"
     ]

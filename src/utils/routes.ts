@@ -4,7 +4,10 @@ export const NAV_LINKS = [
   { label: 'About', href: '/about' },
   { label: 'FAQ', href: '/faq' },
   { label: 'Blog', href: '/blog' },
-  { label: 'Manage Subscription', href: 'https://billing.stripe.com/p/login/bJe00l64P8JBc9489hcbC00' },
+  {
+    label: 'Manage Subscription',
+    href: 'https://billing.stripe.com/p/login/bJe00l64P8JBc9489hcbC00',
+  },
 ];
 
 export const ROUTE_LABELS = {

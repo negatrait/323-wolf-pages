@@ -1,4 +1,4 @@
-import { FOOTER_SECTIONS, FOOTER_COPYRIGHT } from '../../data/load-content';
+import { FOOTER_COPYRIGHT, FOOTER_SECTIONS } from '../../data/load-content';
 
 export function Footer() {
   return (
@@ -12,7 +12,12 @@ export function Footer() {
                 {section.links.map((link, j) => (
                   <li key={j}>
                     {link.href ? (
-                      <a href={link.href} class="hover:text-primary transition-colors">{link.label}</a>
+                      <a
+                        href={link.href}
+                        class="hover:text-primary transition-colors"
+                      >
+                        {link.label}
+                      </a>
                     ) : (
                       <span>{link.label}</span>
                     )}
