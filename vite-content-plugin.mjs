@@ -1,8 +1,8 @@
 import fs from 'fs';
-import path from 'path';
 import matter from 'gray-matter';
-import { Marked } from 'marked';
 import hljs from 'highlight.js';
+import { Marked } from 'marked';
+import path from 'path';
 
 const marked = new Marked({
   renderer: {
@@ -13,8 +13,8 @@ const marked = new Marked({
         : hljs.highlightAuto(text);
       const langClass = language ? ` language-${language}` : '';
       return `<pre><code class="hljs${langClass}">${value}</code></pre>`;
-    }
-  }
+    },
+  },
 });
 
 export default function contentPlugin() {
@@ -85,10 +85,11 @@ export default function contentPlugin() {
 
         // What You Get
         const whatYouGet = loadMd('home/what-you-get.md');
-        const whatYouGetItems = extractLiItems(whatYouGet.html).map(text => {
+        const whatYouGetItems = extractLiItems(whatYouGet.html).map((text) => {
           // Format: "Bold Title: Description" (tags already stripped)
           const colonIdx = text.indexOf(':');
-          if (colonIdx === -1) return { icon: 'check_circle', title: text, desc: '' };
+          if (colonIdx === -1)
+            return { icon: 'check_circle', title: text, desc: '' };
           const title = text.slice(0, colonIdx).trim();
           const desc = text.slice(colonIdx + 1).trim();
           const iconMap = {
@@ -102,11 +103,15 @@ export default function contentPlugin() {
 
         // Subscriber note: find paragraph containing "For subscribers" (after stripping tags)
         const subscriberParas = extractParagraphs(whatYouGet.html);
-        const subscriberNote = subscriberParas.find(p => strip(p).toLowerCase().startsWith('for subscribers'));
+        const subscriberNote = subscriberParas.find((p) =>
+          strip(p).toLowerCase().startsWith('for subscribers'),
+        );
         const HOME_WHAT_YOU_GET = {
           title: whatYouGet.frontmatter.title,
           items: whatYouGetItems,
-          subscriberNote: subscriberNote ? strip(subscriberNote).replace(/^For subscribers:\s*/i, '') : '',
+          subscriberNote: subscriberNote
+            ? strip(subscriberNote).replace(/^For subscribers:\s*/i, '')
+            : '',
         };
 
         // Problem
@@ -115,7 +120,9 @@ export default function contentPlugin() {
         const sectionRegex = /<h2>(SEO|GEO|AEO)[^<]*<\/h2>\s*<ul>(.+?)<\/ul>/gs;
         let sectionMatch;
         while ((sectionMatch = sectionRegex.exec(problem.html)) !== null) {
-          const headingText = sectionMatch[0].match(/<h2>([^<]+)<\/h2>/)?.[1]?.trim() || sectionMatch[1];
+          const headingText =
+            sectionMatch[0].match(/<h2>([^<]+)<\/h2>/)?.[1]?.trim() ||
+            sectionMatch[1];
           const items = extractLiItems(sectionMatch[2]);
           problemSections.push({ title: headingText, items });
         }
@@ -150,7 +157,7 @@ export default function contentPlugin() {
         const whoIsThisFor = loadMd('home/who-is-this-for.md');
         const HOME_WHO_IS_THIS_FOR = {
           title: whoIsThisFor.frontmatter.title,
-          cards: whoIsThisFor.frontmatter.cards.map(c => ({
+          cards: whoIsThisFor.frontmatter.cards.map((c) => ({
             title: c.title,
             desc: c.description,
           })),
@@ -162,7 +169,7 @@ export default function contentPlugin() {
           title: pricing.frontmatter.title,
           subtitle: pricing.frontmatter.subtitle,
         };
-        const PRICING_TIERS = pricing.frontmatter.tiers.map(t => ({
+        const PRICING_TIERS = pricing.frontmatter.tiers.map((t) => ({
           name: t.name,
           price: t.price,
           period: t.period,
@@ -179,7 +186,8 @@ export default function contentPlugin() {
         // Final CTA
         const HOME_FINAL_CTA = {
           title: 'Stop guessing. Start with a real audit.',
-          subtitle: 'Get a comprehensive visibility audit with prioritized recommendations.',
+          subtitle:
+            'Get a comprehensive visibility audit with prioritized recommendations.',
           cta: hero.frontmatter.cta_primary,
           cta_href: hero.frontmatter.cta_primary_href,
         };
@@ -190,8 +198,10 @@ export default function contentPlugin() {
         let currentSection = null;
         const aboutSections = [];
 
-        const introEnd = linesAbout.findIndex(l => l.startsWith('## '));
-        const introLines = linesAbout.slice(1, introEnd >= 0 ? introEnd : linesAbout.length).filter(l => l.trim() && !l.startsWith('#'));
+        const introEnd = linesAbout.findIndex((l) => l.startsWith('## '));
+        const introLines = linesAbout
+          .slice(1, introEnd >= 0 ? introEnd : linesAbout.length)
+          .filter((l) => l.trim() && !l.startsWith('#'));
         const aboutIntro = introLines.join('\n').trim();
 
         for (let i = 0; i < linesAbout.length; i++) {
@@ -210,7 +220,11 @@ export default function contentPlugin() {
           } else if (currentSection) {
             if (line.startsWith('### ')) {
               const subLine = line.replace('### ', '').trim();
-              if (subLine === 'Short term' || subLine === 'Medium term' || subLine === 'Long term') {
+              if (
+                subLine === 'Short term' ||
+                subLine === 'Medium term' ||
+                subLine === 'Long term'
+              ) {
                 currentSection.timeline.push({ title: subLine, content: '' });
               } else if (subLine.includes('Agent')) {
                 currentSection.agents.push({ title: subLine, desc: '' });
@@ -218,16 +232,28 @@ export default function contentPlugin() {
             } else if (line.match(/^\d{2}\.\s/)) {
               const valueMatch = line.match(/^(\d{2})\.\s+\*\*([^*]+)\*\*/);
               if (valueMatch) {
-                currentSection.values.push({ num: valueMatch[1], title: valueMatch[2], desc: '' });
+                currentSection.values.push({
+                  num: valueMatch[1],
+                  title: valueMatch[2],
+                  desc: '',
+                });
               }
             } else if (line.trim()) {
               const text = line.trim();
               if (currentSection.timeline.length > 0 && text) {
-                currentSection.timeline[currentSection.timeline.length - 1].content += text + ' ';
-              } else if (currentSection.agents.length > 0 && text && !text.startsWith('-')) {
-                currentSection.agents[currentSection.agents.length - 1].desc += text + ' ';
+                currentSection.timeline[
+                  currentSection.timeline.length - 1
+                ].content += text + ' ';
+              } else if (
+                currentSection.agents.length > 0 &&
+                text &&
+                !text.startsWith('-')
+              ) {
+                currentSection.agents[currentSection.agents.length - 1].desc +=
+                  text + ' ';
               } else if (currentSection.values.length > 0 && text) {
-                currentSection.values[currentSection.values.length - 1].desc += text + ' ';
+                currentSection.values[currentSection.values.length - 1].desc +=
+                  text + ' ';
               } else if (text.includes('[sivussa@sivussa.com]')) {
                 currentSection.email = 'sivussa@sivussa.com';
               } else if (!text.startsWith('-')) {
@@ -238,29 +264,49 @@ export default function contentPlugin() {
         }
         if (currentSection) aboutSections.push(currentSection);
 
-        aboutSections.forEach(s => {
+        aboutSections.forEach((s) => {
           s.content = s.content.trim();
           s.contentHtml = marked.parse(s.content);
-          s.agents.forEach(a => { a.desc = a.desc.trim(); a.descHtml = marked.parse(a.desc); });
-          s.values.forEach(v => { v.desc = v.desc.trim(); v.descHtml = marked.parse(v.desc); });
-          s.timeline.forEach(t => { t.content = t.content.trim(); t.contentHtml = marked.parse(t.content); });
+          s.agents.forEach((a) => {
+            a.desc = a.desc.trim();
+            a.descHtml = marked.parse(a.desc);
+          });
+          s.values.forEach((v) => {
+            v.desc = v.desc.trim();
+            v.descHtml = marked.parse(v.desc);
+          });
+          s.timeline.forEach((t) => {
+            t.content = t.content.trim();
+            t.contentHtml = marked.parse(t.content);
+          });
         });
 
         const ABOUT = {
           title: about.frontmatter.title,
           subtitle: about.frontmatter.subtitle,
-          intro: 'We believe every business deserves visibility — not just the ones with €5,000/month agency budgets.',
-          sections: aboutSections.map(s => {
+          intro:
+            'We believe every business deserves visibility — not just the ones with €5,000/month agency budgets.',
+          sections: aboutSections.map((s) => {
             if (s.title === 'Our approach') {
-              return { title: s.title, subtitle: 'they fix', intro: 'We built Sivussa to solve one problem: the gap between finding issues and actually clearing them.', agents: s.agents };
+              return {
+                title: s.title,
+                subtitle: 'they fix',
+                intro:
+                  'We built Sivussa to solve one problem: the gap between finding issues and actually clearing them.',
+                agents: s.agents,
+              };
             } else if (s.title === 'Our Values') {
               return { title: s.title, values: s.values };
-            } else if (s.title === 'What we\'re building') {
+            } else if (s.title === "What we're building") {
               return { title: s.title, timeline: s.timeline };
             } else if (s.title === 'Questions? Want to say hello?') {
               return { title: s.title, email: s.email };
             } else {
-              return { title: s.title, content: s.content, contentHtml: s.contentHtml };
+              return {
+                title: s.title,
+                content: s.content,
+                contentHtml: s.contentHtml,
+              };
             }
           }),
           email: 'sivussa@sivussa.com',
@@ -271,21 +317,26 @@ export default function contentPlugin() {
 
         // Load blog posts dynamically
         const postsDir = path.join(contentDir, 'blog/posts');
-        const postFiles = fs.readdirSync(postsDir).filter(f => f.endsWith('.md'));
-        const posts = postFiles.map(filename => {
-          const slug = filename.replace('.md', '');
-          const post = loadMd(path.join('blog/posts', filename));
-          return {
-            slug,
-            title: post.frontmatter.title,
-            description: post.frontmatter.description,
-            date: post.frontmatter.date,
-            category: post.frontmatter.category,
-            readTime: post.frontmatter.readTime,
-            html: post.html,
-            excerpt: post.html.replace(/<[^>]+>/g, '').substring(0, 200) + '...',
-          };
-        }).sort((a, b) => new Date(b.date) - new Date(a.date));
+        const postFiles = fs
+          .readdirSync(postsDir)
+          .filter((f) => f.endsWith('.md'));
+        const posts = postFiles
+          .map((filename) => {
+            const slug = filename.replace('.md', '');
+            const post = loadMd(path.join('blog/posts', filename));
+            return {
+              slug,
+              title: post.frontmatter.title,
+              description: post.frontmatter.description,
+              date: post.frontmatter.date,
+              category: post.frontmatter.category,
+              readTime: post.frontmatter.readTime,
+              html: post.html,
+              excerpt:
+                post.html.replace(/<[^>]+>/g, '').substring(0, 200) + '...',
+            };
+          })
+          .sort((a, b) => new Date(b.date) - new Date(a.date));
 
         // Build BLOG_POSTS_MAP for individual post pages
         const blogPostsMap = {};
@@ -322,9 +373,15 @@ export default function contentPlugin() {
         const FAQ_ITEMS = faq.frontmatter.faqs;
 
         // ===== LEGAL PAGES =====
-        const PRIVACY_POLICY = { html: loadMd('home/sivussa_privacy_policy.md').html };
-        const TERMS_OF_SERVICE = { html: loadMd('home/sivussa_terms_of_service.md').html };
-        const OPEN_SOURCE_NOTICES = { html: loadMd('home/sivussa_open_source_notices.md').html };
+        const PRIVACY_POLICY = {
+          html: loadMd('home/sivussa_privacy_policy.md').html,
+        };
+        const TERMS_OF_SERVICE = {
+          html: loadMd('home/sivussa_terms_of_service.md').html,
+        };
+        const OPEN_SOURCE_NOTICES = {
+          html: loadMd('home/sivussa_open_source_notices.md').html,
+        };
         const PRICING_TERMS = pricing.frontmatter.terms || [];
 
         return `
