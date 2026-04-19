@@ -30,12 +30,12 @@ export default function sitemapPlugin(): Plugin {
 
       const staticPages: SitemapEntry[] = [
         { loc: '/', lastmod: gitLogDate('src/content/home/hero.md'), changefreq: 'weekly', priority: '1.0' },
-        { loc: '/how-it-works', lastmod: gitLogDate('src/content/home/how-it-works.md'), changefreq: 'monthly' },
-        { loc: '/pricing', lastmod: gitLogDate('src/content/home/pricing.md'), changefreq: 'monthly' },
-        { loc: '/about', lastmod: gitLogDate('src/content/about.md'), changefreq: 'monthly' },
-        { loc: '/faq', lastmod: gitLogDate('src/content/faq.md'), changefreq: 'monthly' },
-        { loc: '/blog', lastmod: gitLogDate('src/content/blog/index.md'), changefreq: 'weekly' },
-        { loc: '/open-source-notices', lastmod: gitLogDate('src/content/home/sivussa_open_source_notices.md'), changefreq: 'yearly' },
+        { loc: '/how-it-works', lastmod: gitLogDate('src/content/home/how-it-works.md'), changefreq: 'monthly', priority: '0.5' },
+        { loc: '/pricing', lastmod: gitLogDate('src/content/home/pricing.md'), changefreq: 'monthly', priority: '0.8' },
+        { loc: '/about', lastmod: gitLogDate('src/content/about.md'), changefreq: 'monthly', priority: '0.6' },
+        { loc: '/faq', lastmod: gitLogDate('src/content/faq.md'), changefreq: 'monthly', priority: '0.7' },
+        { loc: '/blog', lastmod: gitLogDate('src/content/blog/index.md'), changefreq: 'weekly', priority: '0.8' },
+        { loc: '/open-source-notices', lastmod: gitLogDate('src/content/home/sivussa_open_source_notices.md'), changefreq: 'yearly', priority: '0.1' },
       ];
 
       const blogPosts: SitemapEntry[] = fs.existsSync(postsDir)
