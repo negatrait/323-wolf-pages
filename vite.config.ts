@@ -2,10 +2,12 @@ import preact from '@preact/preset-vite';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'vite';
 import contentPlugin from './vite-content-plugin.ts';
+import sitemapPlugin from './vite-sitemap-plugin.ts';
 
 export default defineConfig({
   plugins: [
     contentPlugin(),
+    sitemapPlugin(),
     tailwindcss(),
     preact({
       prerender: {
