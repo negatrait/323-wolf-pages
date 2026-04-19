@@ -183,5 +183,6 @@ Before modifying existing codebase or generating new code, read the correct refe
 - [Tailwind CSS v4 docs](https://tailwindcss.com/docs) — current utility CSS
 - [Biome](https://biomejs.dev/) — linter + formatter
 - [Vite](https://vite.dev/) — build tool
+- [marked](https://github.com/markedjs/marked) - MarkDown parser
 
 This is strict: we avoid unnecessary dependency bloat and sprawling codebase.
