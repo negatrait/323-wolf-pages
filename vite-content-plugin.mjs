@@ -1,8 +1,8 @@
-import fs from 'fs';
+import fs from 'node:fs';
+import path from 'node:path';
 import matter from 'gray-matter';
 import hljs from 'highlight.js';
 import { Marked } from 'marked';
-import path from 'path';
 
 const marked = new Marked({
   renderer: {
@@ -19,7 +19,7 @@ const marked = new Marked({
 
 export default function contentPlugin() {
   const virtualModuleId = 'virtual:content';
-  const resolvedVirtualModuleId = '\0' + virtualModuleId;
+  const resolvedVirtualModuleId = `\0${virtualModuleId}`;
 
   return {
     name: 'vite-content-plugin',
@@ -47,24 +47,12 @@ export default function contentPlugin() {
 
         // Helper: extract text from <li> items, stripping inner tags
         function extractLiItems(html) {
-          const items = [];
-          const re = /<li>(.+?)<\/li>/g;
-          let m;
-          while ((m = re.exec(html)) !== null) {
-            items.push(strip(m[1]));
-          }
-          return items;
+          return [...html.matchAll(/<li>(.+?)<\/li>/g)].map((m) => strip(m[1]));
         }
 
         // Helper: extract paragraphs from html
         function extractParagraphs(html) {
-          const ps = [];
-          const re = /<p>(.+?)<\/p>/gs;
-          let m;
-          while ((m = re.exec(html)) !== null) {
-            ps.push(m[1]);
-          }
-          return ps;
+          return [...html.matchAll(/<p>(.+?)<\/p>/gs)].map((m) => m[1]);
         }
 
         // ===== HOME PAGE =====
@@ -118,8 +106,7 @@ export default function contentPlugin() {
         const problem = loadMd('home/problem.md');
         const problemSections = [];
         const sectionRegex = /<h2>(SEO|GEO|AEO)[^<]*<\/h2>\s*<ul>(.+?)<\/ul>/gs;
-        let sectionMatch;
-        while ((sectionMatch = sectionRegex.exec(problem.html)) !== null) {
+        for (const sectionMatch of problem.html.matchAll(sectionRegex)) {
           const headingText =
             sectionMatch[0].match(/<h2>([^<]+)<\/h2>/)?.[1]?.trim() ||
             sectionMatch[1];
@@ -202,7 +189,7 @@ export default function contentPlugin() {
         const introLines = linesAbout
           .slice(1, introEnd >= 0 ? introEnd : linesAbout.length)
           .filter((l) => l.trim() && !l.startsWith('#'));
-        const aboutIntro = introLines.join('\n').trim();
+        const _aboutIntro = introLines.join('\n').trim();
 
         for (let i = 0; i < linesAbout.length; i++) {
           const line = linesAbout[i];
@@ -243,21 +230,21 @@ export default function contentPlugin() {
               if (currentSection.timeline.length > 0 && text) {
                 currentSection.timeline[
                   currentSection.timeline.length - 1
-                ].content += text + ' ';
+                ].content += `${text} `;
               } else if (
                 currentSection.agents.length > 0 &&
                 text &&
                 !text.startsWith('-')
               ) {
                 currentSection.agents[currentSection.agents.length - 1].desc +=
-                  text + ' ';
+                  `${text} `;
               } else if (currentSection.values.length > 0 && text) {
                 currentSection.values[currentSection.values.length - 1].desc +=
-                  text + ' ';
+                  `${text} `;
               } else if (text.includes('[sivussa@sivussa.com]')) {
                 currentSection.email = 'sivussa@sivussa.com';
               } else if (!text.startsWith('-')) {
-                currentSection.content += text + '\n';
+                currentSection.content += `${text}\n`;
               }
             }
           }
@@ -332,8 +319,7 @@ export default function contentPlugin() {
               category: post.frontmatter.category,
               readTime: post.frontmatter.readTime,
               html: post.html,
-              excerpt:
-                post.html.replace(/<[^>]+>/g, '').substring(0, 200) + '...',
+              excerpt: `${post.html.replace(/<[^>]+>/g, '').substring(0, 200)}...`,
             };
           })
           .sort((a, b) => new Date(b.date) - new Date(a.date));
