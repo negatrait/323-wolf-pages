@@ -15,17 +15,17 @@ The problem isn't that you lack a great site. The problem is that **structural b
 - Missing meta descriptions? Your search result is empty and unappealing.
 - Slow pages? Users abandon before they see anything.
 
-## GEO — Local invisibility keeps customers away
+## GEO - Increasing your presence in AI-generated responses
 
-- No Google Business Profile? You don't show up in local searches.
-- Inconsistent NAP data? Search engines don't trust your business location.
-- No local content? Nearby customers can't find you for local queries.
+- Original, evidence backed content? We'll guide you there.
+- Clear authorship and source transparency? These help.
+- Structured content for AI-systems, aiding in accuracy.
 
-## AEO — AI assistants can't answer questions about you
+## AEO — Extracting direct answers from your site
 
 - No FAQ content? Chatbots have nothing to reference.
 - No structured answers? AI can't extract meaningful information.
-- No speakable markup? Voice assistants can't find your business.
+- No speakable markup? Voice assistants can't answer.
 
 ## We see your site like the other machines do
 
