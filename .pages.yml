@@ -1,0 +1,5 @@
+content:
+  - name: robots
+    label: robots.txt
+    type: file
+    path: public/robots.txt
