@@ -1,8 +1,4 @@
 content:
-  - name: robots
-    label: robots.txt
-    type: file
-    path: public/robots.txt
   - name: biome-config
     label: biome.jsonc
     type: file
