@@ -19,11 +19,7 @@ const TIERS = [
     ctaText: 'Get Started — €99',
     ctaHref: STRIPE_URLS['one-shot'],
     features: [
-      'Full visibility audit',
-      'Prioritized recommendations',
-      'Expert guidance for every issue',
-      'PDF report',
-      'Email delivery',
+      'One-time audit',
     ],
   },
   {
@@ -35,11 +31,6 @@ const TIERS = [
     ctaHref: STRIPE_URLS.quarterly,
     features: [
       'Audit every 90 days',
-      'Prioritized recommendations',
-      'Expert guidance',
-      'PDF report',
-      'Email delivery',
-      'Track your progress',
     ],
   },
   {
@@ -51,11 +42,6 @@ const TIERS = [
     ctaHref: STRIPE_URLS.monthly,
     features: [
       'Audit every month',
-      'Prioritized recommendations',
-      'Expert guidance',
-      'PDF report',
-      'Email delivery',
-      'Track your progress',
     ],
   },
 ];
