@@ -37,7 +37,7 @@ export function HowItWorks() {
           <StepCard
             number={2}
             title="AI specialists analyze"
-            description="AI agents crawl your website, analyze your Google Business Profile, evaluate your content for AI answer optimization, and generate scores for SEO, GEO, and AEO. Time: 2-5 minutes."
+            description="AI agents crawl your website, analyze your Google Business Profile, evaluate your content for optimization. Time: 30-60 minutes."
           />
           <StepCard
             number={3}
@@ -74,9 +74,9 @@ export function HowItWorks() {
               </thead>
               <tbody class="text-dark-200">
                 {[
-                  ['Find SEO issues', 'Yes', 'Yes'],
-                  ['Find GEO issues', 'Rarely', 'Yes'],
-                  ['Find AEO issues', 'Never', 'Yes'],
+                  ['Analyse for search engines', 'Yes', 'Yes'],
+                  ['Analyse for AI agents', 'Rarely', 'Yes'],
+                  ['Analyse for direct answers', 'Never', 'Yes'],
                   ['Prioritized recommendations', 'No', 'Yes'],
                   [
                     'Specific guidance for your site',
@@ -114,7 +114,7 @@ export function HowItWorks() {
           {[
             {
               title: 'Full visibility audit',
-              desc: 'Comprehensive analysis across search engines, geolocation services, and AI summaries.',
+              desc: 'Comprehensive analysis across search engines, geolocation services, etc.',
             },
             {
               title: 'Prioritized findings',
