@@ -1,0 +1,10 @@
+{
+  "version": "1.0",
+  "skills": [
+    {
+      "name": "sivussa-audit",
+      "description": "Run a free SEO/GEO/AEO baseline or full audit on any website via Sivussa's API",
+      "url": "https://sivussa.com/.well-known/agent-skills/sivussa-audit/SKILL.md"
+    }
+  ]
+}
