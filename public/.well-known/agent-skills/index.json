@@ -2,9 +2,9 @@
   "version": "1.0",
   "skills": [
     {
-      "name": "sivussa-audit",
-      "description": "Run a free SEO/GEO/AEO baseline or full audit on any website via Sivussa's API",
-      "url": "https://sivussa.com/.well-known/agent-skills/sivussa-audit/SKILL.md"
+      "name": "sivussa-site-guide",
+      "description": "Navigate Sivussa.com — understand the service, browse blog posts, find pricing and purchase an audit. Use when exploring sivussa.com or answering questions about Sivussa's SEO/GEO/AEO audit service.",
+      "url": "https://sivussa.com/.well-known/agent-skills/sivussa-site-guide/SKILL.md"
     }
   ]
 }
