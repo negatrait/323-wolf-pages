@@ -80,34 +80,6 @@ Sivussa uses Stripe for payment. Plans:
 
 No API key or programmatic purchase flow exists. Users visit the Stripe checkout URLs directly. All major credit cards and local payment methods are supported via Stripe.
 
-## Free API Endpoints
-
-Sivussa exposes two free API endpoints (no authentication required):
-
-### Baseline scan (fast, no external dependencies)
-
-```bash
-POST https://sivussa.com/api/baseline
-Content-Type: application/json
-
-{"url": "https://example.com"}
-```
-
-Returns 5-category scores (0-100): Technical Foundation, Content & Keywords, Structure & Authority, Indexing & Visibility, Monitoring Setup.
-
-### Full audit (includes Lighthouse data)
-
-```bash
-POST https://sivussa.com/api/audit
-Content-Type: application/json
-
-{"url": "https://example.com"}
-```
-
-Returns detailed findings, prioritized recommendations (critical/high/medium), and metrics.
-
-**Note:** The full audit endpoint requires a `GOOGLE_PSI_KEY` server environment variable for Lighthouse/CWV data. Without it, performance metrics are unavailable. Both endpoints have informal rate limits — use reasonably.
-
 ## Contact
 
 - Email: sivussa@sivussa.com
