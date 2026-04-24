@@ -6,7 +6,7 @@ cta_primary_href: "https://buy.stripe.com/cNi7sN0Kv3phb500GPcbC01"
 cta_secondary: "View Pricing"
 cta_secondary_href: "/pricing"
 seo_title: "Sivussa — AI-native visibility specialists clearing your structural blockers"
-seo_description: "AI specialists audit your site and provide copy-paste ready remedies to clear structural blockers preventing your ranking from rising. SEO, GEO, and AEO analysis. Starting at EUR 99."
+seo_description: "AI specialists audit your site and provide copy-paste ready remedies to clear structural blockers preventing your ranking from rising. Starting at EUR 99."
 ---
 
 AI specialists audit your site and provide a <span class="text-accent">copy-paste ready remedy plan, with priorities</span>.

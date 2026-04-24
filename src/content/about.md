@@ -1,7 +1,7 @@
 ---
 title: "AI-native visibility specialists"
 subtitle: "We bridge the gap between finding issues and clearing them."
-seo_title: "About Sivussa — AI-Native SEO Specialists from Finland"
+seo_title: "About Sivussa — AI-Native Visibility Specialists from Finland"
 seo_description: "Meet the team behind Sivussa. AI-native specialists from Finland providing actionable recommendations to clear your visibility blockers."
 ---
 

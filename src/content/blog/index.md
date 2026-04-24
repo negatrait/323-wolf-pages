@@ -1,7 +1,7 @@
 ---
 title: "Blog"
-seo_title: "Blog — SEO, GEO, and AEO Insights"
-seo_description: "Technical breakdowns of search protocols, algorithmic shifts, and data optimization. Learn about SEO, GEO, and AEO best practices."
+seo_title: "Blog — Visibility Insights"
+seo_description: "Technical breakdowns of search protocols, algorithmic shifts, and data optimization for better website visibility."
 description: "Precision-engineered intelligence for the AI search era. Technical breakdowns of search protocols, algorithmic shifts, and data optimization."
 search_placeholder: "Search articles"
 categories:

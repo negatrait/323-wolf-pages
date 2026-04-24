@@ -63,7 +63,7 @@ graph TD
 ### Agent Accessibility
 
 - **Content negotiation**: `functions/_middleware.ts` serves markdown versions when `Accept: text/markdown` is sent
-- **llms.txt**: `/llms.txt` provides a full site overview for AI agents
+- **llms.txt + llms-*.md**: Generated at build time by `vite-content-plugin.ts` from the same `src/content/` markdown files — no manual editing needed, one source of truth
 - **Agent Skills**: `/.well-known/agent-skills/` provides navigation skill for agents
 - **Content Signals**: `robots.txt` declares AI content preferences
 
@@ -84,8 +84,6 @@ graph TD
 │   ├── _headers                  # Cloudflare response headers
 │   ├── _redirects                # Cloudflare redirect rules
 │   ├── robots.txt                # Crawler directives + Content Signals
-│   ├── llms.txt                  # Site overview for AI agents
-│   ├── llms-*.md                 # Markdown versions of pages
 │   ├── sivussa-banner.webp       # Hero banner image
 │   └── .well-known/
 │       └── agent-skills/         # Agent Skills index + SKILL.md
@@ -174,7 +172,7 @@ Content can be edited via [Pages CMS](https://pagescms.org) connected to the rep
 4. Save — CMS commits directly to the branch
 5. Cloudflare auto-deploys
 
-**What's NOT in the CMS:** Code files (components, plugins, styles). Those require git/PR workflow.
+**What's NOT in the CMS:** Code files (components, plugins, styles) and auto-generated files (llms.txt, llms-*.md — generated at build time from the same content). Those require git/PR workflow.
 
 ## Adding Content
 

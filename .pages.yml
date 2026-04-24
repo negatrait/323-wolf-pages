@@ -472,63 +472,8 @@ content:
             type: rich-text
 
   # ── AI Agent Content ───────────────────────────────────────
-  - name: ai-agents
-    label: AI Agent Content
-    type: group
-    items:
-      - name: llms-txt
-        label: llms.txt (Site Overview)
-        type: file
-        path: public/llms.txt
-        format: raw
-        fields:
-          - name: body
-            type: rich-text
-
-      - name: llms-home
-        label: Homepage
-        type: file
-        path: public/llms-home.md
-        format: raw
-        fields:
-          - name: body
-            type: rich-text
-
-      - name: llms-about
-        label: About
-        type: file
-        path: public/llms-about.md
-        format: raw
-        fields:
-          - name: body
-            type: rich-text
-
-      - name: llms-how-it-works
-        label: How It Works
-        type: file
-        path: public/llms-how-it-works.md
-        format: raw
-        fields:
-          - name: body
-            type: rich-text
-
-      - name: llms-pricing
-        label: Pricing
-        type: file
-        path: public/llms-pricing.md
-        format: raw
-        fields:
-          - name: body
-            type: rich-text
-
-      - name: llms-faq
-        label: FAQ
-        type: file
-        path: public/llms-faq.md
-        format: raw
-        fields:
-          - name: body
-            type: rich-text
+  # llms.txt + llms-*.md are generated at build time from src/content/
+  # by vite-content-plugin.ts. No manual editing needed.
 
   # ── Site Config ────────────────────────────────────────────
   - name: config

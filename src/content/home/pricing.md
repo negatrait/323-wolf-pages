@@ -1,7 +1,7 @@
 ---
 title: "Simple pricing. No hidden fees."
-seo_title: "Pricing — SEO Audit Plans | One-time, Quarterly & Monthly"
-seo_description: "Affordable SEO, GEO, and AEO audits. One-time €99, quarterly €99, monthly €89. Prioritized recommendations, PDF reports, expert guidance."
+seo_title: "Pricing — Visibility Audit Plans | One-time, Quarterly & Monthly"
+seo_description: "Affordable visibility audits. One-time €99, quarterly €99, monthly €89. Prioritized recommendations, PDF reports, expert guidance."
 subtitle: "Choose what works for you."
 tiers:
   - name: "One-shot"

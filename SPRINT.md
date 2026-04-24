@@ -64,8 +64,15 @@
 
 ## Phase 5 — Pages CMS Integration
 
-- [x] **T5.1** `.pages.yml` — Full CMS configuration covering every content file in the repository
-- [x] **T5.2** `README.md` — Documented CMS usage, what's editable, and what's not
+- [x] **T5.1** `.pages.yml` — Full CMS configuration with 7 grouped sections
+- [x] **T5.2** `README.md` — Documented CMS usage
+
+## Phase 6 — Build-time llms Generation
+
+- [x] **T6.1** `vite-content-plugin.ts` — Added `generateBundle` hook to emit `llms.txt` + 5 `llms-*.md` files at build time
+- [x] **T6.2** Deleted 6 static `public/llms-*.md` + `public/llms.txt` files — no more manual sync
+- [x] **T6.3** Removed llms entries from `.pages.yml` CMS config (no longer static files)
+- [x] **T6.4** Updated README + project structure docs
 
 ### CMS coverage
 
@@ -87,12 +94,6 @@
 | Privacy Policy | `src/content/home/sivussa_privacy_policy.md` | file (raw) |
 | Terms of Service | `src/content/home/sivussa_terms_of_service.md` | file (raw) |
 | Open Source Notices | `src/content/home/sivussa_open_source_notices.md` | file (raw) |
-| llms.txt | `public/llms.txt` | file (raw) |
-| llms-home | `public/llms-home.md` | file (raw) |
-| llms-about | `public/llms-about.md` | file (raw) |
-| llms-how-it-works | `public/llms-how-it-works.md` | file (raw) |
-| llms-pricing | `public/llms-pricing.md` | file (raw) |
-| llms-faq | `public/llms-faq.md` | file (raw) |
 | robots.txt | `public/robots.txt` | file (code) |
 | _headers | `public/_headers` | file (code) |
 | _redirects | `public/_redirects` | file (code) |

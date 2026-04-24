@@ -492,6 +492,137 @@ export default function contentPlugin() {
         .map(([name, val]) => `export const ${name} = ${JSON.stringify(val)};`)
         .join('\n');
     },
+
+    // ── GENERATE LLM CONTENT FILES ──────────────────────────
+    // Builds llms.txt + llms-*.md from the same parsed content
+    // used by page components. One source of truth.
+    generateBundle() {
+      const contentDir = path.resolve(process.cwd(), 'src/content');
+
+      const heroMd = loadMd(contentDir, 'home/hero.md');
+      const hero = heroMd.frontmatter;
+      const problemMd = loadMd(contentDir, 'home/problem.md');
+      const howItWorksMd = loadMd(contentDir, 'home/how-it-works.md');
+      const hw = howItWorksMd.frontmatter;
+      const pricingMd = loadMd(contentDir, 'home/pricing.md');
+      const pm = pricingMd.frontmatter;
+      const faqMd = loadMd(contentDir, 'faq.md');
+      const aboutMd = loadMd(contentDir, 'about.md');
+      const aboutSections = parseAboutSections(aboutMd.raw);
+
+      // llms.txt — site index
+      const llmsTxt = `# ${hero.seo_title || 'Sivussa'}
+
+> ${hero.seo_description || ''}
+
+Visit sivussa.com for more information.
+
+## Main
+
+- [Sivussa](https://sivussa.com/) - Landing page
+- [How It Works](https://sivussa.com/how-it-works) - How the service works
+- [Pricing](https://sivussa.com/pricing): Pricing information and plans
+
+## Optional
+
+- [About](https://sivussa.com/about): About the organization
+- [FAQ](https://sivussa.com/faq): Frequently asked Questions with Answers
+- [Blog](https://sivussa.com/blog): Latest articles and updates
+`;
+
+      // llms-home.md
+      const llmsHome = llmsTxt;
+
+      // llms-how-it-works.md
+      const stepsList = (hw.steps || [])
+        .map((s: any) => `${s.number}. **${s.title}** — ${s.description}`)
+        .join('\n');
+      const tableRows = (hw.comparison_table?.rows || [])
+        .map((r: string[]) => `| ${r.join(' | ')} |`)
+        .join('\n');
+      const tableHeaders = (hw.comparison_table?.headers || [])
+        .map((h: string) => `| ${h} |`)
+        .join('\n') + '\n' + (hw.comparison_table?.headers || []).map(() => '| --- ').join('') + '|';
+      const llmsHowItWorks = `# How It Works — Sivussa
+
+${problemMd.raw.split('---').slice(2).join('---').trim()}
+
+## The Process
+
+${stepsList}
+
+Starting at EUR 89/99. Visit [sivussa.com](https://sivussa.com) to get started.
+`;
+
+      // llms-pricing.md
+      const tierLines = (pm.tiers || [])
+        .map((t: any) => `### ${t.name} — ${t.price} (${t.period})\n- ${t.features.join('\n- ')}\n- [${t.cta_text}](${t.cta_href})`)
+        .join('\n\n');
+      const pricingFaqLines = (pm.faq || [])
+        .map((f: any) => `**${f.question}**\n${f.answer}`)
+        .join('\n\n');
+      const llmsPricing = `# Pricing — Sivussa
+
+Transparent pricing. No hidden fees. Cancel anytime.
+
+## Plans
+
+${tierLines}
+
+## FAQ
+
+${pricingFaqLines}
+
+Visit [sivussa.com/pricing](https://sivussa.com/pricing) for full details.
+`;
+
+      // llms-faq.md
+      const faqCategories: Record<string, any[]> = {};
+      for (const item of faqMd.frontmatter.faqs || []) {
+        const cat = item.category || 'General';
+        if (!faqCategories[cat]) faqCategories[cat] = [];
+        faqCategories[cat].push(item);
+      }
+      const faqSections = Object.entries(faqCategories)
+        .map(([cat, items]) => {
+          const qas = items.map((i: any) => `**${i.question}**\n${i.answer}`).join('\n\n');
+          return `## ${cat}\n\n${qas}`;
+        })
+        .join('\n\n');
+      const llmsFaq = `# FAQ — Sivussa
+
+      Frequently asked questions about Sivussa visibility audits.
+
+${faqSections}
+
+Visit [sivussa.com](https://sivussa.com) for more information.
+`;
+
+      // llms-about.md
+      const aboutBody = aboutMd.raw.split('---').slice(2).join('---').trim();
+      const llmsAbout = `# About Sivussa
+
+${aboutBody}
+`;
+
+      // Emit all as static assets
+      const files: Record<string, string> = {
+        'llms.txt': llmsTxt,
+        'llms-home.md': llmsHome,
+        'llms-how-it-works.md': llmsHowItWorks,
+        'llms-pricing.md': llmsPricing,
+        'llms-faq.md': llmsFaq,
+        'llms-about.md': llmsAbout,
+      };
+
+      for (const [fileName, source] of Object.entries(files)) {
+        this.emitFile({
+          type: 'asset',
+          fileName,
+          source,
+        });
+      }
+    },
   };
 }
 

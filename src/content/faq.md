@@ -1,7 +1,7 @@
 ---
 title: "Frequently Asked Questions"
-seo_title: "FAQ — Common Questions About Sivussa SEO Audits"
-seo_description: "Get answers to common questions about Sivussa SEO, GEO, and AEO audits. Pricing, how it works, technical details, and more."
+seo_title: "FAQ — Common Questions About Sivussa Audits"
+seo_description: "Get answers to common questions about Sivussa audits. Pricing, how it works, technical details, and more."
 faqs:
   - category: "General"
     question: "What is Sivussa?"
