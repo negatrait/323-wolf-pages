@@ -2,6 +2,8 @@
 
 AI-native website visibility audit service. Preact SPA with build-time content pipeline, prerendering, and Cloudflare Pages deployment.
 
+> Staging site: https://staging.323-wolf-pages.pages.dev/
+
 ## Architecture
 
 ```mermaid
