@@ -1,99 +1,142 @@
-# Sprint Plan — Content De-jargon & Code Quality
+# Sprint 2 — TypeScript Safety & Preact Best Practices
 
-> Status: **Review Ready**
-> Branch: `staging`
-> Last updated: 2026-04-24
+**Goal:** Biome check passes with zero errors/warnings. Full TypeScript strict mode. Proper Preact component types.
 
-## Goals
+**Branch:** staging
+**Duration estimate:** 4-6h engineering time
 
-1. **Zero SEO/GEO/AEO jargon on customer-facing pages.** Replace with plain-language descriptions of what happens and why it matters.
-2. **Zero hardcoded text in components.** All visible text sourced from markdown content files.
-3. **Fix all code quality findings** from the full codebase review.
+---
 
-## Rules
+## Phase 1 — Auto-fix (low risk, high volume)
 
-- **No three-letter acronyms** (SEO, GEO, AEO) visible to site visitors. These may appear in `seo_title`, `seo_description` frontmatter (meta tags only), internal code comments, `route-meta.ts` titles (browser tabs), and agent-skills files (machine audience).
-- **Brand voice**: explain what happens, not what the technique is called. "Your site shows up when people search" not "improves SEO."
-- **Single source of truth**: if data exists in content markdown, components must import from `virtual:content`, not redefine it locally.
+### T1.1 Format + organize imports
+- `npx biome check --write .` — fixes 22 format/import issues automatically
+- Verify build still passes
 
-## Completed Tasks
+### T1.2 Remove unused variables in content plugin
+- Lines 590, 619, 622: `noUnusedVariables` in `vite-content-plugin.ts`
+- 3 variables declared but never read
 
-### Phase 1 — Content De-jargon
+---
 
-- [x] **T1.1** `src/content/home/problem.md` — "SEO" → "Search engines can't find you", "GEO" → "AI assistants skip over you", "AEO" → "Voice search and chatbots miss your answers"
-- [x] **T1.2** `src/content/about.md` — "SEO specialists" → "visibility specialists", "AI SEO team" → "AI visibility team"
-- [x] **T1.3** `src/content/home/features.md` — "SEO specialists" → "visibility specialists"
-- [x] **T1.4** `src/content/home/who-is-this-for.md` — "SEO Professionals" → "Visibility Professionals", "SEO troubleshooting" → "visibility troubleshooting"
-- [x] **T1.5** `src/content/home/pricing.md` — No visible jargon (seo_title/seo_description kept for meta)
-- [x] **T1.6** `src/content/faq.md` — "SEO specialists" → "visibility team/professionals"
-- [x] **T1.7** `src/content/blog/index.md` — "GEO era" → "AI search era"
-- [x] **T1.8** `public/llms-*.md` — Rewrote SEO/GEO/AEO references in plain language
-- [x] **T1.9** `src/content/about.md` "Our approach" — verified, already plain language
+## Phase 2 — TypeScript Infrastructure
 
-### Phase 2 — Kill Hardcoded Text
+### T2.1 Add `tsconfig.json`
+- `strict: true`, `noUncheckedIndexedAccess`, `noImplicitReturns`
+- `jsx: "react-jsx"`, `jsxImportSource: "preact"`
+- Include `src/`, `vite-content-plugin.ts`, `vite.config.ts`
+- Exclude `node_modules/`, `dist/`
+- May need `@tsconfig/biome` or Vite-compatible base
 
-- [x] **T2.1** `src/pages/HowItWorks.tsx` — All text now from `HOME_HOW_IT_WORKS` content import (heading, intro, steps, comparison table, what-you-get grid, CTA)
-- [x] **T2.2** `src/pages/Pricing.tsx` — Deleted local `TIERS`, `PRICING_FAQ`, `STRIPE_URLS`, competitor cards, feature table. All sourced from content plugin via `PRICING_TIERS`, `PRICING_FAQ`, `PRICING_FEATURE_TABLE`, `PRICING_COMPETITORS`, `PRICING_CTA`
-- [x] **T2.3** `src/pages/Home.tsx` — Removed unused `_STRIPE_ONE_SHOT` import
-- [x] **T2.4** `src/pages/Blog.tsx` — Verified, already content-driven
+### T2.2 Add `typecheck` script to package.json
+- `"typecheck": "tsc --noEmit"`
+- Must pass with zero errors
 
-### Phase 3 — Code Quality Fixes
+### T2.3 Install type dependencies
+- `@types/node` (for vite plugin)
+- Verify existing: `preact`, `@preact/preset-vite` types
 
-- [x] **T3.1** `index.html` — Updated `theme-color` to `#071F16`, removed 3 duplicate JSON-LD blocks (Organization, Speakable, FAQ), fixed stale org description
-- [x] **T3.2** All external links — `rel="noopener noreferrer"` on all `target="_blank"` links (Pricing, HowItWorks CTAs)
-- [x] **T3.3** `BreadcrumbNav.tsx` — Added `aria-label="breadcrumb"`
-- [x] **T3.4** `Nav.tsx` — Added `target="_blank" rel="noopener noreferrer"` to external nav links
-- [x] **T3.5** `About.tsx` — Replaced fragile `contentHtml.split('</p>')` with direct `dangerouslySetInnerHTML`
-- [x] **T3.6** `route-meta.ts` + page `description` props — Removed jargon from titles and descriptions
+---
 
-### Phase 4 — Agent/Machine Files (No changes needed)
+## Phase 3 — Type All Component Props
 
-- [x] **T4.1** `public/.well-known/agent-skills/index.json` — Kept SEO/GEO/AEO (machine audience)
-- [x] **T4.2** `public/.well-known/agent-skills/sivussa-site-guide/SKILL.md` — Kept SEO/GEO/AEO (machine audience)
-- [x] **T4.3** `public/robots.txt` — No changes needed
-- [x] **T4.4** `public/_headers` — No changes needed
+### T3.1 Define interfaces for every component
+Current state — all props are untyped:
+```
+Accordion({ question, answer, defaultOpen })
+BlogPost({ slug })
+BreadcrumbNav({ currentPage, extraLink })
+Button({ children, href, variant, class })
+FeatureCard({ title, description })
+Head({ title, description, canonical, ogImage, structuredData })
+Layout({ children })
+PricingCard({ tier, price, period, features, cta, ctaHref, popular })
+Section({ children, dark, class })
+StepCard({ number, title, description })
+TestimonialCard({ quote, name, role })
+```
 
-## Not In Scope
+Each gets a typed `Props` interface and `FunctionalComponent` signature.
 
-- Adding TypeScript types / TSDoc (separate sprint)
-- `_redirects` 404 handling (requires Cloudflare Functions change)
-- `marked` HTML sanitization (content is first-party, low risk)
-- Blog post content (`audit-findings-before-after.md`) — historical document
-- `src/utils/seo.ts` JSON-LD — machine-readable, not customer-visible
-- `src/content/home/sivussa_terms_of_service.md` — legal text, technical terms appropriate
+### T3.2 Type page component props
+- `BlogPost` receives `{ slug: string }` from router
+- All other pages take no props — type as `() => VNode`
 
-## Phase 5 — Pages CMS Integration
+### T3.3 Type all hooks and event handlers
+- `Head.tsx` uses `useEffect` with deps array
+- `Accordion.tsx` uses `useState`
+- Ensure proper Preact hook types
 
-- [x] **T5.1** `.pages.yml` — Full CMS configuration with 7 grouped sections
-- [x] **T5.2** `README.md` — Documented CMS usage
+---
 
-## Phase 6 — Build-time llms Generation
+## Phase 4 — Eliminate `any` in Content Plugin
 
-- [x] **T6.1** `vite-content-plugin.ts` — Added `generateBundle` hook to emit `llms.txt` + 5 `llms-*.md` files at build time
-- [x] **T6.2** Deleted 6 static `public/llms-*.md` + `public/llms.txt` files — no more manual sync
-- [x] **T6.3** Removed llms entries from `.pages.yml` CMS config (no longer static files)
-- [x] **T6.4** Updated README + project structure docs
+### T4.1 Replace `any` with proper types (15 instances)
+Current `any` usage in `vite-content-plugin.ts`:
+- `buildRouteMeta` params (6×)
+- `blogPostsMap` entries (5×)
+- `generateBundle` helper functions (4×)
 
-### CMS coverage
+Fix: define interfaces for parsed markdown results (`ParsedHero`, `ParsedPricing`, etc.) and use them instead of `any`.
 
-| Section | File | Type |
-|---------|------|------|
-| Homepage Hero | `src/content/home/hero.md` | file (frontmatter + rich-text body) |
-| Homepage Problem | `src/content/home/problem.md` | file |
-| Homepage How It Works | `src/content/home/how-it-works.md` | file (complex frontmatter) |
-| Homepage Features | `src/content/home/features.md` | file |
-| Homepage What You Get | `src/content/home/what-you-get.md` | file |
-| Homepage Who Is This For | `src/content/home/who-is-this-for.md` | file |
-| Homepage Pricing | `src/content/home/pricing.md` | file (complex frontmatter) |
-| About Page | `src/content/about.md` | file |
-| FAQ Page | `src/content/faq.md` | file |
-| Blog Settings | `src/content/blog/index.md` | file |
-| Blog Posts | `src/content/blog/posts/*.md` | collection |
-| Navigation | `src/content/nav.md` | file |
-| Footer | `src/content/footer.md` | file |
-| Privacy Policy | `src/content/home/sivussa_privacy_policy.md` | file (raw) |
-| Terms of Service | `src/content/home/sivussa_terms_of_service.md` | file (raw) |
-| Open Source Notices | `src/content/home/sivussa_open_source_notices.md` | file (raw) |
-| robots.txt | `public/robots.txt` | file (code) |
-| _headers | `public/_headers` | file (code) |
-| _redirects | `public/_redirects` | file (code) |
+### T4.2 Type the virtual module exports
+- `load-content.ts` re-exports are untyped
+- Add type declarations so consumers get autocomplete
+- Consider a `types.d.ts` or `vite-env.d.ts` for the virtual module
+
+---
+
+## Phase 5 — Content Plugin Type Safety
+
+### T5.1 Type `loadMd` return values
+- Currently generic with `Record<string, unknown>` default
+- Each call site should specify its frontmatter interface
+- Verify all 15+ `loadMd` calls use typed interfaces
+
+### T5.2 Type `parseAboutSections` and other parsers
+- `parseAboutSections` returns `RawAboutSection[]` (already has interface)
+- Verify all parser return types match their consumers
+
+### T5.3 Type `generateBundle` sitemap and llms generation
+- Sitemap entries, llms file maps — all typed
+
+---
+
+## Phase 6 — Preact Best Practices
+
+### T6.1 Proper component signatures
+- All components: `FunctionalComponent<Props>` or arrow functions with typed props
+- No bare `export function Comp({ prop })` without types
+
+### T6.2 `class` prop → `className` where appropriate
+- Preact supports `class` but TypeScript + React types expect `className`
+- Decide: keep Preact-native `class` (with custom types) or switch to `className`
+- Document the decision
+
+### T6.3 Key props on mapped elements
+- Verify all `.map()` calls have proper `key` props
+- No array index keys where data has unique IDs
+
+---
+
+## Phase 7 — Final Verification
+
+### T7.1 `npx biome check .` — zero errors, zero warnings
+### T7.2 `npx tsc --noEmit` — zero errors
+### T7.3 `npx vite build` — still passes
+### T7.4 Update README with TypeScript requirements
+### T7.5 Update `.pages.yml` if any content file changes
+
+---
+
+## Scope Boundaries
+
+**In scope:** src/, vite-content-plugin.ts, vite.config.ts
+**Out of scope:** index.html (minimal JS), functions/ (plain JS, not TS), public/ (static files), design/UX changes, new features
+
+## Risk Notes
+
+- Adding `tsconfig.json` strict mode will surface many implicit-any errors in existing code
+- The content plugin is ~800 lines with heavy `any` usage — biggest refactor target
+- Preact `class` vs `className` decision affects every component
+- All changes must pass `vite build` — type errors that don't affect runtime still block the sprint
