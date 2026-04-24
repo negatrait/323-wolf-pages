@@ -2,7 +2,7 @@ import { Section } from '../components/common/Section';
 import { BreadcrumbNav } from '../components/layout/BreadcrumbNav';
 import { Head } from '../components/seo/Head';
 import { getRouteMeta } from '../data/route-meta';
-import { BLOG_POSTS_MAP, SITE_CONFIG } from '../data/load-content';
+import { BLOG_POSTS_MAP } from '../data/load-content';
 
 export function BlogPost({ slug }) {
   const post = BLOG_POSTS_MAP[slug];
@@ -34,40 +34,12 @@ export function BlogPost({ slug }) {
     });
   };
 
-  // Article schema
-  const articleJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Article',
-    headline: post.title,
-    description: post.description,
-    datePublished: post.date,
-    dateModified: post.date,
-    author: {
-      '@type': 'Organization',
-      name: SITE_CONFIG.name,
-      url: SITE_CONFIG.url,
-    },
-    publisher: {
-      '@type': 'Organization',
-      name: SITE_CONFIG.name,
-      logo: {
-        '@type': 'ImageObject',
-        url: `${SITE_CONFIG.url}/logo.png`,
-      },
-    },
-    mainEntityOfPage: {
-      '@type': 'WebPage',
-      '@id': `${SITE_CONFIG.url}/blog/${slug}`,
-    },
-  };
-
   return (
     <>
       <Head
         title={meta.title}
         description={meta.description}
         canonical={meta.canonical}
-        structuredData={articleJsonLd}
       />
 
       <Section>

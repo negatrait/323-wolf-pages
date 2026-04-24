@@ -4,7 +4,6 @@ import { BreadcrumbNav } from '../components/layout/BreadcrumbNav';
 import { Head } from '../components/seo/Head';
 import { getRouteMeta } from '../data/route-meta';
 import { FAQ_ITEMS, SITE_CONFIG } from '../data/load-content';
-import { faqPageJsonLd } from '../utils/seo';
 
 const meta = getRouteMeta('/faq');
 const CATEGORIES = ['General', 'Pricing', 'How It Works', 'Technical'];
@@ -16,7 +15,6 @@ export function FAQ() {
         title={meta.title}
         description={meta.description}
         canonical={meta.canonical}
-        structuredData={faqPageJsonLd(FAQ_ITEMS)}
       />
 
       <Section>

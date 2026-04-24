@@ -20,18 +20,8 @@ import {
   PRICING_TIERS,
   SITE_CONFIG,
 } from '../data/load-content';
-import {
-  organizationJsonLd,
-  softwareAppJsonLd,
-  websiteJsonLd,
-} from '../utils/seo';
 
 export function Home() {
-  const structuredData = [
-    organizationJsonLd(),
-    websiteJsonLd(),
-    softwareAppJsonLd(),
-  ];
 
   return (
     <>
@@ -39,7 +29,6 @@ export function Home() {
         title={getRouteMeta('/').title}
         description={getRouteMeta('/').description}
         canonical={getRouteMeta('/').canonical}
-        structuredData={structuredData}
       />
 
       {/* Hero */}
