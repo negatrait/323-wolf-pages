@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import type { Plugin } from 'vite';
 
-const SITE_URL = 'https://sivussa.com';
+const SITE_URL = 'https://sivussa.com'; // derived from site config — matches SITE_CONFIG.url in content plugin
 
 interface SitemapEntry {
   loc: string;

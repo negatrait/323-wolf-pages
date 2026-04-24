@@ -2,17 +2,19 @@ import { Section } from '../components/common/Section';
 import { StepCard } from '../components/content/StepCard';
 import { BreadcrumbNav } from '../components/layout/BreadcrumbNav';
 import { Head } from '../components/seo/Head';
+import { getRouteMeta } from '../data/route-meta';
 import { HOME_HOW_IT_WORKS } from '../data/load-content';
 
 const HW = HOME_HOW_IT_WORKS;
+const meta = getRouteMeta('/how-it-works');
 
 export function HowItWorks() {
   return (
     <>
       <Head
-        title="How Sivussa Works — 4 Simple Steps"
-        description="Purchase your audit, AI specialists analyze your site, get a scored PDF report with copy-paste ready recommendations. Starting at EUR 99."
-        canonical="https://sivussa.com/how-it-works"
+        title={meta.title}
+        description={meta.description}
+        canonical={meta.canonical}
       />
       <Section>
         <BreadcrumbNav currentPage="How It Works" />

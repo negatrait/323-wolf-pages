@@ -1,5 +1,7 @@
 ---
 title: "We Launched a Website Visibility Audit Service - first customer: Sivussa."
+seo_title: "We Audited Ourselves — Here's What We Found"
+seo_description: "Sivussa team audits their own site. Discover the issues found and how we fixed them for better visibility."
 category: "BEHIND THE SCENES"
 readTime: "4 MIN READ"
 date: "2026-04-17"

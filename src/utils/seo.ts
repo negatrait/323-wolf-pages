@@ -1,14 +1,23 @@
+import { SITE_CONFIG } from '../data/load-content';
+
+const { name: SITE_NAME, url: SITE_URL, email: SITE_EMAIL } = SITE_CONFIG;
+
 export function buildMeta({
   title,
   description,
   canonical,
   ogImage = '/og-default.png',
+}: {
+  title: string;
+  description: string;
+  canonical: string;
+  ogImage?: string;
 }) {
   return {
-    title: `${title} | Sivussa`,
+    title: `${title} | ${SITE_NAME}`,
     description,
-    canonical: `https://sivussa.com${canonical}`,
-    ogImage: `https://sivussa.com${ogImage}`,
+    canonical: `${SITE_URL}${canonical}`,
+    ogImage: `${SITE_URL}${ogImage}`,
   };
 }
 
@@ -16,11 +25,11 @@ export function organizationJsonLd() {
   return {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: 'Sivussa',
-    url: 'https://sivussa.com',
-    logo: 'https://sivussa.com/logo.png',
-    description: 'AI-powered SEO/GEO/AEO audit tool for small businesses.',
-    email: 'sivussa@sivussa.com',
+    name: SITE_NAME,
+    url: SITE_URL,
+    logo: `${SITE_URL}/logo.png`,
+    description: 'AI-powered visibility audit tool for small businesses.',
+    email: SITE_EMAIL,
     address: {
       '@type': 'PostalAddress',
       addressLocality: 'Helsinki',
@@ -33,12 +42,12 @@ export function websiteJsonLd() {
   return {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: 'Sivussa',
-    url: 'https://sivussa.com',
+    name: SITE_NAME,
+    url: SITE_URL,
   };
 }
 
-export function faqPageJsonLd(items) {
+export function faqPageJsonLd(items: Array<{ question: string; answer: string }>) {
   return {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
@@ -54,7 +63,7 @@ export function softwareAppJsonLd() {
   return {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
-    name: 'Sivussa',
+    name: SITE_NAME,
     applicationCategory: 'BusinessApplication',
     operatingSystem: 'Web',
     offers: [

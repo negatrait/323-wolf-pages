@@ -14,6 +14,14 @@ import path from 'node:path';
 import matter from 'gray-matter';
 import hljs from 'highlight.js';
 import { Marked } from 'marked';
+// ─── Site Configuration ───────────────────────────────────────
+const SITE = {
+  name: 'Sivussa',
+  url: 'https://sivussa.com',
+  email: 'sivussa@sivussa.com',
+} as const;
+
+
 
 // ─── Interfaces ───────────────────────────────────────────────
 
@@ -103,6 +111,8 @@ interface FaqFrontmatter {
 interface BlogPostFrontmatter {
   title: string;
   description: string;
+  seo_title?: string;
+  seo_description?: string;
   date: string;
   category: string;
   readTime: string;
@@ -215,6 +225,55 @@ function loadMd<T = Record<string, unknown>>(
     html: marked.parse(content) as string,
     raw: content,
   };
+}
+
+// ─── Route Meta Builder ───────────────────────────────────────
+
+function buildRouteMeta(
+  contentDir: string,
+  hero: any,
+  pricingMd: any,
+  faqMd: any,
+  aboutMd: any,
+  blogPostsMap: Record<string, any>,
+): Record<string, { title: string; description: string; canonical: string }> {
+  const howItWorksMd = loadMd(contentDir, 'home/how-it-works.md');
+  const blogConfigMd = loadMd(contentDir, 'blog/index.md');
+
+  const routes: Record<string, { title: string; description: string; canonical: string }> = {};
+
+  const routeSources: Array<{ path: string; fm: any }> = [
+    { path: '/', fm: hero },
+    { path: '/how-it-works', fm: howItWorksMd.frontmatter },
+    { path: '/pricing', fm: pricingMd },
+    { path: '/about', fm: aboutMd },
+    { path: '/faq', fm: faqMd },
+    { path: '/blog', fm: blogConfigMd.frontmatter },
+  ];
+
+  for (const r of routeSources) {
+    routes[r.path] = {
+      title: r.fm?.seo_title || SITE.name,
+      description: r.fm?.seo_description || '',
+      canonical: `${SITE.url}${r.path === '/' ? '/' : r.path}`,
+    };
+  }
+
+  for (const [slug, post] of Object.entries(blogPostsMap)) {
+    const postPath = `/blog/${slug}`;
+    routes[postPath] = {
+      title: (post as any)?.seo_title || `${(post as any).title} — ${SITE.name} Blog`,
+      description: (post as any)?.seo_description || (post as any).description || '',
+      canonical: `${SITE.url}${postPath}`,
+    };
+  }
+
+  // Legal pages have no frontmatter — derive from site config
+  routes['/open-source-notices'] = { title: `Open Source Notices — ${SITE.name}`, description: 'Third-party software licenses and acknowledgments.', canonical: `${SITE.url}/open-source-notices` };
+  routes['/privacy'] = { title: `Privacy Policy — ${SITE.name}`, description: 'How your data is collected, used, and protected. GDPR compliant.', canonical: `${SITE.url}/privacy` };
+  routes['/terms'] = { title: `Terms of Service — ${SITE.name}`, description: 'Terms and conditions for using the audit service.', canonical: `${SITE.url}/terms` };
+
+  return routes;
 }
 
 // ─── Plugin ───────────────────────────────────────────────────
@@ -383,7 +442,7 @@ export default function contentPlugin() {
         intro:
           'We believe every business deserves visibility — not just the ones with €5,000/month agency budgets.',
         sections: aboutSections.map(mapAboutSection),
-        email: 'sivussa@sivussa.com',
+        email: SITE.email,
       };
 
       // ── BLOG ──────────────────────────────────────────────
@@ -419,6 +478,8 @@ export default function contentPlugin() {
         blogPostsMap[post.slug] = {
           title: post.title,
           description: post.description,
+          seo_title: post.seo_title,
+          seo_description: post.seo_description,
           date: post.date,
           category: post.category,
           readTime: post.readTime,
@@ -488,6 +549,13 @@ export default function contentPlugin() {
         ['PRICING_FEATURE_TABLE', PRICING_FEATURE_TABLE],
         ['PRICING_COMPETITORS', PRICING_COMPETITORS],
         ['PRICING_CTA', PRICING_CTA],
+        ['SITE_CONFIG', {
+          name: SITE.name,
+          url: SITE.url,
+          email: SITE.email,
+          tagline: hero.seo_title || SITE.name,
+        }],
+        ['ROUTE_META', buildRouteMeta(contentDir, hero.frontmatter, pricing.frontmatter, faq.frontmatter, about.frontmatter, blogPostsMap)],
       ]
         .map(([name, val]) => `export const ${name} = ${JSON.stringify(val)};`)
         .join('\n');
@@ -677,8 +745,8 @@ function parseAboutSections(raw: string): RawAboutSection[] {
         current.agents[current.agents.length - 1].desc += `${text} `;
       } else if (current.values.length > 0 && text) {
         current.values[current.values.length - 1].desc += `${text} `;
-      } else if (text.includes('[sivussa@sivussa.com]')) {
-        current.email = 'sivussa@sivussa.com';
+      } else if (text.includes(SITE.email)) {
+        current.email = SITE.email;
       } else if (!text.startsWith('-')) {
         current.content += `${text}\n`;
       }

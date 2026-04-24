@@ -1,10 +1,12 @@
 import { Section } from '../components/common/Section';
 import { BreadcrumbNav } from '../components/layout/BreadcrumbNav';
 import { Head } from '../components/seo/Head';
-import { BLOG_POSTS_MAP } from '../data/load-content';
+import { getRouteMeta } from '../data/route-meta';
+import { BLOG_POSTS_MAP, SITE_CONFIG } from '../data/load-content';
 
 export function BlogPost({ slug }) {
   const post = BLOG_POSTS_MAP[slug];
+  const meta = getRouteMeta(`/blog/${slug}`);
 
   if (!post) {
     return (
@@ -42,29 +44,29 @@ export function BlogPost({ slug }) {
     dateModified: post.date,
     author: {
       '@type': 'Organization',
-      name: 'Sivussa',
-      url: 'https://sivussa.com',
+      name: SITE_CONFIG.name,
+      url: SITE_CONFIG.url,
     },
     publisher: {
       '@type': 'Organization',
-      name: 'Sivussa',
+      name: SITE_CONFIG.name,
       logo: {
         '@type': 'ImageObject',
-        url: 'https://sivussa.com/logo.png',
+        url: `${SITE_CONFIG.url}/logo.png`,
       },
     },
     mainEntityOfPage: {
       '@type': 'WebPage',
-      '@id': `https://sivussa.com/blog/${slug}`,
+      '@id': `${SITE_CONFIG.url}/blog/${slug}`,
     },
   };
 
   return (
     <>
       <Head
-        title={`${post.title} — Sivussa Blog`}
-        description={post.description}
-        canonical={`https://sivussa.com/blog/${slug}`}
+        title={meta.title}
+        description={meta.description}
+        canonical={meta.canonical}
         structuredData={articleJsonLd}
       />
 

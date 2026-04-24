@@ -26,4 +26,6 @@ export {
   PRICING_TIERS,
   PRIVACY_POLICY,
   TERMS_OF_SERVICE,
+  ROUTE_META,
+  SITE_CONFIG,
 } from 'virtual:content';

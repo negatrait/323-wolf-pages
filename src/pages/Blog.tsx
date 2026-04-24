@@ -2,7 +2,10 @@ import { useState } from 'preact/hooks';
 import { Section } from '../components/common/Section';
 import { BreadcrumbNav } from '../components/layout/BreadcrumbNav';
 import { Head } from '../components/seo/Head';
+import { getRouteMeta } from '../data/route-meta';
 import { BLOG_CONFIG } from '../data/load-content';
+
+const meta = getRouteMeta('/blog');
 
 export function Blog() {
   const [activeCategory, setActiveCategory] = useState('ALL');
@@ -20,9 +23,9 @@ export function Blog() {
   return (
     <>
       <Head
-        title="Blog — Website Visibility Insights"
-        description="Tips, audit findings, and actionable guides for improving your website visibility."
-        canonical="https://sivussa.com/blog"
+        title={meta.title}
+        description={meta.description}
+        canonical={meta.canonical}
       />
 
       <Section>

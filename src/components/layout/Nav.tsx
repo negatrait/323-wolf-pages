@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'preact/hooks';
 import { useLocation } from 'preact-iso';
 import { NAV_LINKS } from '../../utils/routes';
+import { NAV_CONFIG } from '../../data/load-content';
 
 export function Nav() {
   const location = useLocation();
@@ -37,7 +38,7 @@ export function Nav() {
       >
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
           <a href="/" class="text-xl font-bold text-primary">
-            Sivussa
+            {NAV_CONFIG.logo_text}
           </a>
 
           {/* Desktop nav */}

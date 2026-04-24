@@ -10,16 +10,18 @@ import {
   PRICING_TERMS,
   PRICING_TIERS,
 } from '../data/load-content';
+import { getRouteMeta } from '../data/route-meta';
 
 const PT = PRICING_FEATURE_TABLE;
+const meta = getRouteMeta('/pricing');
 
 export function Pricing() {
   return (
     <>
       <Head
-        title="Pricing — Simple Plans, No Hidden Fees"
-        description="From €89/month. Full visibility audit with prioritized recommendations. Simple, transparent pricing."
-        canonical="https://sivussa.com/pricing"
+        title={meta.title}
+        description={meta.description}
+        canonical={meta.canonical}
       />
       <Section>
         <BreadcrumbNav currentPage="Pricing" />

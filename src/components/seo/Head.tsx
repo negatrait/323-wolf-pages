@@ -1,5 +1,5 @@
 import { useEffect } from 'preact/hooks';
-import { getRouteMeta } from '../../data/route-meta';
+import { getRouteMeta, SITE_CONFIG } from '../../data/route-meta';
 
 /**
  * SEO head component. Works in two modes:
@@ -21,7 +21,7 @@ export function Head({
       setMeta('description', description);
       setMeta('og:title', title);
       setMeta('og:description', description);
-      setMeta('og:image', ogImage || 'https://sivussa.com/og-default.png');
+      setMeta('og:image', ogImage || `${SITE_CONFIG.url}/og-default.png`);
       setMeta('og:url', canonical);
       setMeta('og:type', 'website');
       setMeta('twitter:card', 'summary_large_image');

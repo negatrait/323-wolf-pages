@@ -1,17 +1,25 @@
 import { Section } from '../components/common/Section';
 import { BreadcrumbNav } from '../components/layout/BreadcrumbNav';
 import { Head } from '../components/seo/Head';
-import { ABOUT } from '../data/load-content';
-import { organizationJsonLd } from '../utils/seo';
+import { getRouteMeta } from '../data/route-meta';
+import { ABOUT, SITE_CONFIG } from '../data/load-content';
+
+const meta = getRouteMeta('/about');
 
 export function About() {
   return (
     <>
       <Head
-        title="About Sivussa — Visibility Upgrades on Autopilot"
-        description="Sivussa democratizes online visibility for small businesses. Built in Finland."
-        canonical="https://sivussa.com/about"
-        structuredData={organizationJsonLd()}
+        title={meta.title}
+        description={meta.description}
+        canonical={meta.canonical}
+        structuredData={{
+          '@context': 'https://schema.org',
+          '@type': 'Organization',
+          name: SITE_CONFIG.name,
+          url: SITE_CONFIG.url,
+          logo: `${SITE_CONFIG.url}/logo.png`,
+        }}
       />
 
       <Section>

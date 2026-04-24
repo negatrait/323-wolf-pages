@@ -1,15 +1,18 @@
 import { Section } from '../components/common/Section';
 import { BreadcrumbNav } from '../components/layout/BreadcrumbNav';
 import { Head } from '../components/seo/Head';
+import { getRouteMeta } from '../data/route-meta';
 import { PRIVACY_POLICY } from '../data/load-content';
+
+const meta = getRouteMeta('/privacy');
 
 export function Privacy() {
   return (
     <>
       <Head
-        title="Privacy Policy"
-        description="How Sivussa collects, uses, and protects your data. GDPR compliant."
-        canonical="https://sivussa.com/privacy"
+        title={meta.title}
+        description={meta.description}
+        canonical={meta.canonical}
       />
 
       <Section>

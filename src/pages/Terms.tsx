@@ -1,15 +1,18 @@
 import { Section } from '../components/common/Section';
 import { BreadcrumbNav } from '../components/layout/BreadcrumbNav';
 import { Head } from '../components/seo/Head';
+import { getRouteMeta } from '../data/route-meta';
 import { TERMS_OF_SERVICE } from '../data/load-content';
+
+const meta = getRouteMeta('/terms');
 
 export function Terms() {
   return (
     <>
       <Head
-        title="Terms of Service"
-        description="Terms and conditions for using Sivussa audit service."
-        canonical="https://sivussa.com/terms"
+        title={meta.title}
+        description={meta.description}
+        canonical={meta.canonical}
       />
 
       <Section>

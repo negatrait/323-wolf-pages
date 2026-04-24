@@ -1,5 +1,6 @@
 import { Section } from '../components/common/Section';
 import { Head } from '../components/seo/Head';
+import { SITE_CONFIG } from '../data/load-content';
 
 export function NotFound() {
   return (
@@ -7,7 +8,7 @@ export function NotFound() {
       <Head
         title="Page Not Found"
         description="The page you're looking for doesn't exist."
-        canonical="https://sivussa.com/404"
+        canonical={`${SITE_CONFIG.url}/404`}
       />
       <Section>
         <div class="max-w-xl mx-auto text-center py-20">

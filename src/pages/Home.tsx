@@ -4,6 +4,7 @@ import { FeatureCard } from '../components/content/FeatureCard';
 import { PricingCard } from '../components/content/PricingCard';
 import { StepCard } from '../components/content/StepCard';
 import { Head } from '../components/seo/Head';
+import { getRouteMeta } from '../data/route-meta';
 import {
   FAQ_ITEMS,
   FEATURES,
@@ -17,6 +18,7 @@ import {
   HOME_WHAT_YOU_GET,
   HOME_WHO_IS_THIS_FOR,
   PRICING_TIERS,
+  SITE_CONFIG,
 } from '../data/load-content';
 import {
   organizationJsonLd,
@@ -34,15 +36,9 @@ export function Home() {
   return (
     <>
       <Head
-        title={
-          HOME_HERO.seo_title ||
-          'Sivussa — Find out if your website is invisible to customers'
-        }
-        description={
-          HOME_HERO.seo_description ||
-          "Sivussa scans your website and shows you exactly why customers can't find you — and what to fix first. Built for small businesses."
-        }
-        canonical="https://sivussa.com/"
+        title={getRouteMeta('/').title}
+        description={getRouteMeta('/').description}
+        canonical={getRouteMeta('/').canonical}
         structuredData={structuredData}
       />
 
@@ -172,7 +168,7 @@ export function Home() {
               </div>
               <div>
                 <p class="text-primary">
-                  <strong>Sivussa:</strong>{' '}
+                  <strong>{SITE_CONFIG.name}:</strong>{' '}
                   {HOME_HOW_IT_WORKS.comparison.sivussa}
                 </p>
               </div>
