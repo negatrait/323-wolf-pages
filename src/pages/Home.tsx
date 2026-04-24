@@ -77,10 +77,18 @@ export function Home() {
               </a>
             </div>
           </div>
+          <div class="max-w-4xl mx-auto mt-12">
+            <img
+              src="/sivussa-banner.webp"
+              alt="Sivussa — AI-native visibility specialists clearing your structural blockers"
+              class="w-full rounded-2xl border border-dark-600 shadow-2xl"
+              width="1536"
+              height="850"
+              loading="eager"
+            />
+          </div>
         </div>
       </section>
-
-      {/* What You Get */}
       <Section>
         <div class="max-w-4xl mx-auto">
           <h2 class="text-3xl md:text-4xl font-bold text-white text-center mb-12">
