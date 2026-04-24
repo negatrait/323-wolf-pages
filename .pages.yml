@@ -480,6 +480,24 @@ content:
     label: Site Config
     type: group
     items:
+      - name: site
+        label: Site Identity
+        type: file
+        path: src/content/site.md
+        fields:
+          - name: name
+            type: string
+            label: Site Name
+          - name: url
+            type: string
+            label: Site URL
+          - name: email
+            type: string
+            label: Contact Email
+          - name: tagline
+            type: string
+            label: Tagline
+
       - name: robots
         label: robots.txt
         type: file

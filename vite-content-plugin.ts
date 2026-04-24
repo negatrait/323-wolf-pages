@@ -15,11 +15,19 @@ import matter from 'gray-matter';
 import hljs from 'highlight.js';
 import { Marked } from 'marked';
 // ─── Site Configuration ───────────────────────────────────────
-const SITE = {
-  name: 'Sivussa',
-  url: 'https://sivussa.com',
-  email: 'sivussa@sivussa.com',
-} as const;
+// Loaded from src/content/site.md frontmatter at build time.
+// Edit there — or via Pages CMS.
+let SITE: { name: string; url: string; email: string; tagline: string };
+
+function loadSiteConfig(contentDir: string) {
+  const siteMd = loadMd(contentDir, 'site.md');
+  SITE = {
+    name: siteMd.frontmatter.name as string,
+    url: siteMd.frontmatter.url as string,
+    email: siteMd.frontmatter.email as string,
+    tagline: siteMd.frontmatter.tagline as string,
+  };
+}
 
 
 
@@ -291,6 +299,7 @@ export default function contentPlugin() {
       if (id !== resolvedVirtualModuleId) return;
 
       const contentDir = path.resolve(process.cwd(), 'src/content');
+      loadSiteConfig(contentDir);
 
       // ── HOME ──────────────────────────────────────────────
 
@@ -566,6 +575,7 @@ export default function contentPlugin() {
     // used by page components. One source of truth.
     generateBundle() {
       const contentDir = path.resolve(process.cwd(), 'src/content');
+      loadSiteConfig(contentDir);
 
       const heroMd = loadMd(contentDir, 'home/hero.md');
       const hero = heroMd.frontmatter;
@@ -579,23 +589,23 @@ export default function contentPlugin() {
       const aboutSections = parseAboutSections(aboutMd.raw);
 
       // llms.txt — site index
-      const llmsTxt = `# ${hero.seo_title || 'Sivussa'}
+      const llmsTxt = `# ${hero.seo_title || SITE.name}
 
 > ${hero.seo_description || ''}
 
-Visit sivussa.com for more information.
+Visit ${SITE.url} for more information.
 
 ## Main
 
-- [Sivussa](https://sivussa.com/) - Landing page
-- [How It Works](https://sivussa.com/how-it-works) - How the service works
-- [Pricing](https://sivussa.com/pricing): Pricing information and plans
+- [${SITE.name}](${SITE.url}/) - Landing page
+- [How It Works](${SITE.url}/how-it-works) - How the service works
+- [Pricing](${SITE.url}/pricing): Pricing information and plans
 
 ## Optional
 
-- [About](https://sivussa.com/about): About the organization
-- [FAQ](https://sivussa.com/faq): Frequently asked Questions with Answers
-- [Blog](https://sivussa.com/blog): Latest articles and updates
+- [About](${SITE.url}/about): About the organization
+- [FAQ](${SITE.url}/faq): Frequently asked Questions with Answers
+- [Blog](${SITE.url}/blog): Latest articles and updates
 `;
 
       // llms-home.md
@@ -611,7 +621,7 @@ Visit sivussa.com for more information.
       const tableHeaders = (hw.comparison_table?.headers || [])
         .map((h: string) => `| ${h} |`)
         .join('\n') + '\n' + (hw.comparison_table?.headers || []).map(() => '| --- ').join('') + '|';
-      const llmsHowItWorks = `# How It Works — Sivussa
+      const llmsHowItWorks = `# How It Works — ${SITE.name}
 
 ${problemMd.raw.split('---').slice(2).join('---').trim()}
 
@@ -619,7 +629,7 @@ ${problemMd.raw.split('---').slice(2).join('---').trim()}
 
 ${stepsList}
 
-Starting at EUR 89/99. Visit [sivussa.com](https://sivussa.com) to get started.
+Starting at EUR 89/99. Visit [sivussa.com](${SITE.url}) to get started.
 `;
 
       // llms-pricing.md
@@ -629,7 +639,7 @@ Starting at EUR 89/99. Visit [sivussa.com](https://sivussa.com) to get started.
       const pricingFaqLines = (pm.faq || [])
         .map((f: any) => `**${f.question}**\n${f.answer}`)
         .join('\n\n');
-      const llmsPricing = `# Pricing — Sivussa
+      const llmsPricing = `# Pricing — ${SITE.name}
 
 Transparent pricing. No hidden fees. Cancel anytime.
 
@@ -641,7 +651,7 @@ ${tierLines}
 
 ${pricingFaqLines}
 
-Visit [sivussa.com/pricing](https://sivussa.com/pricing) for full details.
+Visit [sivussa.com/pricing](${SITE.url}/pricing) for full details.
 `;
 
       // llms-faq.md
@@ -657,18 +667,18 @@ Visit [sivussa.com/pricing](https://sivussa.com/pricing) for full details.
           return `## ${cat}\n\n${qas}`;
         })
         .join('\n\n');
-      const llmsFaq = `# FAQ — Sivussa
+      const llmsFaq = `# FAQ — ${SITE.name}
 
       Frequently asked questions about Sivussa visibility audits.
 
 ${faqSections}
 
-Visit [sivussa.com](https://sivussa.com) for more information.
+Visit [sivussa.com](${SITE.url}) for more information.
 `;
 
       // llms-about.md
       const aboutBody = aboutMd.raw.split('---').slice(2).join('---').trim();
-      const llmsAbout = `# About Sivussa
+      const llmsAbout = `# About ${SITE.name}
 
 ${aboutBody}
 `;
