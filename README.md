@@ -132,7 +132,6 @@ After first page load, `Head.tsx` handles client-side meta tag mutations and JSO
 │   └── _middleware.ts            # Markdown content negotiation for AI agents
 ├── public/                       # Static assets (copied to dist/)
 │   ├── _headers                  # Cloudflare response headers
-│   ├── _redirects                # Cloudflare redirect rules
 │   ├── robots.txt                # Crawler directives + Content Signals
 │   ├── sivussa-banner.webp       # Hero banner image
 │   └── .well-known/
@@ -213,7 +212,7 @@ Content editable via [Pages CMS](https://pagescms.org). The `.pages.yml` configu
 - **Blog**: posts (auto-discovered)
 - **Layout**: nav, footer
 - **Legal**: privacy, terms, notices
-- **Site Config**: site identity (name, url, email, tagline), robots.txt, _headers, _redirects
+- **Site Config**: site identity (name, url, email, tagline), robots.txt, _headers
 - **Agent Content**: agent-skills SKILL.md files
 
 CMS edits commit directly to the branch. Cloudflare auto-deploys.

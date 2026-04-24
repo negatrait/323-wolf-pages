@@ -500,9 +500,3 @@ content:
         type: file
         path: public/_headers
         format: code
-
-      - name: redirects
-        label: _redirects
-        type: file
-        path: public/_redirects
-        format: code
