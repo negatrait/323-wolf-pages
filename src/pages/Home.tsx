@@ -49,8 +49,18 @@ export function Home() {
       />
 
       {/* Hero */}
-      <section class="py-20 lg:py-32 bg-dark-900">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section class="relative min-h-[600px] lg:min-h-[700px] flex items-center overflow-hidden">
+        <img
+          src="/sivussa-banner.webp"
+          alt=""
+          class="absolute inset-0 w-full h-full object-cover"
+          width="1536"
+          height="850"
+          loading="eager"
+          aria-hidden="true"
+        />
+        <div class="absolute inset-0 bg-dark-900/70" />
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
           <div class="max-w-3xl mx-auto text-center">
             <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
               {HOME_HERO.title}{' '}
@@ -76,16 +86,6 @@ export function Home() {
                 {HOME_HERO.cta_secondary}
               </a>
             </div>
-          </div>
-          <div class="max-w-4xl mx-auto mt-12">
-            <img
-              src="/sivussa-banner.webp"
-              alt="Sivussa — AI-native visibility specialists clearing your structural blockers"
-              class="w-full rounded-2xl border border-dark-600 shadow-2xl"
-              width="1536"
-              height="850"
-              loading="eager"
-            />
           </div>
         </div>
       </section>
