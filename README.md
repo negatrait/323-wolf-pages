@@ -158,7 +158,7 @@ Defined in `src/index.css` `@theme` block. All Tailwind utilities (`text-primary
 5. Merge → auto-deploys to production
 
 ### CMS
-Content can be edited via [Cloudflare Pages CMS](https://dash.cloudflare.com) or [PagesCMS.org](https://pagescms.org). The `.pages.yml` file at the repository root configures the editor for every content file in the project.
+Content can be edited via [Pages CMS](https://pagescms.org) connected to the repository. The `.pages.yml` file at the repository root configures the editor for every content file, organized into groups:
 
 **What's editable via CMS:**
 - All homepage sections (hero, problem, how-it-works, features, pricing, who-is-this-for, what-you-get)

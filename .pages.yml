@@ -1,438 +1,411 @@
 # Pages CMS configuration for Sivussa.com
-# See SPRINT.md for integration status and README.md for CMS usage docs.
 
 media:
   input: public
   output: /
 
 content:
-  # ── Homepage Sections ──────────────────────────────────────
-  - name: hero
-    label: Homepage Hero
-    type: file
-    path: src/content/home/hero.md
-    format: yaml-frontmatter
-    fields:
-      - name: title
-        type: string
-        label: Title
-        required: true
-      - name: subtitle
-        type: string
-        label: Subtitle (highlight)
-      - name: cta_primary
-        type: string
-        label: Primary CTA text
-      - name: cta_primary_href
-        type: string
-        label: Primary CTA URL
-      - name: cta_secondary
-        type: string
-        label: Secondary CTA text
-      - name: cta_secondary_href
-        type: string
-        label: Secondary CTA URL
-      - name: seo_title
-        type: string
-        label: SEO title
-        hidden: true
-      - name: seo_description
-        type: text
-        label: SEO description
-        hidden: true
-      - name: body
-        type: rich-text
-        label: Body text
-
-  - name: problem
-    label: Homepage Problem
-    type: file
-    path: src/content/home/problem.md
-    format: yaml-frontmatter
-    fields:
-      - name: title
-        type: string
-        required: true
-      - name: subtitle
-        type: string
-      - name: body
-        type: rich-text
-
-  - name: how-it-works
-    label: Homepage How It Works
-    type: file
-    path: src/content/home/how-it-works.md
-    format: yaml-frontmatter
-    fields:
-      - name: title
-        type: string
-      - name: seo_title
-        type: string
-        hidden: true
-      - name: seo_description
-        type: text
-        hidden: true
-      - name: heading
-        type: string
-        label: Page heading
-      - name: heading_highlight
-        type: string
-        label: Heading highlight text
-      - name: intro
-        type: text
-        label: Intro paragraph
-      - name: steps
-        type: object
-        label: Steps
-        list: true
+  # ── Homepage ───────────────────────────────────────────────
+  - name: homepage
+    label: Homepage
+    type: group
+    items:
+      - name: hero
+        label: Hero
+        type: file
+        path: src/content/home/hero.md
+        format: yaml-frontmatter
         fields:
-          - name: number
-            type: number
           - name: title
             type: string
-          - name: description
-            type: text
-      - name: comparison
-        type: object
-        label: Comparison quote
-        fields:
-          - name: other
-            type: text
-          - name: sivussa
-            type: text
-      - name: comparison_heading
-        type: string
-        label: Comparison section heading
-      - name: comparison_heading_highlight
-        type: string
-      - name: comparison_table
-        type: object
-        label: Comparison table
-        fields:
-          - name: headers
+            required: true
+          - name: subtitle
             type: string
-            list: true
-          - name: rows
+            label: Subtitle (highlight)
+          - name: cta_primary
+            type: string
+            label: Primary CTA text
+          - name: cta_primary_href
+            type: string
+            label: Primary CTA URL
+          - name: cta_secondary
+            type: string
+            label: Secondary CTA text
+          - name: cta_secondary_href
+            type: string
+            label: Secondary CTA URL
+          - name: seo_title
+            type: string
+            hidden: true
+          - name: seo_description
+            type: text
+            hidden: true
+          - name: body
+            type: rich-text
+            label: Body text
+
+      - name: problem
+        label: Problem Statement
+        type: file
+        path: src/content/home/problem.md
+        format: yaml-frontmatter
+        fields:
+          - name: title
+            type: string
+            required: true
+          - name: subtitle
+            type: string
+          - name: body
+            type: rich-text
+
+      - name: how-it-works
+        label: How It Works
+        type: file
+        path: src/content/home/how-it-works.md
+        format: yaml-frontmatter
+        fields:
+          - name: title
+            type: string
+          - name: seo_title
+            type: string
+            hidden: true
+          - name: seo_description
+            type: text
+            hidden: true
+          - name: heading
+            type: string
+            label: Page heading
+          - name: heading_highlight
+            type: string
+          - name: intro
+            type: text
+          - name: steps
             type: object
             list: true
             fields:
-              - name: "0"
+              - name: number
+                type: number
+              - name: title
                 type: string
-              - name: "1"
+              - name: description
+                type: text
+          - name: comparison
+            type: object
+            fields:
+              - name: other
+                type: text
+              - name: sivussa
+                type: text
+          - name: comparison_heading
+            type: string
+          - name: comparison_heading_highlight
+            type: string
+          - name: comparison_table
+            type: object
+            fields:
+              - name: headers
                 type: string
-              - name: "2"
+                list: true
+              - name: rows
+                type: object
+                list: true
+                fields:
+                  - name: "0"
+                    type: string
+                  - name: "1"
+                    type: string
+                  - name: "2"
+                    type: string
+          - name: what_you_get
+            type: object
+            list: true
+            fields:
+              - name: title
                 type: string
-      - name: what_you_get
-        type: object
-        label: What you get cards
-        list: true
-        fields:
-          - name: title
+              - name: desc
+                type: text
+          - name: cta_title
             type: string
-          - name: desc
+          - name: cta_subtitle
             type: text
-      - name: cta_title
-        type: string
-        label: CTA heading
-      - name: cta_subtitle
-        type: text
-        label: CTA description
-      - name: cta_text
-        type: string
-        label: CTA button text
-      - name: cta_href
-        type: string
-        label: CTA button URL
-      - name: body
-        type: rich-text
-
-  - name: features
-    label: Homepage Features
-    type: file
-    path: src/content/home/features.md
-    format: yaml-frontmatter
-    fields:
-      - name: title
-        type: string
-      - name: subtitle
-        type: string
-      - name: features
-        type: object
-        list: true
-        fields:
-          - name: title
-            type: string
-          - name: description
-            type: text
-      - name: body
-        type: rich-text
-
-  - name: what-you-get
-    label: Homepage What You Get
-    type: file
-    path: src/content/home/what-you-get.md
-    format: yaml-frontmatter
-    fields:
-      - name: title
-        type: string
-      - name: body
-        type: rich-text
-
-  - name: who-is-this-for
-    label: Homepage Who Is This For
-    type: file
-    path: src/content/home/who-is-this-for.md
-    format: yaml-frontmatter
-    fields:
-      - name: title
-        type: string
-      - name: subtitle
-        type: string
-      - name: cards
-        type: object
-        list: true
-        fields:
-          - name: title
-            type: string
-          - name: description
-            type: text
-      - name: body
-        type: rich-text
-
-  - name: pricing
-    label: Homepage Pricing
-    type: file
-    path: src/content/home/pricing.md
-    format: yaml-frontmatter
-    fields:
-      - name: title
-        type: string
-      - name: seo_title
-        type: string
-        hidden: true
-      - name: seo_description
-        type: text
-        hidden: true
-      - name: subtitle
-        type: string
-      - name: tiers
-        type: object
-        list: true
-        label: Pricing tiers
-        fields:
-          - name: name
-            type: string
-          - name: price
-            type: string
-          - name: period
-            type: string
-          - name: popular
-            type: boolean
           - name: cta_text
             type: string
-            label: CTA button text
           - name: cta_href
             type: string
-            label: CTA button URL
+          - name: body
+            type: rich-text
+
+      - name: features
+        label: Features
+        type: file
+        path: src/content/home/features.md
+        format: yaml-frontmatter
+        fields:
+          - name: title
+            type: string
+          - name: subtitle
+            type: string
           - name: features
-            type: string
-            list: true
-      - name: terms
-        type: object
-        list: true
-        label: Legal terms
-        fields:
-          - name: timing
-            type: string
-          - name: consumers
-            type: string
-          - name: withdrawal
-            type: string
-          - name: tos_pp
-            type: string
-      - name: faq
-        type: object
-        list: true
-        label: Pricing FAQ
-        fields:
-          - name: question
-            type: string
-          - name: answer
-            type: text
-      - name: feature_table
-        type: object
-        label: Feature comparison table
-        fields:
-          - name: headers
-            type: string
-            list: true
-          - name: rows
             type: object
             list: true
             fields:
-              - name: "0"
+              - name: title
                 type: string
-              - name: "1"
-                type: string
-              - name: "2"
-                type: string
-              - name: "3"
-                type: string
-      - name: competitors
-        type: object
-        list: true
-        label: Competitor cards
-        fields:
-          - name: name
-            type: string
-          - name: price
-            type: string
-          - name: desc
-            type: text
-          - name: highlight
-            type: boolean
-      - name: cta_title
-        type: string
-      - name: cta_text
-        type: string
-      - name: cta_href
-        type: string
-      - name: body
-        type: rich-text
+              - name: description
+                type: text
+          - name: body
+            type: rich-text
 
-  # ── Pages ──────────────────────────────────────────────────
-  - name: about
-    label: About Page
-    type: file
-    path: src/content/about.md
-    format: yaml-frontmatter
-    fields:
-      - name: title
-        type: string
-      - name: subtitle
-        type: string
-      - name: seo_title
-        type: string
-        hidden: true
-      - name: seo_description
-        type: text
-        hidden: true
-      - name: body
-        type: rich-text
-
-  - name: faq
-    label: FAQ Page
-    type: file
-    path: src/content/faq.md
-    format: yaml-frontmatter
-    fields:
-      - name: title
-        type: string
-      - name: seo_title
-        type: string
-        hidden: true
-      - name: seo_description
-        type: text
-        hidden: true
-      - name: faqs
-        type: object
-        list: true
-        fields:
-          - name: category
-            type: string
-          - name: question
-            type: string
-          - name: answer
-            type: text
-      - name: body
-        type: rich-text
-
-  # ── Blog ───────────────────────────────────────────────────
-  - name: blog-config
-    label: Blog Settings
-    type: file
-    path: src/content/blog/index.md
-    format: yaml-frontmatter
-    fields:
-      - name: title
-        type: string
-      - name: seo_title
-        type: string
-        hidden: true
-      - name: seo_description
-        type: text
-        hidden: true
-      - name: description
-        type: text
-      - name: search_placeholder
-        type: string
-      - name: categories
-        type: string
-        list: true
-      - name: load_more_link
-        type: string
-      - name: load_more_text
-        type: string
-      - name: body
-        type: rich-text
-
-  - name: blog-posts
-    label: Blog Posts
-    type: collection
-    path: src/content/blog/posts
-    filename: "{primary}.md"
-    format: yaml-frontmatter
-    view:
-      primary: title
-      sort: date
-      order: desc
-    fields:
-      - name: title
-        type: string
-        required: true
-      - name: category
-        type: string
-        required: true
-      - name: readTime
-        type: string
-        label: Read time (e.g. "4 MIN READ")
-      - name: date
-        type: string
-        required: true
-      - name: description
-        type: text
-      - name: body
-        type: rich-text
-
-  # ── Layout ─────────────────────────────────────────────────
-  - name: nav
-    label: Navigation
-    type: file
-    path: src/content/nav.md
-    format: yaml-frontmatter
-    fields:
-      - name: logo_text
-        type: string
-      - name: links
-        type: object
-        list: true
-        fields:
-          - name: label
-            type: string
-          - name: href
-            type: string
-
-  - name: footer
-    label: Footer
-    type: file
-    path: src/content/footer.md
-    format: yaml-frontmatter
-    fields:
-      - name: sections
-        type: object
-        list: true
+      - name: what-you-get
+        label: What You Get
+        type: file
+        path: src/content/home/what-you-get.md
+        format: yaml-frontmatter
         fields:
           - name: title
+            type: string
+          - name: body
+            type: rich-text
+
+      - name: who-is-this-for
+        label: Who Is This For
+        type: file
+        path: src/content/home/who-is-this-for.md
+        format: yaml-frontmatter
+        fields:
+          - name: title
+            type: string
+          - name: subtitle
+            type: string
+          - name: cards
+            type: object
+            list: true
+            fields:
+              - name: title
+                type: string
+              - name: description
+                type: text
+          - name: body
+            type: rich-text
+
+      - name: pricing
+        label: Pricing
+        type: file
+        path: src/content/home/pricing.md
+        format: yaml-frontmatter
+        fields:
+          - name: title
+            type: string
+          - name: seo_title
+            type: string
+            hidden: true
+          - name: seo_description
+            type: text
+            hidden: true
+          - name: subtitle
+            type: string
+          - name: tiers
+            type: object
+            list: true
+            fields:
+              - name: name
+                type: string
+              - name: price
+                type: string
+              - name: period
+                type: string
+              - name: popular
+                type: boolean
+              - name: cta_text
+                type: string
+              - name: cta_href
+                type: string
+              - name: features
+                type: string
+                list: true
+          - name: terms
+            type: object
+            list: true
+            fields:
+              - name: timing
+                type: string
+              - name: consumers
+                type: string
+              - name: withdrawal
+                type: string
+              - name: tos_pp
+                type: string
+          - name: faq
+            type: object
+            list: true
+            fields:
+              - name: question
+                type: string
+              - name: answer
+                type: text
+          - name: feature_table
+            type: object
+            fields:
+              - name: headers
+                type: string
+                list: true
+              - name: rows
+                type: object
+                list: true
+                fields:
+                  - name: "0"
+                    type: string
+                  - name: "1"
+                    type: string
+                  - name: "2"
+                    type: string
+                  - name: "3"
+                    type: string
+          - name: competitors
+            type: object
+            list: true
+            fields:
+              - name: name
+                type: string
+              - name: price
+                type: string
+              - name: desc
+                type: text
+              - name: highlight
+                type: boolean
+          - name: cta_title
+            type: string
+          - name: cta_text
+            type: string
+          - name: cta_href
+            type: string
+          - name: body
+            type: rich-text
+
+  # ── Pages ──────────────────────────────────────────────────
+  - name: pages
+    label: Pages
+    type: group
+    items:
+      - name: about
+        label: About
+        type: file
+        path: src/content/about.md
+        format: yaml-frontmatter
+        fields:
+          - name: title
+            type: string
+          - name: subtitle
+            type: string
+          - name: seo_title
+            type: string
+            hidden: true
+          - name: seo_description
+            type: text
+            hidden: true
+          - name: body
+            type: rich-text
+
+      - name: faq
+        label: FAQ
+        type: file
+        path: src/content/faq.md
+        format: yaml-frontmatter
+        fields:
+          - name: title
+            type: string
+          - name: seo_title
+            type: string
+            hidden: true
+          - name: seo_description
+            type: text
+            hidden: true
+          - name: faqs
+            type: object
+            list: true
+            fields:
+              - name: category
+                type: string
+              - name: question
+                type: string
+              - name: answer
+                type: text
+          - name: body
+            type: rich-text
+
+  # ── Blog ───────────────────────────────────────────────────
+  - name: blog
+    label: Blog
+    type: group
+    items:
+      - name: blog-config
+        label: Blog Settings
+        type: file
+        path: src/content/blog/index.md
+        format: yaml-frontmatter
+        fields:
+          - name: title
+            type: string
+          - name: seo_title
+            type: string
+            hidden: true
+          - name: seo_description
+            type: text
+            hidden: true
+          - name: description
+            type: text
+          - name: search_placeholder
+            type: string
+          - name: categories
+            type: string
+            list: true
+          - name: load_more_link
+            type: string
+          - name: load_more_text
+            type: string
+          - name: body
+            type: rich-text
+
+      - name: blog-posts
+        label: Blog Posts
+        type: collection
+        path: src/content/blog/posts
+        filename: "{primary}.md"
+        format: yaml-frontmatter
+        view:
+          primary: title
+          sort: date
+          order: desc
+        fields:
+          - name: title
+            type: string
+            required: true
+          - name: category
+            type: string
+            required: true
+          - name: readTime
+            type: string
+            label: Read time (e.g. "4 MIN READ")
+          - name: date
+            type: string
+            required: true
+          - name: description
+            type: text
+          - name: body
+            type: rich-text
+
+  # ── Layout ─────────────────────────────────────────────────
+  - name: layout
+    label: Layout
+    type: group
+    items:
+      - name: nav
+        label: Navigation
+        type: file
+        path: src/content/nav.md
+        format: yaml-frontmatter
+        fields:
+          - name: logo_text
             type: string
           - name: links
             type: object
@@ -442,116 +415,149 @@ content:
                 type: string
               - name: href
                 type: string
-      - name: copyright
-        type: string
+
+      - name: footer
+        label: Footer
+        type: file
+        path: src/content/footer.md
+        format: yaml-frontmatter
+        fields:
+          - name: sections
+            type: object
+            list: true
+            fields:
+              - name: title
+                type: string
+              - name: links
+                type: object
+                list: true
+                fields:
+                  - name: label
+                    type: string
+                  - name: href
+                    type: string
+          - name: copyright
+            type: string
 
   # ── Legal ──────────────────────────────────────────────────
-  - name: privacy
-    label: Privacy Policy
-    type: file
-    path: src/content/home/sivussa_privacy_policy.md
-    format: raw
-    fields:
-      - name: body
-        type: rich-text
+  - name: legal
+    label: Legal
+    type: group
+    items:
+      - name: privacy
+        label: Privacy Policy
+        type: file
+        path: src/content/home/sivussa_privacy_policy.md
+        format: raw
+        fields:
+          - name: body
+            type: rich-text
 
-  - name: terms
-    label: Terms of Service
-    type: file
-    path: src/content/home/sivussa_terms_of_service.md
-    format: raw
-    fields:
-      - name: body
-        type: rich-text
+      - name: terms
+        label: Terms of Service
+        type: file
+        path: src/content/home/sivussa_terms_of_service.md
+        format: raw
+        fields:
+          - name: body
+            type: rich-text
 
-  - name: open-source-notices
-    label: Open Source Notices
-    type: file
-    path: src/content/home/sivussa_open_source_notices.md
-    format: raw
-    fields:
-      - name: body
-        type: rich-text
+      - name: open-source-notices
+        label: Open Source Notices
+        type: file
+        path: src/content/home/sivussa_open_source_notices.md
+        format: raw
+        fields:
+          - name: body
+            type: rich-text
 
-  # ── Agent Content ──────────────────────────────────────────
-  - name: llms-txt
-    label: llms.txt (AI Overview)
-    type: file
-    path: public/llms.txt
-    format: raw
-    fields:
-      - name: body
-        type: rich-text
+  # ── AI Agent Content ───────────────────────────────────────
+  - name: ai-agents
+    label: AI Agent Content
+    type: group
+    items:
+      - name: llms-txt
+        label: llms.txt (Site Overview)
+        type: file
+        path: public/llms.txt
+        format: raw
+        fields:
+          - name: body
+            type: rich-text
 
-  - name: llms-home
-    label: llms-home.md
-    type: file
-    path: public/llms-home.md
-    format: raw
-    fields:
-      - name: body
-        type: rich-text
+      - name: llms-home
+        label: Homepage
+        type: file
+        path: public/llms-home.md
+        format: raw
+        fields:
+          - name: body
+            type: rich-text
 
-  - name: llms-about
-    label: llms-about.md
-    type: file
-    path: public/llms-about.md
-    format: raw
-    fields:
-      - name: body
-        type: rich-text
+      - name: llms-about
+        label: About
+        type: file
+        path: public/llms-about.md
+        format: raw
+        fields:
+          - name: body
+            type: rich-text
 
-  - name: llms-how-it-works
-    label: llms-how-it-works.md
-    type: file
-    path: public/llms-how-it-works.md
-    format: raw
-    fields:
-      - name: body
-        type: rich-text
+      - name: llms-how-it-works
+        label: How It Works
+        type: file
+        path: public/llms-how-it-works.md
+        format: raw
+        fields:
+          - name: body
+            type: rich-text
 
-  - name: llms-pricing
-    label: llms-pricing.md
-    type: file
-    path: public/llms-pricing.md
-    format: raw
-    fields:
-      - name: body
-        type: rich-text
+      - name: llms-pricing
+        label: Pricing
+        type: file
+        path: public/llms-pricing.md
+        format: raw
+        fields:
+          - name: body
+            type: rich-text
 
-  - name: llms-faq
-    label: llms-faq.md
-    type: file
-    path: public/llms-faq.md
-    format: raw
-    fields:
-      - name: body
-        type: rich-text
+      - name: llms-faq
+        label: FAQ
+        type: file
+        path: public/llms-faq.md
+        format: raw
+        fields:
+          - name: body
+            type: rich-text
 
-  # ── Config Files ───────────────────────────────────────────
-  - name: robots
-    label: robots.txt
-    type: file
-    path: public/robots.txt
-    format: raw
-    fields:
-      - name: body
-        type: code
+  # ── Site Config ────────────────────────────────────────────
+  - name: config
+    label: Site Config
+    type: group
+    items:
+      - name: robots
+        label: robots.txt
+        type: file
+        path: public/robots.txt
+        format: raw
+        fields:
+          - name: body
+            type: code
 
-  - name: headers
-    label: _headers
-    type: file
-    path: public/_headers
-    format: raw
-    fields:
-      - name: body
-        type: code
+      - name: headers
+        label: _headers
+        type: file
+        path: public/_headers
+        format: raw
+        fields:
+          - name: body
+            type: code
 
-  - name: redirects
-    label: _redirects
-    type: file
-    path: public/_redirects
-    format: raw
-    fields:
-      - name: body
-        type: code
+      - name: redirects
+        label: _redirects
+        type: file
+        path: public/_redirects
+        format: raw
+        fields:
+          - name: body
+            type: code
