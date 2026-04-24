@@ -1,190 +1,212 @@
-# 323-Wolf Pages on Cloudflare
+# Sivussa.com
 
-## Overview
+AI-native website visibility audit service. Preact SPA with build-time prerendering, deployed on Cloudflare Pages.
 
-Sivussa.com is a Preact site with build-time prerendering, deployed on Cloudflare Pages via CI/CD from `origin/main`.
+## Architecture
 
-## Stack (Current)
+```mermaid
+graph TD
+    subgraph Build Time
+        MD["src/content/*.md<br/>(Markdown + frontmatter)"]
+        VCP["vite-content-plugin.ts<br/>(gray-matter → marked → JS)"]
+        VP["vite-sitemap-plugin.ts<br/>(git dates → sitemap.xml)"]
+        PR["src/prerender.tsx<br/>(renderToString per route)"]
+        VITE["vite.config.ts<br/>(Vite 8 + Preact preset)"]
+    end
 
-| Package | Role | Installed | Latest | Status |
-|---------|------|-----------|--------|--------|
-| `preact` | UI framework | ^10.19.0 | 10.29.1 | ⚠️ minor behind |
-| `preact-iso` | Isomorphic routing/hydration | ^2.0.0 | 2.11.1 | ⚠️ minor behind |
-| `preact-render-to-string` | SSR render | ^6.3.0 | 6.6.7 | ⚠️ minor behind |
-| `vite` | Build tool | ^5.0.0 | **8.0.8** | 🔴 3 major behind |
-| `@preact/preset-vite` | Preact + prerender for Vite | ^2.8.0 | 2.10.5 | ⚠️ minor behind |
-| `tailwindcss` | Utility CSS | ^3.4.1 | **4.2.2** | 🔴 1 major behind |
-| `@tailwindcss/typography` | Prose styling | ^0.5.19 | see note (1) | ⚠️ v3-only API |
-| `postcss` | CSS processing | ^8.4.33 | — | ❌ removable with TW4 |
-| `autoprefixer` | Vendor prefixes | ^10.4.17 | — | ❌ removable with TW4 |
-| `marked` | Markdown parser | ^18.0.1 | 18.0.0 | ✅ current |
-| `gray-matter` | Frontmatter parser | ^4.0.3 | 4.0.3 | ✅ current |
-| `highlight.js` | Syntax highlighting | ^11.11.1 | 11.11.1 | ✅ current |
-| `@astrojs/markdown-remark` | — | ^7.1.0 | 7.0.0 | ❌ **dead dependency** — never imported |
+    subgraph Runtime — Static Assets
+        DIST["dist/<br/>(prerendered HTML + CSS + JS)"]
+        STATIC["public/<br/>(robots.txt, _headers, llms*, .well-known/)"]
+    end
 
-### Missing
+    subgraph Runtime — Cloudflare Pages Functions
+        MW["functions/_middleware.ts<br/>(Accept: text/markdown → llms-*.md)"]
+    end
 
-| Tool | Role |
-|------|------|
-| `@biomejs/biome` | Linter + formatter (replaces ESLint + Prettier) |
-| `@tailwindcss/vite` | Vite plugin for Tailwind v4 (replaces PostCSS pipeline) |
+    subgraph Pages
+        HOME["Home /"]
+        HIW["How It Works"]
+        PRICE["Pricing"]
+        ABOUT["About"]
+        FAQ["FAQ"]
+        BLOG["Blog + Blog Posts"]
+        LEGAL["Privacy / Terms / Notices"]
+    end
 
-### Notes
+    MD --> VCP
+    VCP --> |"virtual:content"| HOME
+    VCP --> PRICE
+    VCP --> FAQ
+    VCP --> ABOUT
+    VCP --> BLOG
+    VP --> DIST
+    PR --> DIST
+    VITE --> PR
+    STATIC --> DIST
+    MW --> |"content negotiation"| STATIC
 
-1. **@tailwindcss/typography**: The `^0.5.x` line is the Tailwind v3 plugin. For Tailwind v4, the typography plugin is loaded via `@plugin '@tailwindcss/typography'` in CSS — same package name, but usage changes.
+    style VCP fill:#57AE7B,color:#071F16
+    style PR fill:#57AE7B,color:#071F16
+    style MW fill:#FF9037,color:#071F16
+```
 
----
+## How It Works
 
-## Modernization Plan
+### Content Pipeline
 
-### Phase 1: Toolchain upgrade (zero visual change)
+1. **Author content** in `src/content/` as markdown files with YAML frontmatter
+2. **Build time**: `vite-content-plugin.ts` reads all markdown, parses frontmatter (gray-matter), renders HTML (marked), and emits a `virtual:content` module with typed JS constants
+3. **Page components** import constants from `virtual:content` via `src/data/load-content.ts`
+4. **Prerender**: `@preact/preset-vite` calls `src/prerender.tsx` for each route, producing static HTML with full SEO metadata
+5. **Deploy**: Cloudflare Pages auto-builds from `main` branch
 
-**Goal**: Get everything current without touching application code.
+### Agent Accessibility
 
-#### 1.1 Vite 8
-- `npm install vite@latest @preact/preset-vite@latest`
-- Rename `vite.config.js` → `vite.config.ts` (Vite 8 supports TS config natively)
-- **Breaking changes to audit**: Vite 6+ changed environment API, dropped Node.js <18, changed `resolve.alias` behavior. Vite 8 may have further changes. Check [vite.dev/releases](https://vite.dev/releases) changelog.
-- Verify `vite-content-plugin.mjs` compatibility (it uses raw Node.js `fs`/`path` — should be fine).
-- **Risk**: `@preact/preset-vite` must be compatible with Vite 8. If not, pin Vite 7 and open upstream issue.
+- **Content negotiation**: `functions/_middleware.ts` serves markdown versions when `Accept: text/markdown` is sent
+- **llms.txt**: `/llms.txt` provides a full site overview for AI agents
+- **Agent Skills**: `/.well-known/agent-skills/` provides navigation skill for agents
+- **Content Signals**: `robots.txt` declares AI content preferences
 
-#### 1.2 Preact ecosystem
-- `npm install preact@latest preact-iso@latest preact-render-to-string@latest`
-- Drop direct `preact-render-to-string` import from `prerender.jsx` if `@preact/preset-vite`'s built-in prerender handles it (see Phase 2).
-- No breaking changes expected (all within 10.x / 2.x / 6.x).
+### SEO
 
-#### 1.3 Tailwind v4
-- Remove: `tailwindcss`, `postcss`, `autoprefixer` (v3 packages)
-- Install: `tailwindcss@latest @tailwindcss/vite @tailwindcss/typography`
-- Delete `tailwind.config.js` and `postcss.config.js`
-- Move theme configuration to CSS using `@theme` directive in `src/index.css`:
-  ```css
-  @import "tailwindcss";
-  @plugin "@tailwindcss/typography";
+- **Prerendered HTML**: Every page is pre-rendered with full meta tags, JSON-LD, and canonical URLs
+- **`src/data/route-meta.ts`**: Single source of truth for per-route title/description/canonical
+- **`src/components/seo/Head.tsx`**: Client-side head mutations for SPA navigation
+- **JSON-LD**: Organization, WebSite, SoftwareApplication schemas on homepage
+- **Sitemap**: Auto-generated from content markdown files with git last-modified dates
 
-  @theme {
-    --color-primary: #00FF41;
-    --color-primary-dark: #00cc33;
-    --color-primary-light: #33ff66;
-    --color-primary-dim: rgba(0,255,65,0.15);
-    --color-dark: #131313;
-    --color-dark-50: #f5f5f5;
-    /* ... etc */
-    --font-sans: "Inter", system-ui, -apple-system, sans-serif;
-    --font-mono: "JetBrains Mono", "Fira Code", monospace;
-  }
-  ```
-- Add `@tailwindcss/vite` to `vite.config.ts` plugins array.
-- **Custom keyframes/animations**: Move from `tailwind.config.js` to `@theme` or `@keyframes` in CSS.
-- **Breaking changes to audit**: TW4 uses CSS-first config, different color scale format, removed `extend` key, changed class name behavior for some utilities. Run `npx @tailwindcss/upgrade` for automated migration.
-- **Typography plugin**: Works in TW4 via `@plugin` directive. Verify prose class styling hasn't drifted.
+## Project Structure
 
-#### 1.4 Biome
-- Install: `npm install -D @biomejs/biome`
-- Initialize: `npx @biomejs/biome init`
-- Configure `biome.json`:
-  ```json
-  {
-    "$schema": "https://biomejs.dev/schemas/2.0.0/schema.json",
-    "organizeImports": { "enabled": true },
-    "linter": {
-      "enabled": true,
-      "rules": {
-        "recommended": true,
-        "correctness": { "noUnusedVariables": "warn" },
-        "style": { "noNonNullAssertion": "off" }
-      }
-    },
-    "formatter": {
-      "enabled": true,
-      "indentStyle": "space",
-      "indentWidth": 2
-    },
-    "javascript": {
-      "formatter": {
-        "quoteStyle": "single",
-        "semicolons": "always"
-      }
-    }
-  }
-  ```
-- Add scripts:
-  - `"lint": "biome lint ."`
-  - `"format": "biome format --write ."`
-  - `"check": "biome check ."`
-- Add to CI (or at minimum, run before every commit).
+```
+├── functions/                    # Cloudflare Pages Functions
+│   └── _middleware.ts            # Markdown content negotiation for AI agents
+├── public/                       # Static assets (copied to dist/)
+│   ├── _headers                  # Cloudflare response headers
+│   ├── _redirects                # Cloudflare redirect rules
+│   ├── robots.txt                # Crawler directives + Content Signals
+│   ├── llms.txt                  # Site overview for AI agents
+│   ├── llms-*.md                 # Markdown versions of pages
+│   ├── sivussa-banner.webp       # Hero banner image
+│   └── .well-known/
+│       └── agent-skills/         # Agent Skills index + SKILL.md
+├── src/
+│   ├── app.tsx                   # Router — all routes defined here
+│   ├── index.tsx                 # Entry point (hydrate)
+│   ├── index.css                 # Tailwind theme + global styles
+│   ├── prerender.tsx             # Build-time prerender contract
+│   ├── components/
+│   │   ├── common/               # Accordion, Button, Section
+│   │   ├── content/              # FeatureCard, PricingCard, StepCard, TestimonialCard
+│   │   ├── layout/               # Layout, Nav, Footer, BreadcrumbNav
+│   │   └── seo/                  # Head (client-side meta mutations)
+│   ├── content/                  # Markdown content (single source of truth)
+│   │   ├── about.md
+│   │   ├── faq.md
+│   │   ├── footer.md
+│   │   ├── nav.md
+│   │   ├── home/                 # Homepage sections
+│   │   │   ├── hero.md           #   Title, subtitle, CTAs
+│   │   │   ├── problem.md        #   Problem statement
+│   │   │   ├── how-it-works.md   #   Process steps
+│   │   │   ├── features.md       #   Feature cards
+│   │   │   ├── pricing.md        #   Pricing tiers
+│   │   │   ├── what-you-get.md   #   Deliverables
+│   │   │   ├── who-is-this-for.md
+│   │   │   └── *.md              #   Legal pages
+│   │   └── blog/
+│   │       ├── index.md          #   Blog index config
+│   │       └── posts/            #   Blog posts (slug = filename)
+│   ├── data/
+│   │   ├── load-content.ts       # Re-exports from virtual:content
+│   │   └── route-meta.ts         # Per-route SEO metadata
+│   ├── pages/                    # Page components (one per route)
+│   ├── styles/
+│   │   └── highlight.css         # Syntax highlighting theme
+│   └── utils/
+│       ├── routes.ts             # Nav links + route labels
+│       └── seo.ts                # JSON-LD schema builders
+├── vite-content-plugin.ts        # Markdown → typed JS (556 lines)
+├── vite-sitemap-plugin.ts        # Sitemap generator
+└── vite.config.ts                # Build config
+```
 
-#### 1.5 Dead dependency cleanup
-- Remove `@astrojs/markdown-remark` — never imported, adds weight to `node_modules` and `npm audit` noise.
-- Verify nothing in the codebase touches it (confirmed: only present in `node_modules/`).
+## Brand Colors
 
----
+| Role | Value | Usage |
+|------|-------|-------|
+| Primary | `#57AE7B` | CTAs, links, accents |
+| Primary dark | `#3d8a5e` | Hover states |
+| Primary light | `#7bc99a` | Gradient endpoints |
+| Accent | `#FF9037` | Orange highlights |
+| Off-black | `#071F16` | Background (`dark-900`) |
+| Off-white | `#FFF7E3` | Light text (`dark-50`) |
 
-### Phase 2: Prerender consolidation ✅ COMPLETE
-
-**Goal**: Refactor `prerender.jsx` from a 149-line monolith into lean, separated concerns.
-
-#### What was done
-- `src/prerender.jsx` trimmed from 149 → 37 lines (plugin contract only)
-- `src/data/route-meta.js` — single source of truth for per-route metadata
-- `src/components/seo/Head.jsx` — client-side head mutations for SPA navigation
-- `src/utils/seo.js` — JSON-LD schema builders (Organization, WebSite, SoftwareApplication, FAQPage)
-- `vite-content-plugin.mjs` — regex while-loops refactored to `matchAll()`, `node:` protocol imports
-
-#### Why the prerender script is still needed
-`@preact/preset-vite` requires a prerender script — it calls your `prerender()` function. The script is the plugin's API contract, not optional. The preset handles route walking and HTML file generation; the script provides the rendered HTML and head elements per route.
-
-#### Note on `preact-render-to-string`
-Still in dependencies because the prerender script imports it directly. This is correct — the preset does not bundle it for you.
-
----
-
-### Phase 3: Optional improvements (not blocking)
-
-| Item | Why | Effort |
-|------|-----|--------|
-| **TypeScript migration** | `vite.config.ts` already hints at TS. Full `.jsx` → `.tsx` gives type safety for props/data. | Medium |
-| **Content plugin refactor** | `vite-content-plugin.mjs` is ~200 lines of imperative parsing. Could be simplified with a schema/validation layer. | Low |
-| **highlight.js → Shiki** | Shiki produces TypeScript-compatible highlighting, used by Astro/Starlight. But highlight.js works fine and is lighter. | Low priority |
-| **Blog post code blocks** | Currently using custom marked renderer. Works. No change needed unless switching markdown pipeline. | None |
-
----
+Defined in `src/index.css` `@theme` block. All Tailwind utilities (`text-primary`, `bg-dark-900`, etc.) derive from these.
 
 ## Deployment
 
 ### Rules
-- **`wrangler pages deploy dist` is FORBIDDEN** — push to `origin/main`, CF Pages auto-builds.
-- All SEO metadata MUST be in the prerender pipeline (page components, content frontmatter, or Layout).
-- JSON-LD schemas MUST be in prerendered HTML — not loaded via JavaScript after hydration.
-- Titles and descriptions come from content frontmatter (`seo_title`, `seo_description` fields). Hardcoded in JS/JSX is forbidden.
+- **`wrangler pages deploy` is FORBIDDEN** — push to `origin/main`, Cloudflare Pages auto-builds
+- **Staging** (`origin/staging`) auto-deploys as a password-protected preview site
+- **Production** (`origin/main`) auto-deploys to sivussa.com
 
-### Adding a new page
-1. Create the page component in `src/pages/`
-2. Add the route in `src/app.jsx`
-3. Add content markdown in `src/content/` if needed
-4. Add `seo_title` and `seo_description` in content frontmatter
-5. (Phase 2 onward: no route list to maintain — router auto-discovers)
+### Branch workflow
+1. Work on `staging` branch
+2. Push → Cloudflare deploys preview (password-protected)
+3. Review on staging preview
+4. Create PR: `staging` → `main`
+5. Merge → auto-deploys to production
 
-### What to avoid
-- Post-build scripts that inject HTML into `dist/` (use prerender pipeline)
-- Client-side-only JSON-LD (must be in prerendered HTML)
-- Untracked files in the repo (commit or delete)
-- Dead code / disabled files (delete, don't rename to `.disabled`)
+### CMS
+Non-technical content edits can be made via [Cloudflare Pages CMS](https://dash.cloudflare.com) — the `.pages.yml` configures the CMS editor. Changes go through Pages CMS to `main` directly.
 
----
+## Adding Content
+
+### New page
+1. Create component in `src/pages/`
+2. Add route in `src/app.tsx`
+3. Add SEO metadata in `src/data/route-meta.ts`
+4. Add route to `additionalPrerenderRoutes` in `vite.config.ts`
+5. Add sitemap entry in `vite-sitemap-plugin.ts`
+
+### New blog post
+1. Create `src/content/blog/posts/<slug>.md` with frontmatter (`title`, `date`, `author`, etc.)
+2. The content plugin auto-discovers it, the sitemap plugin includes it
+
+### Updating existing content
+Edit the markdown in `src/content/`. Frontmatter fields are documented in `vite-content-plugin.ts` interfaces. SEO metadata lives in `src/data/route-meta.ts`.
+
+## Development
+
+```bash
+npm install
+npm run dev        # Local dev server with HMR
+npm run build      # Production build to dist/
+npm run preview    # Preview production build
+npm run check      # Biome lint + format check
+```
+
+## What Not To Do
+
+- Don't inject HTML into `dist/` post-build — use the prerender pipeline
+- Don't load JSON-LD via client-side JavaScript — must be in prerendered HTML
+- Don't hardcode titles/descriptions in JSX — use content frontmatter or `route-meta.ts`
+- Don't leave dead code or disabled files — delete, don't rename to `.disabled`
+- Don't use `pip install` or `sudo apt` for project dependencies — use `npm`
+- Don't run `wrangler pages deploy` — Cloudflare auto-deploys from git
 
 ## References
 
-Before modifying existing codebase or generating new code, read the correct references:
+These repositories are relevant for understanding the technologies used:
 
-- [Preact](https://github.com/preactjs/preact) — UI framework
-- [Preact ISO](https://github.com/preactjs/preact-iso) — isomorphic routing
+- [Preact](https://github.com/preactjs/preact) — UI framework (3KB React alternative)
+- [Preact ISO](https://github.com/preactjs/preact-iso) — Isomorphic routing/hydration
 - [@preact/preset-vite](https://github.com/preactjs/preset-vite) — Vite integration + prerender
-- [Tailwind CSS v4 docs](https://tailwindcss.com/docs) — current utility CSS
-- [Biome](https://biomejs.dev/) — linter + formatter
-- [Vite](https://vite.dev/) — build tool
-- [marked](https://github.com/markedjs/marked) - MarkDown parser
-- [highlight.js](https://github.com/highlightjs/highlight.js) - syntax highlighter
-- [gray-matter](https://github.com/jonschlinkert/gray-matter) - YAML frontmatter parser
-
-This is strict: we avoid unnecessary dependency bloat and sprawling codebase.
+- [Vite](https://github.com/vitejs/vite) — Build tool
+- [Tailwind CSS v4](https://github.com/tailwindlabs/tailwindcss) — Utility CSS with CSS-first config
+- [Marked](https://github.com/markedjs/marked) — Markdown parser
+- [gray-matter](https://github.com/jonschlinkert/gray-matter) — YAML frontmatter parser
+- [highlight.js](https://github.com/highlightjs/highlight.js) — Syntax highlighting
+- [Biome](https://github.com/biomejs/biome) — Linter + formatter
+- [Cloudflare Pages](https://developers.cloudflare.com/pages/) — Hosting + CDN + Functions
+- [Agent Skills](https://github.com/agentskills/agentskills) — Agent skill specification
