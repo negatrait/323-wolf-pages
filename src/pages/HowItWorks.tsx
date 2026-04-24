@@ -2,8 +2,8 @@ import { Section } from '../components/common/Section';
 import { StepCard } from '../components/content/StepCard';
 import { BreadcrumbNav } from '../components/layout/BreadcrumbNav';
 import { Head } from '../components/seo/Head';
-import { getRouteMeta } from '../data/route-meta';
 import { HOME_HOW_IT_WORKS } from '../data/load-content';
+import { getRouteMeta } from '../data/route-meta';
 
 const HW = HOME_HOW_IT_WORKS;
 const meta = getRouteMeta('/how-it-works');
@@ -20,12 +20,9 @@ export function HowItWorks() {
         <BreadcrumbNav currentPage="How It Works" />
         <div class="max-w-4xl mx-auto">
           <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">
-            {HW.heading}{' '}
-            <span class="text-primary">{HW.headingHighlight}</span>
+            {HW.heading} <span class="text-primary">{HW.headingHighlight}</span>
           </h1>
-          <p class="text-xl text-dark-300 mb-16">
-            {HW.intro}
-          </p>
+          <p class="text-xl text-dark-300 mb-16">{HW.intro}</p>
         </div>
       </Section>
 
@@ -103,12 +100,8 @@ export function HowItWorks() {
       {/* CTA */}
       <Section>
         <div class="max-w-3xl mx-auto text-center">
-          <h2 class="text-3xl font-bold text-white mb-4">
-            {HW.ctaTitle}
-          </h2>
-          <p class="text-dark-300 mb-8">
-            {HW.ctaSubtitle}
-          </p>
+          <h2 class="text-3xl font-bold text-white mb-4">{HW.ctaTitle}</h2>
+          <p class="text-dark-300 mb-8">{HW.ctaSubtitle}</p>
           <a
             href={HW.ctaHref}
             target="_blank"

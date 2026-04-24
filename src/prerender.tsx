@@ -1,15 +1,14 @@
 import { h } from 'preact';
 import { renderToString } from 'preact-render-to-string';
 import { App } from './app';
+import { BLOG_POSTS_MAP, FAQ_ITEMS, SITE_CONFIG } from './data/load-content';
 import { getRouteMeta } from './data/route-meta';
-import { SITE_CONFIG } from './data/load-content';
 import {
+  faqPageJsonLd,
   organizationJsonLd,
   softwareAppJsonLd,
   websiteJsonLd,
-  faqPageJsonLd,
 } from './utils/seo';
-import { FAQ_ITEMS, BLOG_POSTS_MAP } from './data/load-content';
 
 // Global schemas on every page
 const globalSchemas = [organizationJsonLd(), websiteJsonLd()];
@@ -78,7 +77,9 @@ export async function prerender(data) {
   }
 
   // Blog posts get Article schema
-  const blogSlug = route.startsWith('/blog/') ? route.replace('/blog/', '') : null;
+  const blogSlug = route.startsWith('/blog/')
+    ? route.replace('/blog/', '')
+    : null;
   if (blogSlug && blogSlug !== '' && BLOG_POSTS_MAP[blogSlug]) {
     const post = BLOG_POSTS_MAP[blogSlug];
     headElements.add({
@@ -89,10 +90,21 @@ export async function prerender(data) {
         '@type': 'BlogPosting',
         headline: post.title,
         datePublished: post.date,
-        author: { '@type': 'Organization', name: SITE_CONFIG.name, url: SITE_CONFIG.url },
-        publisher: { '@type': 'Organization', name: SITE_CONFIG.name, logo: { '@type': 'ImageObject', url: `${SITE_CONFIG.url}/logo.png` } },
+        author: {
+          '@type': 'Organization',
+          name: SITE_CONFIG.name,
+          url: SITE_CONFIG.url,
+        },
+        publisher: {
+          '@type': 'Organization',
+          name: SITE_CONFIG.name,
+          logo: { '@type': 'ImageObject', url: `${SITE_CONFIG.url}/logo.png` },
+        },
         description: post.description || '',
-        mainEntityOfPage: { '@type': 'WebPage', '@id': `${SITE_CONFIG.url}/blog/${blogSlug}` },
+        mainEntityOfPage: {
+          '@type': 'WebPage',
+          '@id': `${SITE_CONFIG.url}/blog/${blogSlug}`,
+        },
       }),
     });
   }

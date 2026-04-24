@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'preact/hooks';
 import { useLocation } from 'preact-iso';
-import { NAV_LINKS } from '../../utils/routes';
 import { NAV_CONFIG } from '../../data/load-content';
+import { NAV_LINKS } from '../../utils/routes';
 
 export function Nav() {
   const location = useLocation();
