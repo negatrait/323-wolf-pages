@@ -125,7 +125,7 @@ export function Pricing() {
                 href={t.ctaHref}
                 target="_blank"
                 rel="noopener"
-                class="w-full block text-center px-8 py-4 bg-gradient-to-br from-primary to-[#6EDE69] text-dark-900 font-black uppercase tracking-widest text-sm hover:shadow-[0_0_20px_rgba(0,255,65,0.15)] transition-all"
+                class="w-full block text-center px-8 py-4 bg-gradient-to-br from-primary to-primary-light text-dark-900 font-black uppercase tracking-widest text-sm hover:shadow-[0_0_20px_rgba(87,174,123,0.15)] transition-all"
               >
                 {t.ctaText}
               </a>
