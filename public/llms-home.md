@@ -1,6 +1,6 @@
 # Sivussa — AI-native visibility specialists clearing your structural blockers
 
-> AI specialists audit your site and provide copy-paste ready remedies to clear structural blockers preventing your ranking from rising. SEO, GEO, and AEO analysis. Starting at EUR 89/99.
+> AI specialists audit your site and provide copy-paste ready remedies to clear structural blockers preventing your ranking from rising. We cover search engine visibility, AI assistant readiness, and direct answer optimization. Starting at EUR 89/99.
 
 Visit sivussa.com for more information.
 

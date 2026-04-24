@@ -30,23 +30,10 @@ export function About() {
           <h2 class="text-2xl font-bold text-white mb-6">
             {ABOUT.sections[0].title}
           </h2>
-          <div class="prose prose-invert max-w-none">
-            <p
-              class="text-dark-300 leading-relaxed mb-6"
-              dangerouslySetInnerHTML={{
-                __html: `${ABOUT.sections[0].contentHtml.split('</p>')[0]}</p>`,
-              }}
-            />
-            <p
-              class="text-dark-300 leading-relaxed"
-              dangerouslySetInnerHTML={{
-                __html: ABOUT.sections[0].contentHtml
-                  .split('</p>')
-                  .slice(1)
-                  .join('</p>'),
-              }}
-            />
-          </div>
+          <div
+            class="prose prose-invert max-w-none text-dark-300 leading-relaxed"
+            dangerouslySetInnerHTML={{ __html: ABOUT.sections[0].contentHtml }}
+          />
         </div>
       </Section>
 
@@ -81,21 +68,10 @@ export function About() {
           <h2 class="text-2xl font-bold text-white mb-6">
             {ABOUT.sections[2].title}
           </h2>
-          <div class="prose prose-invert max-w-none">
-            {ABOUT.sections[2].contentHtml
-              .split('</p>')
-              .reduce((acc, chunk, i, arr) => {
-                if (i < arr.length - 1)
-                  acc.push(
-                    <p
-                      key={i}
-                      class="text-dark-300 leading-relaxed mb-4"
-                      dangerouslySetInnerHTML={{ __html: `${chunk}</p>` }}
-                    />,
-                  );
-                return acc;
-              }, [])}
-          </div>
+          <div
+            class="prose prose-invert max-w-none text-dark-300 leading-relaxed"
+            dangerouslySetInnerHTML={{ __html: ABOUT.sections[2].contentHtml }}
+          />
         </div>
       </Section>
 

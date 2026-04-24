@@ -2,53 +2,41 @@ import { Section } from '../components/common/Section';
 import { StepCard } from '../components/content/StepCard';
 import { BreadcrumbNav } from '../components/layout/BreadcrumbNav';
 import { Head } from '../components/seo/Head';
+import { HOME_HOW_IT_WORKS } from '../data/load-content';
 
-const STRIPE_ONE_SHOT = 'https://buy.stripe.com/cNi7sN0Kv3phb500GPcbC01';
+const HW = HOME_HOW_IT_WORKS;
 
 export function HowItWorks() {
   return (
     <>
       <Head
         title="How Sivussa Works — 4 Simple Steps"
-        description="Purchase your audit, AI specialists analyze your site, get a scored PDF report with copy-paste ready remedies. Starting at EUR 99."
+        description="Purchase your audit, AI specialists analyze your site, get a scored PDF report with copy-paste ready recommendations. Starting at EUR 99."
         canonical="https://sivussa.com/how-it-works"
       />
       <Section>
         <BreadcrumbNav currentPage="How It Works" />
         <div class="max-w-4xl mx-auto">
           <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">
-            We audit your site.{' '}
-            <span class="text-primary">Then we tell you what to fix.</span>
+            {HW.heading}{' '}
+            <span class="text-primary">{HW.headingHighlight}</span>
           </h1>
           <p class="text-xl text-dark-300 mb-16">
-            AI specialists analyze your site and provide expert recommendations.
-            You review and implement. That's it.
+            {HW.intro}
           </p>
         </div>
       </Section>
 
       <Section dark={false}>
         <div class="max-w-4xl mx-auto space-y-16">
-          <StepCard
-            number={1}
-            title="Purchase your audit"
-            description="Choose a one-time audit or subscribe for recurring audits. Payment is secure via Stripe. No setup required."
-          />
-          <StepCard
-            number={2}
-            title="AI specialists analyze"
-            description="AI agents crawl your website, analyze your Google Business Profile, evaluate your content for optimization. Time: 30-60 minutes."
-          />
-          <StepCard
-            number={3}
-            title="Get your report"
-            description="Receive a detailed PDF audit report with scored findings and prioritized, actionable recommendations. Each issue explains the problem and provides specific guidance on how to fix it."
-          />
-          <StepCard
-            number={4}
-            title="Implement and improve"
-            description="Use the recommendations to fix issues. Run follow-up audits to see your scores improve. Track your progress over time with recurring audits."
-          />
+          {HW.steps.map((step) => (
+            <StepCard
+              key={step.number}
+              number={step.number}
+              title={step.title}
+              description={step.description}
+            />
+          ))}
         </div>
       </Section>
 
@@ -56,47 +44,34 @@ export function HowItWorks() {
       <Section>
         <div class="max-w-4xl mx-auto">
           <h2 class="text-2xl font-bold text-white text-center mb-8">
-            Other tools: "Here's what's wrong."{' '}
-            <span class="text-primary">Sivussa: "Here's what to do."</span>
+            {HW.comparisonHeading}{' '}
+            <span class="text-primary">{HW.comparisonHeadingHighlight}</span>
           </h2>
           <div class="overflow-x-auto">
             <table class="w-full text-sm">
               <thead>
                 <tr class="border-b border-dark-600">
-                  <th class="text-left py-3 px-4 text-dark-300">
-                    What happens
-                  </th>
-                  <th class="text-center py-3 px-4 text-dark-300">
-                    Other Tools
-                  </th>
-                  <th class="text-center py-3 px-4 text-primary">Sivussa</th>
+                  {HW.comparisonTable.headers.map((h, i) => (
+                    <th
+                      key={i}
+                      class={`py-3 px-4 ${i === 0 ? 'text-left text-dark-300' : 'text-center text-dark-300'}`}
+                    >
+                      {h}
+                    </th>
+                  ))}
                 </tr>
               </thead>
               <tbody class="text-dark-200">
-                {[
-                  ['Analyse for search engines', 'Yes', 'Yes'],
-                  ['Analyse for AI agents', 'Rarely', 'Yes'],
-                  ['Analyse for direct answers', 'Never', 'Yes'],
-                  ['Prioritized recommendations', 'No', 'Yes'],
-                  [
-                    'Specific guidance for your site',
-                    'Sometimes generic',
-                    'Tailored to your content',
-                  ],
-                  ['Content suggestions', 'No', 'AI-generated for your niche'],
-                  [
-                    'Schema markup guidance',
-                    '"You should add it"',
-                    'Explained with examples',
-                  ],
-                  ['Ongoing audits', 'No', 'Yes, on schedule'],
-                ].map(([label, other, sivussa], i) => (
+                {HW.comparisonTable.rows.map((row, i) => (
                   <tr key={i} class="border-b border-dark-700">
-                    <td class="py-3 px-4">{label}</td>
-                    <td class="py-3 px-4 text-center text-dark-400">{other}</td>
-                    <td class="py-3 px-4 text-center text-primary font-medium">
-                      {sivussa}
-                    </td>
+                    {row.map((cell, j) => (
+                      <td
+                        key={j}
+                        class={`py-3 px-4 ${j === 0 ? '' : 'text-center'} ${j === row.length - 1 ? 'text-primary font-medium' : j > 0 && j < row.length - 1 ? 'text-dark-400' : ''}`}
+                      >
+                        {String(cell)}
+                      </td>
+                    ))}
                   </tr>
                 ))}
               </tbody>
@@ -111,44 +86,7 @@ export function HowItWorks() {
           What you get
         </h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
-          {[
-            {
-              title: 'Full visibility audit',
-              desc: 'Comprehensive analysis across search engines, geolocation services, etc.',
-            },
-            {
-              title: 'Prioritized findings',
-              desc: 'Issues ranked by impact so you know what to fix first.',
-            },
-            {
-              title: 'Expert recommendations',
-              desc: 'AI-powered guidance for every issue found.',
-            },
-            {
-              title: 'Competitor comparison',
-              desc: 'See how you perform against top-ranking competitors.',
-            },
-            {
-              title: 'Performance analysis',
-              desc: 'Core Web Vitals and performance metrics.',
-            },
-            {
-              title: 'PDF report',
-              desc: 'Delivered to your email. Share with your team.',
-            },
-            {
-              title: 'Recurring audits',
-              desc: 'Monthly or quarterly audits for subscribers.',
-            },
-            {
-              title: 'Track progress',
-              desc: 'See your scores improve over time.',
-            },
-            {
-              title: 'Email delivery',
-              desc: 'Reports delivered directly to your inbox.',
-            },
-          ].map((t, i) => (
+          {HW.whatYouGet.map((t, i) => (
             <div
               key={i}
               class="rounded-xl p-5 bg-dark-900 border border-dark-600"
@@ -164,18 +102,18 @@ export function HowItWorks() {
       <Section>
         <div class="max-w-3xl mx-auto text-center">
           <h2 class="text-3xl font-bold text-white mb-4">
-            Ready for a real audit with actionable recommendations?
+            {HW.ctaTitle}
           </h2>
           <p class="text-dark-300 mb-8">
-            Get a comprehensive visibility audit with prioritized guidance.
+            {HW.ctaSubtitle}
           </p>
           <a
-            href={STRIPE_ONE_SHOT}
+            href={HW.ctaHref}
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
             class="inline-block px-8 py-4 bg-primary text-dark-900 font-bold rounded-lg hover:bg-primary-dark transition-colors"
           >
-            Get Your Audit — €99
+            {HW.ctaText}
           </a>
         </div>
       </Section>

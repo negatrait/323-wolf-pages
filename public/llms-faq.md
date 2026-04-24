@@ -1,6 +1,6 @@
 # FAQ — Sivussa
 
-Frequently asked questions about Sivussa SEO, GEO, and AEO audits.
+Frequently asked questions about Sivussa visibility audits.
 
 ## General
 
@@ -30,7 +30,7 @@ Yes. Upgrade or downgrade anytime. Prorated billing applies.
 ## Technical
 
 **What do you audit?**
-SEO (technical health, meta tags, structured data, page speed, content), GEO (generative engine optimization — AI-generated responses, authority signals), and AEO (answering engine optimization — FAQ content, featured snippets, AI answer readiness).
+Search engine visibility (technical health, meta tags, structured data, page speed, content), AI assistant readiness (AI-generated responses, authority signals), and direct answer optimization (FAQ content, featured snippets, AI answer readiness).
 
 **How long does an audit take?**
 Typically 1-2 hours. Our AI-native team of 20+ specialists works fast.

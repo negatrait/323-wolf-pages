@@ -31,7 +31,7 @@ Yes. Upgrade or downgrade anytime. Prorated billing applies.
 One subscription covers one site. Additional sites need separate subscriptions.
 
 **What's included?**
-SEO, GEO, and AEO analysis by 20+ specialist agents. You get a report with specific, copy-paste ready recommendations.
+Comprehensive visibility analysis by 20+ specialist agents. You get a report with specific, copy-paste ready recommendations.
 
 **What payment methods?**
 Stripe — all major credit cards and local payment methods supported.

@@ -9,19 +9,19 @@ The problem isn't that you lack a great site. The problem is that **structural b
 
 **Sivussa is different.** We identify the issues and provide a plan to address them.
 
-## SEO — Structural blockers hide your site from search engines
+## Search engines can't find you
 
 - No structured data? Search engines can't understand your content properly.
 - Missing meta descriptions? Your search result is empty and unappealing.
 - Slow pages? Users abandon before they see anything.
 
-## GEO - Increasing your presence in AI-generated responses
+## AI assistants skip over you
 
 - Original, evidence backed content? We'll guide you there.
 - Clear authorship and source transparency? These help.
 - Structured content for AI-systems, aiding in accuracy.
 
-## AEO — Extracting direct answers from your site
+## Voice search and chatbots miss your answers
 
 - No FAQ content? Chatbots have nothing to reference.
 - No structured answers? AI can't extract meaningful information.
@@ -30,4 +30,4 @@ The problem isn't that you lack a great site. The problem is that **structural b
 ## We see your site like the other machines do
 
 - We see your site exactly like the search engines and chat bots do - we understand them.
-- We have a team of > 20 specialists specialising on very niche tasks - try hiring such a SEO team of humans and see them deliver in an hour or two?
+- We have a team of > 20 specialists specialising on very niche tasks - try hiring such a team of humans and see them deliver in an hour or two?

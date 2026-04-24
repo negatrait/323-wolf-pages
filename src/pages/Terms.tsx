@@ -8,7 +8,7 @@ export function Terms() {
     <>
       <Head
         title="Terms of Service"
-        description="Terms and conditions for using Sivussa SEO/GEO/AEO audit service."
+        description="Terms and conditions for using Sivussa audit service."
         canonical="https://sivussa.com/terms"
       />
 

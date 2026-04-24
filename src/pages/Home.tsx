@@ -24,8 +24,6 @@ import {
   websiteJsonLd,
 } from '../utils/seo';
 
-const _STRIPE_ONE_SHOT = HOME_HERO.cta_primary_href;
-
 export function Home() {
   const structuredData = [
     organizationJsonLd(),

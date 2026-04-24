@@ -12,7 +12,7 @@ The problem isn't that you lack a great site. The problem is that **structural b
 - Missing meta descriptions? Your search result is empty and unappealing.
 - Slow pages? Users abandon before they see anything.
 
-## GEO — Increasing your presence in AI-generated responses
+## AI assistants skip over you
 
 - Original, evidence backed content? We'll guide you there.
 - Clear authorship and source transparency? These help.
@@ -27,7 +27,7 @@ The problem isn't that you lack a great site. The problem is that **structural b
 ## We see your site like the other machines do
 
 - We see your site exactly like the search engines and chat bots do — we understand them.
-- We have a team of > 20 specialists specialising on very niche tasks — try hiring such a SEO team of humans and see them deliver in an hour or two?
+- We have a team of > 20 specialists specialising on very niche tasks — try hiring such a team of humans and see them deliver in an hour or two?
 
 ## The Process
 

@@ -186,6 +186,10 @@ npm run preview    # Preview production build
 npm run check      # Biome lint + format check
 ```
 
+## Active Sprint
+
+See [SPRINT.md](./SPRINT.md) for current work-in-progress: content de-jargon, hardcoded text removal, and code quality fixes.
+
 ## What Not To Do
 
 - Don't inject HTML into `dist/` post-build — use the prerender pipeline

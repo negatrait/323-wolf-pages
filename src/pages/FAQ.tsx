@@ -12,7 +12,7 @@ export function FAQ() {
     <>
       <Head
         title="FAQ — Frequently Asked Questions"
-        description="Common questions about Sivussa SEO/GEO/AEO audits, pricing, data security, and more."
+        description="Common questions about Sivussa audits, pricing, data security, and more."
         canonical="https://sivussa.com/faq"
         structuredData={faqPageJsonLd(FAQ_ITEMS)}
       />

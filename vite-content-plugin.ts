@@ -43,8 +43,19 @@ interface ProblemFrontmatter {
 /** How-It-Works frontmatter (home/how-it-works.md) */
 interface HowItWorksFrontmatter {
   title: string;
+  heading?: string;
+  heading_highlight?: string;
+  intro?: string;
   steps: Array<{ number: number; title: string; description: string }>;
   comparison: { other: string; sivussa: string };
+  comparison_heading?: string;
+  comparison_heading_highlight?: string;
+  comparison_table?: { headers: string[]; rows: string[][] };
+  what_you_get?: Array<{ title: string; desc: string }>;
+  cta_title?: string;
+  cta_subtitle?: string;
+  cta_text?: string;
+  cta_href?: string;
 }
 
 /** Features frontmatter (home/features.md) */
@@ -74,6 +85,12 @@ interface PricingFrontmatter {
     features: string[];
   }>;
   terms?: string[];
+  faq?: Array<{ question: string; answer: string }>;
+  feature_table?: { headers: string[]; rows: (string | boolean)[][] };
+  competitors?: Array<{ name: string; price: string; desc: string; highlight?: boolean }>;
+  cta_title?: string;
+  cta_text?: string;
+  cta_href?: string;
 }
 
 /** FAQ frontmatter */
@@ -279,8 +296,19 @@ export default function contentPlugin() {
       );
       const HOME_HOW_IT_WORKS = {
         title: howItWorks.frontmatter.title,
+        heading: howItWorks.frontmatter.heading,
+        headingHighlight: howItWorks.frontmatter.heading_highlight,
+        intro: howItWorks.frontmatter.intro,
         steps: howItWorks.frontmatter.steps,
         comparison: howItWorks.frontmatter.comparison,
+        comparisonHeading: howItWorks.frontmatter.comparison_heading,
+        comparisonHeadingHighlight: howItWorks.frontmatter.comparison_heading_highlight,
+        comparisonTable: howItWorks.frontmatter.comparison_table,
+        whatYouGet: howItWorks.frontmatter.what_you_get,
+        ctaTitle: howItWorks.frontmatter.cta_title,
+        ctaSubtitle: howItWorks.frontmatter.cta_subtitle,
+        ctaText: howItWorks.frontmatter.cta_text,
+        ctaHref: howItWorks.frontmatter.cta_href,
       };
 
       // Features
@@ -322,6 +350,15 @@ export default function contentPlugin() {
         ctaHref: t.cta_href,
         features: t.features,
       }));
+
+      const PRICING_FAQ = pricing.frontmatter.faq || [];
+      const PRICING_FEATURE_TABLE = pricing.frontmatter.feature_table || { headers: [], rows: [] };
+      const PRICING_COMPETITORS = pricing.frontmatter.competitors || [];
+      const PRICING_CTA = {
+        title: pricing.frontmatter.cta_title || '',
+        text: pricing.frontmatter.cta_text || '',
+        href: pricing.frontmatter.cta_href || '',
+      };
 
       // FAQ
       const faq = loadMd<FaqFrontmatter>(contentDir, 'faq.md');
@@ -447,6 +484,10 @@ export default function contentPlugin() {
         ['TERMS_OF_SERVICE', TERMS_OF_SERVICE],
         ['OPEN_SOURCE_NOTICES', OPEN_SOURCE_NOTICES],
         ['PRICING_TERMS', PRICING_TERMS],
+        ['PRICING_FAQ', PRICING_FAQ],
+        ['PRICING_FEATURE_TABLE', PRICING_FEATURE_TABLE],
+        ['PRICING_COMPETITORS', PRICING_COMPETITORS],
+        ['PRICING_CTA', PRICING_CTA],
       ]
         .map(([name, val]) => `export const ${name} = ${JSON.stringify(val)};`)
         .join('\n');

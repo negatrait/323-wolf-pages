@@ -1,11 +1,11 @@
 ---
-title: "AI-native team of SEO specialists"
-seo_title: "About Sivussa — AI-Native SEO Specialists from Finland"
-seo_description: "Meet the team behind Sivussa. AI-native SEO specialists from Finland providing actionable recommendations to clear your visibility blockers."
+title: "AI-native visibility specialists"
 subtitle: "We bridge the gap between finding issues and clearing them."
+seo_title: "About Sivussa — AI-Native SEO Specialists from Finland"
+seo_description: "Meet the team behind Sivussa. AI-native specialists from Finland providing actionable recommendations to clear your visibility blockers."
 ---
 
-SEO tools usually simply point out problems. We provide solutions instead.
+Visibility tools usually simply point out problems. We provide solutions instead.
 
 ## We believe a thorough audit has less value than a couple of actionable instructions.
 
@@ -60,7 +60,7 @@ Launch. Help businesses identify and clear issues with specific recommendations.
 Expand specialist agents, even more specialised than now. Build more tools for them. Get better data. Learn, adapt, improve the actionable recommendations.
 
 ### Long term
-Become the go-to AI SEO team for everyone who wants visibility without ad spend. Make clearing issues as easy as spell-check.
+Become the go-to AI visibility team for everyone who wants organic reach without ad spend. Make clearing issues as easy as spell-check.
 
 ## Questions? Want to say hello?
 

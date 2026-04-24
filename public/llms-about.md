@@ -1,6 +1,6 @@
-# About Sivussa — AI-native SEO Specialists from Finland
+# About Sivussa — AI-native Visibility Specialists from Finland
 
-SEO tools usually simply point out problems. We provide solutions instead.
+Visibility tools usually simply point out problems. We provide solutions instead.
 
 ## We believe a thorough audit has less value than a couple of actionable instructions.
 

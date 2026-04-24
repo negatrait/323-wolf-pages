@@ -2,83 +2,23 @@ import { Accordion } from '../components/common/Accordion';
 import { Section } from '../components/common/Section';
 import { BreadcrumbNav } from '../components/layout/BreadcrumbNav';
 import { Head } from '../components/seo/Head';
-import { PRICING_TERMS } from '../data/load-content';
+import {
+  PRICING_CTA,
+  PRICING_COMPETITORS,
+  PRICING_FAQ,
+  PRICING_FEATURE_TABLE,
+  PRICING_TERMS,
+  PRICING_TIERS,
+} from '../data/load-content';
 
-const STRIPE_URLS = {
-  'one-shot': 'https://buy.stripe.com/cNi7sN0Kv3phb500GPcbC01',
-  quarterly: 'https://buy.stripe.com/3cIdRbal52ld7SO4X5cbC02',
-  monthly: 'https://buy.stripe.com/5kQ9AV64P5xpehc3T1cbC03',
-};
-
-const TIERS = [
-  {
-    name: 'One-shot',
-    price: '€99',
-    period: 'one-time',
-    popular: false,
-    ctaText: 'Get Started — €99',
-    ctaHref: STRIPE_URLS['one-shot'],
-    features: [
-      'One-time audit',
-    ],
-  },
-  {
-    name: 'Quarterly',
-    price: '€99',
-    period: '/quarter',
-    popular: false,
-    ctaText: 'Get Started — €99/qtr',
-    ctaHref: STRIPE_URLS.quarterly,
-    features: [
-      'Audit every 90 days',
-    ],
-  },
-  {
-    name: 'Monthly',
-    price: '€89',
-    period: '/month',
-    popular: true,
-    ctaText: 'Get Started — €89/mo',
-    ctaHref: STRIPE_URLS.monthly,
-    features: [
-      'Audit every month',
-    ],
-  },
-];
-
-const PRICING_FAQ = [
-  {
-    question: 'Can I cancel anytime?',
-    answer:
-      "Yes. No contracts. Cancel and you won't be charged again. Your current period runs to completion.",
-  },
-  {
-    question: 'Can I switch plans?',
-    answer: 'Yes. Upgrade or downgrade anytime. Prorated billing applies.',
-  },
-  {
-    question: 'Can I audit multiple sites?',
-    answer:
-      'Each site requires a separate subscription. Contact us for volume discounts.',
-  },
-  {
-    question: 'What payment methods do you accept?',
-    answer:
-      'Credit and debit cards via Stripe. Apple Pay and Google Pay supported.',
-  },
-  {
-    question: 'What makes this different from Semrush or Ahrefs?',
-    answer:
-      'They audit. We audit AND provide prioritized recommendations. They give you a checklist — you figure out what to do. We give you expert guidance on what to fix first.',
-  },
-];
+const PT = PRICING_FEATURE_TABLE;
 
 export function Pricing() {
   return (
     <>
       <Head
         title="Pricing — Simple Plans, No Hidden Fees"
-        description="From €89/month. Full SEO + GEO + AEO audits with prioritized recommendations. Simple, transparent pricing."
+        description="From €89/month. Full visibility audit with prioritized recommendations. Simple, transparent pricing."
         canonical="https://sivussa.com/pricing"
       />
       <Section>
@@ -96,7 +36,7 @@ export function Pricing() {
 
       <Section dark={false}>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-          {TIERS.map((t) => (
+          {PRICING_TIERS.map((t) => (
             <div
               key={t.name}
               class={`relative rounded-2xl p-8 border flex flex-col ${t.popular ? 'border-primary shadow-glow bg-dark-800' : 'border-dark-600 bg-dark-800'}`}
@@ -124,7 +64,7 @@ export function Pricing() {
               <a
                 href={t.ctaHref}
                 target="_blank"
-                rel="noopener"
+                rel="noopener noreferrer"
                 class="w-full block text-center px-8 py-4 bg-gradient-to-br from-primary to-primary-light text-dark-900 font-black uppercase tracking-widest text-sm hover:shadow-[0_0_20px_rgba(87,174,123,0.15)] transition-all"
               >
                 {t.ctaText}
@@ -170,42 +110,27 @@ export function Pricing() {
           <table class="w-full text-sm">
             <thead>
               <tr class="border-b border-dark-600">
-                <th class="text-left py-3 px-4 text-dark-300">Feature</th>
-                <th class="text-center py-3 px-4 text-dark-300">
-                  One-shot €99
-                </th>
-                <th class="text-center py-3 px-4 text-dark-300">
-                  Quarterly €99/qtr
-                </th>
-                <th class="text-center py-3 px-4 text-primary font-semibold">
-                  Monthly €89/mo
-                </th>
+                {PT.headers.map((h, i) => (
+                  <th
+                    key={i}
+                    class={`py-3 px-4 ${i === 0 ? 'text-left text-dark-300' : i === PT.headers.length - 1 ? 'text-center text-primary font-semibold' : 'text-center text-dark-300'}`}
+                  >
+                    {h}
+                  </th>
+                ))}
               </tr>
             </thead>
             <tbody class="text-dark-200">
-              {[
-                ['Full visibility audit', true, true, true],
-                ['Prioritized recommendations', true, true, true],
-                ['Expert guidance', true, true, true],
-                ['Specific recommendations for your site', true, true, true],
-                ['Content suggestions', true, true, true],
-                ['Schema markup guidance', true, true, true],
-                ['Track your progress', false, true, true],
-                ['PDF report', true, true, true],
-                ['Email delivery', true, true, true],
-                ['Support', 'Email', 'Email', 'Email'],
-                ['Audit frequency', 'Once', 'Every 90 days', 'Every month'],
-              ].map(([label, ...vals], i) => (
+              {PT.rows.map((row, i) => (
                 <tr key={i} class="border-b border-dark-700">
-                  <td class="py-3 px-4">{label}</td>
-                  {vals.map((v, j) => (
-                    <td key={j} class="py-3 px-4 text-center">
-                      {v === true ? (
+                  {row.map((cell, j) => (
+                    <td key={j} class={`py-3 px-4 ${j === 0 ? '' : 'text-center'}`}>
+                      {cell === true ? (
                         <span class="text-primary">✓</span>
-                      ) : v === false ? (
+                      ) : cell === false ? (
                         <span class="text-dark-500">—</span>
                       ) : (
-                        <span class="text-dark-300">{v}</span>
+                        <span class={j === row.length - 1 ? 'text-primary font-medium' : j > 0 ? 'text-dark-300' : ''}>{String(cell)}</span>
                       )}
                     </td>
                   ))}
@@ -222,29 +147,7 @@ export function Pricing() {
           Why this is different
         </h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
-          {[
-            {
-              name: 'Semrush',
-              price: '$1,428/yr',
-              desc: 'Comprehensive audit. Zero prioritized recommendations. 200 issues and you figure out what to do.',
-            },
-            {
-              name: 'Ahrefs',
-              price: '$1,548/yr',
-              desc: 'Great backlink data. No GEO. No AEO. No recommendations.',
-            },
-            {
-              name: 'Sitebulb',
-              price: '$336/yr',
-              desc: 'Desktop tool. Technical SEO only. No local. No AI answers. No guidance.',
-            },
-            {
-              name: 'Sivussa',
-              price: '€89/mo',
-              desc: 'Full SEO + GEO + AEO. Every issue comes with prioritized, expert recommendations by AI specialists.',
-              highlight: true,
-            },
-          ].map((c, i) => (
+          {PRICING_COMPETITORS.map((c, i) => (
             <div
               key={i}
               class={`rounded-2xl p-6 border ${c.highlight ? 'border-primary bg-dark-800' : 'border-dark-600 bg-dark-900'}`}
@@ -277,15 +180,15 @@ export function Pricing() {
       <Section dark={false}>
         <div class="max-w-3xl mx-auto text-center">
           <h2 class="text-3xl font-bold text-white mb-4">
-            Stop paying for checklists. Get recommendations.
+            {PRICING_CTA.title}
           </h2>
           <a
-            href={STRIPE_URLS['one-shot']}
+            href={PRICING_CTA.href}
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
             class="inline-block px-8 py-4 bg-primary text-dark-900 font-bold rounded-lg hover:bg-primary-dark transition-colors"
           >
-            Get Your Audit — €99
+            {PRICING_CTA.text}
           </a>
         </div>
       </Section>

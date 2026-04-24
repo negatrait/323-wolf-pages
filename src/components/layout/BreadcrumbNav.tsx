@@ -1,6 +1,6 @@
 export function BreadcrumbNav({ currentPage, extraLink }) {
   return (
-    <nav class="text-sm text-dark-400 mb-6">
+    <nav aria-label="breadcrumb" class="text-sm text-dark-400 mb-6">
       <a href="/" class="hover:text-primary transition-colors">
         Home
       </a>

@@ -42,15 +42,20 @@ export function Nav() {
 
           {/* Desktop nav */}
           <div class="hidden md:flex items-center gap-6">
-            {NAV_LINKS.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                class={`text-sm font-medium transition-colors ${isActive(link.href) ? 'text-primary' : 'text-dark-200 hover:text-white'}`}
-              >
-                {link.label}
-              </a>
-            ))}
+            {NAV_LINKS.map((link) => {
+              const external = link.href.startsWith('http');
+              return (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  target={external ? '_blank' : undefined}
+                  rel={external ? 'noopener noreferrer' : undefined}
+                  class={`text-sm font-medium transition-colors ${isActive(link.href) ? 'text-primary' : 'text-dark-200 hover:text-white'}`}
+                >
+                  {link.label}
+                </a>
+              );
+            })}
           </div>
 
           {/* Mobile hamburger */}
@@ -84,16 +89,21 @@ export function Nav() {
               <span class="material-symbols-outlined text-2xl">close</span>
             </button>
             <nav class="mt-12 flex flex-col gap-2">
-              {NAV_LINKS.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setMobileOpen(false)}
-                  class={`text-lg py-3 border-b border-dark-600 ${isActive(link.href) ? 'text-primary' : 'text-dark-200 hover:text-white'}`}
-                >
-                  {link.label}
-                </a>
-              ))}
+              {NAV_LINKS.map((link) => {
+                const external = link.href.startsWith('http');
+                return (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    target={external ? '_blank' : undefined}
+                    rel={external ? 'noopener noreferrer' : undefined}
+                    onClick={() => setMobileOpen(false)}
+                    class={`text-lg py-3 border-b border-dark-600 ${isActive(link.href) ? 'text-primary' : 'text-dark-200 hover:text-white'}`}
+                  >
+                    {link.label}
+                  </a>
+                );
+              })}
             </nav>
           </div>
         </>

@@ -1,5 +1,5 @@
 ---
-title: "AI-native team of SEO specialists."
+title: "AI-native visibility specialists."
 subtitle: " We find the problems, we find the solutions. You forward them to your technical team or DIY."
 features:
   - title: "Copy-Paste Ready Recommendations"
@@ -16,4 +16,4 @@ features:
     description: "Results delivered to an email address of your choosing. Audit any domain, send to any email."
 ---
 
-## AI-native team of SEO specialists
+## AI-native visibility specialists

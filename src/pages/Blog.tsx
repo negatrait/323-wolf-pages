@@ -21,7 +21,7 @@ export function Blog() {
     <>
       <Head
         title="Blog — Website Visibility Insights"
-        description="SEO tips, audit findings, and actionable guides for improving your website visibility."
+        description="Tips, audit findings, and actionable guides for improving your website visibility."
         canonical="https://sivussa.com/blog"
       />
 
