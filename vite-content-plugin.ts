@@ -712,6 +712,8 @@ ${aboutBody}
         { loc: '/faq', lastmod: gitLogDate('src/content/faq.md'), changefreq: 'monthly', priority: '0.7' },
         { loc: '/blog', lastmod: gitLogDate('src/content/blog/index.md'), changefreq: 'weekly', priority: '0.8' },
         { loc: '/open-source-notices', lastmod: gitLogDate('src/content/home/sivussa_open_source_notices.md'), changefreq: 'yearly', priority: '0.1' },
+        { loc: '/privacy', lastmod: gitLogDate('src/content/home/sivussa_privacy_policy.md'), changefreq: 'yearly', priority: '0.1' },
+        { loc: '/terms', lastmod: gitLogDate('src/content/home/sivussa_terms_of_service.md'), changefreq: 'yearly', priority: '0.1' },
       ];
 
       const postsDir = path.join(contentDir, 'blog/posts');
