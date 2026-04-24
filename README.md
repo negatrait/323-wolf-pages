@@ -158,7 +158,23 @@ Defined in `src/index.css` `@theme` block. All Tailwind utilities (`text-primary
 5. Merge → auto-deploys to production
 
 ### CMS
-Non-technical content edits can be made via [Cloudflare Pages CMS](https://dash.cloudflare.com) — the `.pages.yml` configures the CMS editor. Changes go through Pages CMS to `main` directly.
+Content can be edited via [Cloudflare Pages CMS](https://dash.cloudflare.com) or [PagesCMS.org](https://pagescms.org). The `.pages.yml` file at the repository root configures the editor for every content file in the project.
+
+**What's editable via CMS:**
+- All homepage sections (hero, problem, how-it-works, features, pricing, who-is-this-for, what-you-get)
+- About page, FAQ page, blog posts
+- Navigation, footer, legal pages (privacy, terms, notices)
+- Agent content (llms.txt, llms-*.md)
+- Config files (robots.txt, _headers, _redirects)
+
+**How to use:**
+1. Open Pages CMS connected to the `negatrait/323-wolf-pages` repo
+2. Select the `main` branch (or `staging` for preview)
+3. Edit content through the visual editor
+4. Save — CMS commits directly to the branch
+5. Cloudflare auto-deploys
+
+**What's NOT in the CMS:** Code files (components, plugins, styles). Those require git/PR workflow.
 
 ## Adding Content
 

@@ -61,3 +61,38 @@
 - Blog post content (`audit-findings-before-after.md`) — historical document
 - `src/utils/seo.ts` JSON-LD — machine-readable, not customer-visible
 - `src/content/home/sivussa_terms_of_service.md` — legal text, technical terms appropriate
+
+## Phase 5 — Pages CMS Integration
+
+- [x] **T5.1** `.pages.yml` — Full CMS configuration covering every content file in the repository
+- [x] **T5.2** `README.md` — Documented CMS usage, what's editable, and what's not
+
+### CMS coverage
+
+| Section | File | Type |
+|---------|------|------|
+| Homepage Hero | `src/content/home/hero.md` | file (frontmatter + rich-text body) |
+| Homepage Problem | `src/content/home/problem.md` | file |
+| Homepage How It Works | `src/content/home/how-it-works.md` | file (complex frontmatter) |
+| Homepage Features | `src/content/home/features.md` | file |
+| Homepage What You Get | `src/content/home/what-you-get.md` | file |
+| Homepage Who Is This For | `src/content/home/who-is-this-for.md` | file |
+| Homepage Pricing | `src/content/home/pricing.md` | file (complex frontmatter) |
+| About Page | `src/content/about.md` | file |
+| FAQ Page | `src/content/faq.md` | file |
+| Blog Settings | `src/content/blog/index.md` | file |
+| Blog Posts | `src/content/blog/posts/*.md` | collection |
+| Navigation | `src/content/nav.md` | file |
+| Footer | `src/content/footer.md` | file |
+| Privacy Policy | `src/content/home/sivussa_privacy_policy.md` | file (raw) |
+| Terms of Service | `src/content/home/sivussa_terms_of_service.md` | file (raw) |
+| Open Source Notices | `src/content/home/sivussa_open_source_notices.md` | file (raw) |
+| llms.txt | `public/llms.txt` | file (raw) |
+| llms-home | `public/llms-home.md` | file (raw) |
+| llms-about | `public/llms-about.md` | file (raw) |
+| llms-how-it-works | `public/llms-how-it-works.md` | file (raw) |
+| llms-pricing | `public/llms-pricing.md` | file (raw) |
+| llms-faq | `public/llms-faq.md` | file (raw) |
+| robots.txt | `public/robots.txt` | file (code) |
+| _headers | `public/_headers` | file (code) |
+| _redirects | `public/_redirects` | file (code) |
