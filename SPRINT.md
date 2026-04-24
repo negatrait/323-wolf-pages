@@ -1,185 +1,315 @@
 # Sprint 2 — TypeScript Safety & Preact Best Practices
 
-**Goal:** Biome check passes with zero errors/warnings. Full TypeScript strict mode. Proper Preact component types. Content plugin modularized.
+**Goal:** Biome check zero errors/warnings. TypeScript strict mode zero errors. Content plugin modularized with full types. Proper Preact component types.
 
 **Branch:** staging
 
 ---
 
-## Phase 1 — Auto-fix (low risk, high volume)
+## Phase 1 — Auto-fix
 
 ### T1.1 Format + organize imports
 - `npx biome check --write .` — fixes 22 format/import issues
-- Verify build still passes
 
 ### T1.2 Remove unused variables
-- 3 unused variables in `vite-content-plugin.ts` (lines 590, 619, 622)
-- Delete or wire them up
+- 3 unused vars in content plugin (lines 590, 619, 622)
 
 ---
 
-## Phase 2 — Modularize Content Plugin
+## Phase 2 — Modularize Content Plugin with Full Types
 
-Current state: `vite-content-plugin.ts` is 852 lines — a monolith doing 5 jobs. Must split before typing.
+Extract 852-line monolith into typed modules. Each module is typed from extraction — no `any` migrations.
 
-### T2.1 Create `vite-plugin/` directory structure
+### Directory structure
 ```
 vite-plugin/
-├── index.ts              # Plugin entry (load + generateBundle hooks, imports parsers)
-├── types.ts              # All interfaces (frontmatter, parsed content, site config)
-├── site-config.ts        # loadSiteConfig() + SITE constant
-├── markdown-loader.ts    # loadMd(), marked setup, HTML helpers
+├── index.ts              # Plugin entry (~80 lines)
+├── types.ts              # All interfaces (~180 lines)
+├── site-config.ts        # Site identity loader (~20 lines)
+├── markdown-loader.ts    # loadMd + marked + HTML helpers (~80 lines)
 ├── parsers/
-│   ├── home.ts           # HOME_HERO, HOME_WHAT_YOU_GET, HOME_PROBLEM, HOME_HOW_IT_WORKS, HOME_FEATURES, HOME_WHO_IS_THIS_FOR, HOME_PRICING, HOME_FAQ, HOME_FINAL_CTA
-│   ├── about.ts          # ABOUT, parseAboutSections, mapAboutSection
-│   ├── blog.ts           # BLOG_CONFIG, BLOG_POSTS_MAP
-│   ├── faq.ts            # FAQ_ITEMS
-│   ├── legal.ts          # PRIVACY_POLICY, TERMS_OF_SERVICE, OPEN_SOURCE_NOTICES
-│   ├── layout.ts         # NAV_CONFIG, FOOTER_SECTIONS, FOOTER_COPYRIGHT
-│   └── pricing.ts        # PRICING_TIERS, PRICING_FAQ, PRICING_FEATURE_TABLE, PRICING_COMPETITORS, PRICING_CTA, PRICING_TERMS
-├── route-meta.ts         # buildRouteMeta()
-├── llms-generator.ts     # generateBundle llms section
-└── sitemap-generator.ts  # generateBundle sitemap section
+│   ├── home.ts           # HOME_* constants (~150 lines)
+│   ├── about.ts          # ABOUT + section parsers (~100 lines)
+│   ├── blog.ts           # BLOG_CONFIG + BLOG_POSTS_MAP (~60 lines)
+│   ├── faq.ts            # FAQ_ITEMS (~15 lines)
+│   ├── legal.ts          # PRIVACY_POLICY, TERMS, NOTICES (~30 lines)
+│   ├── layout.ts         # NAV_CONFIG, FOOTER_* (~20 lines)
+│   └── pricing.ts        # PRICING_* derived constants (~50 lines)
+├── route-meta.ts         # buildRouteMeta() (~50 lines)
+├── llms-generator.ts     # llms.txt + llms-*.md (~140 lines)
+└── sitemap-generator.ts  # sitemap.xml (~50 lines)
 ```
 
-### T2.2 Extract `types.ts`
-- Move all 130 lines of interfaces out of the monolith
-- Re-export from single file
+### T2.1 `vite-plugin/types.ts`
+All interfaces extracted and **tightened** — no `any`:
 
-### T2.3 Extract `markdown-loader.ts`
-- `loadMd()`, marked setup, `stripTags()`, `extractLiText()`, `findParagraph()`, `extractH2UlSections()`
-- ~60 lines, pure utility functions
+```typescript
+// Site identity (from site.md)
+export interface SiteConfig {
+  name: string;
+  url: string;
+  email: string;
+  tagline: string;
+}
 
-### T2.4 Extract `site-config.ts`
-- `loadSiteConfig()`, `SITE` variable
-- ~15 lines
+// Frontmatter interfaces (what gray-matter parses)
+export interface HeroFrontmatter { ... }
+export interface PricingFrontmatter { ... }
+export interface FaqFrontmatter { ... }
+// etc.
 
-### T2.5 Extract parsers into `parsers/`
-- Each parser function takes `contentDir` + `loadMd` + helpers, returns its constants
-- `home.ts` is the biggest (~140 lines) — handles hero, what-you-get, problem, how-it-works, features, who-is-this-for, pricing
-- Each parser: ~20-80 lines
+// Parsed content interfaces (what parsers output)
+export interface HeroContent { ... }
+export interface PricingContent { ... }
+export interface AboutContent { ... }
+export interface BlogPostContent { ... }
+// etc.
 
-### T2.6 Extract `route-meta.ts`
-- `buildRouteMeta()` — 47 lines
-- Takes parsed frontmatters, returns route map
+// Route meta
+export interface RouteMeta {
+  title: string;
+  description: string;
+  canonical: string;
+}
 
-### T2.7 Extract `llms-generator.ts`
-- All llms.txt + llms-*.md template building from generateBundle
-- ~130 lines
+// Parsed FAQ item
+export interface FaqItem {
+  question: string;
+  answer: string;
+  category: string;
+}
 
-### T2.8 Extract `sitemap-generator.ts`
-- Sitemap XML generation from generateBundle
-- ~40 lines
+// Blog post (what components receive)
+export interface BlogPost {
+  title: string;
+  description: string;
+  seo_title?: string;
+  seo_description?: string;
+  date: string;
+  category: string;
+  readTime: string;
+  html: string;
+}
+```
 
-### T2.9 Rewrite `index.ts` as thin orchestrator
-- `load()` hook: calls parsers, assembles export map
-- `generateBundle()` hook: calls llms-generator + sitemap-generator
-- Target: ~80 lines (imports + plugin skeleton + emit)
+### T2.2 `vite-plugin/site-config.ts`
+```typescript
+import type { SiteConfig } from './types';
+// loadMd imported from sibling module
+export function loadSiteConfig(contentDir: string): SiteConfig { ... }
+```
 
-### T2.10 Verify build passes after modularization
+### T2.3 `vite-plugin/markdown-loader.ts`
+```typescript
+export function loadMd<T>(contentDir: string, filePath: string): 
+  { frontmatter: T; html: string; raw: string } { ... }
+// + all HTML helpers, typed inputs/outputs
+// + marked setup
+```
+
+### T2.4 `vite-plugin/parsers/*.ts`
+Each parser function:
+- Takes typed inputs (`contentDir: string`, `loadMd` function)
+- Returns typed constants using interfaces from `types.ts`
+- Zero `any` — if frontmatter shape is uncertain, use optional fields
+
+Example `parsers/home.ts`:
+```typescript
+import type { HeroFrontmatter, HeroContent, WhatYouGetFrontmatter, ... } from '../types';
+export function parseHome(contentDir: string, loadMd: LoadMdFn): {
+  HOME_HERO: HeroContent;
+  HOME_WHAT_YOU_GET: WhatYouGetContent;
+  // ... all home constants
+} { ... }
+```
+
+### T2.5 `vite-plugin/route-meta.ts`
+```typescript
+import type { RouteMeta } from './types';
+export function buildRouteMeta(
+  contentDir: string,
+  site: SiteConfig,
+  hero: HeroFrontmatter,
+  pricing: PricingFrontmatter,
+  // ... typed params, no any
+): Record<string, RouteMeta> { ... }
+```
+
+### T2.6 `vite-plugin/llms-generator.ts`
+```typescript
+import type { SiteConfig, HeroFrontmatter, ... } from './types';
+export function generateLlmsFiles(
+  site: SiteConfig,
+  hero: HeroFrontmatter,
+  // ... typed params
+): Record<string, string> { ... }  // filename → content
+```
+
+### T2.7 `vite-plugin/sitemap-generator.ts`
+```typescript
+export function generateSitemap(
+  contentDir: string,
+  siteUrl: string,
+): string { ... }  // XML string
+```
+
+### T2.8 `vite-plugin/index.ts` — thin orchestrator
+```typescript
+import type { Plugin } from 'vite';
+// Import all parsers, generators
+export default function contentPlugin(): Plugin {
+  return {
+    name: 'vite-content-plugin',
+    resolveId(id) { ... },
+    load(id) {
+      // Call each parser, assemble export map
+      // ~80 lines of orchestration
+    },
+    generateBundle() {
+      // Call llms + sitemap generators, emit files
+    },
+  };
+}
+```
+
+### T2.9 Update `vite.config.ts` import
+- Change `./vite-content-plugin.ts` → `./vite-plugin/index.ts`
+
+### T2.10 Verify build passes
 - `npx vite build` — zero behavior change
 - All pages render identically
-- Update `vite.config.ts` import path
+
+**Checkpoint: Harri reviews module structure before proceeding.**
 
 ---
 
 ## Phase 3 — TypeScript Infrastructure
 
 ### T3.1 Add `tsconfig.json`
-- `strict: true`, `noUncheckedIndexedAccess`, `noImplicitReturns`
-- `jsx: "react-jsx"`, `jsxImportSource: "preact"`
-- Include `src/`, `vite-plugin/`, `vite.config.ts`
-- Paths alias for `virtual:content` module declaration
+```json
+{
+  "compilerOptions": {
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitReturns": true,
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact",
+    "moduleResolution": "bundler",
+    "target": "ES2022",
+    "module": "ES2022",
+    "skipLibCheck": true
+  },
+  "include": ["src", "vite-plugin", "vite.config.ts"],
+  "exclude": ["node_modules", "dist"]
+}
+```
 
-### T3.2 Add `typecheck` script
-- `"typecheck": "tsc --noEmit"` in package.json
-- Must pass with zero errors
+### T3.2 Declare virtual module
+```typescript
+// src/vite-env.d.ts
+declare module 'virtual:content' {
+  export const SITE_CONFIG: import('../vite-plugin/types').SiteConfig;
+  export const ROUTE_META: Record<string, import('../vite-plugin/types').RouteMeta>;
+  export const HOME_HERO: import('../vite-plugin/types').HeroContent;
+  // ... all exports
+}
+```
 
-### T3.3 Add type dependencies
-- `@types/node` if not present
-- Verify all imports resolve
+### T3.3 Add scripts to package.json
+- `"typecheck": "tsc --noEmit"`
+
+### T3.4 Install type deps
+- `@types/node` for vite plugin files
+
+### T3.5 `tsc --noEmit` — fix any remaining errors
+- Content plugin already typed from Phase 2
+- Expect: Preact JSX type mismatches, component prop issues
 
 ---
 
 ## Phase 4 — Type All Component Props
 
-### T4.1 Define interfaces for every component (14 components)
-- Accordion, BreadcrumbNav, Button, FeatureCard, Head, Layout
-- Nav, PricingCard, Section, StepCard, TestimonialCard
-- All get typed `Props` interfaces
-
-### T4.2 Type page component props (11 pages)
-- `BlogPost({ slug }: { slug: string })` — only page with props
-- Others: no-arg functions returning JSX
-
-### T4.3 Type all hooks and event handlers
-- `useEffect` in Head.tsx
-- `useState` in Accordion.tsx
-
----
-
-## Phase 5 — Eliminate `any` (now feasible after modularization)
-
-### T5.1 Type `vite-plugin/parsers/*.ts`
-- Each parser already has its own file — type the inputs and outputs
-- Replace `any` with proper frontmatter interfaces from `types.ts`
-
-### T5.2 Type `vite-plugin/llms-generator.ts`
-- Template functions take typed parsed content, not `any`
-
-### T5.3 Type `vite-plugin/route-meta.ts`
-- Frontmatter params already typed from parsers
-
-### T5.4 Declare virtual module types
-- `src/vite-env.d.ts` or `types.d.ts` declaring `virtual:content` module
-- Gives autocomplete to all importers
-
----
-
-## Phase 6 — Preact Best Practices
-
-### T6.1 FunctionalComponent signatures
-- All components use `FunctionalComponent<Props>` or typed arrow functions
-
-### T6.2 `class` vs `className` decision
-- Document choice, apply consistently
-
-### T6.3 Key props on mapped elements
-- Audit all `.map()` calls
-
----
-
-## Phase 7 — Final Verification
-
-### T7.1 `npx biome check .` — zero errors, zero warnings
-### T7.2 `npx tsc --noEmit` — zero errors
-### T7.3 `npx vite build` — passes
-### T7.4 Update README
-### T7.5 Force-push main if needed
-
----
-
-## Dependency Chain
-
+### T4.1 Component prop interfaces (14 components)
+Each gets a `Props` interface:
 ```
-Phase 1 (auto-fix)
-  ↓
-Phase 2 (modularize) ← Harri reviews the structure before proceeding
-  ↓
-Phase 3 (tsconfig) ← needs modular files to be incremental
-  ↓
-Phase 4 (component types) ← independent of plugin
-  ↓
-Phase 5 (eliminate any) ← only possible after Phase 2+3
-  ↓
-Phase 6 (Preact patterns) ← after Phase 4
-  ↓
-Phase 7 (verify)
+Accordion → { question: string; answer: string; defaultOpen?: boolean }
+BreadcrumbNav → { currentPage: string; extraLink?: { href: string; label: string } }
+Button → { children: ComponentChildren; href?: string; variant?: string; class?: string }
+FeatureCard → { title: string; description: string }
+Head → { title: string; description: string; canonical: string; ogImage?: string }
+Layout → { children: ComponentChildren }
+PricingCard → { tier: string; price: string; period: string; features: string[]; cta: string; ctaHref: string; popular?: boolean }
+Section → { children: ComponentChildren; dark?: boolean; class?: string }
+StepCard → { number: string; title: string; description: string }
+TestimonialCard → { quote: string; name: string; role: string }
+Nav → {} (no props)
+Footer → {} (no props)
 ```
 
-**Checkpoint:** After Phase 2, request review. The module structure determines how clean Phases 3-5 can be.
+### T4.2 Page component types (11 pages)
+- `BlogPost({ slug }: { slug: string })`
+- All others: `() => VNode` (no props)
 
-## Scope Boundaries
+### T4.3 Hook types
+- `Head.tsx` uses Preact `useEffect` — type deps array properly
+- `Accordion.tsx` uses `useState<boolean>` — type state
 
-**In scope:** src/, vite-plugin/, vite.config.ts, tsconfig.json, biome.json
-**Out of scope:** functions/ (plain JS), public/ (static), design/UX changes, new features
+### T4.4 `class` vs `className` decision
+- Preact accepts both. With TypeScript + JSX, `className` is the React-compatible typed path.
+- Decision: **keep `class`** (Preact-native) but add JSX namespace declaration to satisfy TS
+- Add to `vite-env.d.ts`:
+  ```typescript
+  declare namespace JSX {
+    interface HTMLAttributes<T> {
+      class?: string;
+      for?: string;
+    }
+  }
+  ```
+
+---
+
+## Phase 5 — Preact Best Practices
+
+### T5.1 FunctionalComponent signatures
+- Components use `FunctionalComponent<Props>` where it adds value
+- Simple components can stay as typed functions — don't over-ceremony
+
+### T5.2 Key props audit
+- All `.map()` calls have proper `key` props
+- No array index keys where stable IDs exist
+
+### T5.3 Event handler types
+- Any click/submit handlers get proper Preact event types
+
+---
+
+## Phase 6 — Final Verification
+
+### T6.1 `npx biome check .` — zero errors, zero warnings
+### T6.2 `npx tsc --noEmit` — zero errors
+### T6.3 `npx vite build` — passes
+### T6.4 Update README (module structure, typecheck command)
+### T6.5 Sync main ← staging
+
+---
+
+## Execution Order
+
+```
+T1.1-T1.2  Auto-fix (10 min)
+    ↓
+T2.1-T2.10 Modularize with types (2-3h) ← CHECKPOINT
+    ↓
+T3.1-T3.5 TypeScript infra (30 min)
+    ↓
+T4.1-T4.4 Component types (1h)
+    ↓
+T5.1-T5.3 Preact patterns (30 min)
+    ↓
+T6.1-T6.5 Verify (15 min)
+```
+
+## Scope
+- **In:** src/, vite-plugin/, vite.config.ts, tsconfig.json, biome.json
+- **Out:** functions/ (plain JS), public/ (static), design/UX, new features
