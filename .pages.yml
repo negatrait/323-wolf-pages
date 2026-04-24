@@ -448,28 +448,19 @@ content:
         label: Privacy Policy
         type: file
         path: src/content/home/sivussa_privacy_policy.md
-        format: raw
-        fields:
-          - name: body
-            type: rich-text
+        format: code
 
       - name: terms
         label: Terms of Service
         type: file
         path: src/content/home/sivussa_terms_of_service.md
-        format: raw
-        fields:
-          - name: body
-            type: rich-text
+        format: code
 
       - name: open-source-notices
         label: Open Source Notices
         type: file
         path: src/content/home/sivussa_open_source_notices.md
-        format: raw
-        fields:
-          - name: body
-            type: rich-text
+        format: code
 
   # ── AI Agent Content ───────────────────────────────────────
   # llms.txt + llms-*.md are generated at build time from src/content/
@@ -502,25 +493,16 @@ content:
         label: robots.txt
         type: file
         path: public/robots.txt
-        format: raw
-        fields:
-          - name: body
-            type: code
+        format: code
 
       - name: headers
         label: _headers
         type: file
         path: public/_headers
-        format: raw
-        fields:
-          - name: body
-            type: code
+        format: code
 
       - name: redirects
         label: _redirects
         type: file
         path: public/_redirects
-        format: raw
-        fields:
-          - name: body
-            type: code
+        format: code
