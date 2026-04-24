@@ -1,0 +1,10 @@
+{
+  "version": "1.0",
+  "skills": [
+    {
+      "name": "sivussa-audit",
+      "description": "Run an SEO/GEO/AEO audit on a website via Sivussa's audit service",
+      "url": "https://sivussa.com/.well-known/agent-skills/sivussa-audit/SKILL.md"
+    }
+  ]
+}
