@@ -1,49 +1,71 @@
 # Sivussa.com
 
-AI-native website visibility audit service. Preact SPA with build-time prerendering, deployed on Cloudflare Pages.
+AI-native website visibility audit service. Preact SPA with build-time content pipeline, prerendering, and Cloudflare Pages deployment.
 
 ## Architecture
 
 ```mermaid
 graph TD
-    subgraph Build Time
-        MD["src/content/*.md<br/>(Markdown + frontmatter)"]
-        VCP["vite-content-plugin.ts<br/>(gray-matter → marked → JS)"]
-        VP["vite-sitemap-plugin.ts<br/>(git dates → sitemap.xml)"]
-        PR["src/prerender.tsx<br/>(renderToString per route)"]
-        VITE["vite.config.ts<br/>(Vite 8 + Preact preset)"]
+    subgraph Sources — Single Source of Truth
+        SITE["site.md<br/>name · url · email · tagline"]
+        MD["src/content/*.md<br/>(Markdown + YAML frontmatter)"]
+        STATIC["public/<br/>robots.txt · _headers · banner"]
     end
 
-    subgraph Runtime — Static Assets
-        DIST["dist/<br/>(prerendered HTML + CSS + JS)"]
-        STATIC["public/<br/>(robots.txt, _headers, llms*, .well-known/)"]
+    subgraph Build Time — vite-content-plugin.ts
+        VCP["Content Plugin<br/>gray-matter → marked → JS"]
+        ROUTE["ROUTE_META<br/>(from frontmatter seo_title/seo_description)"]
+        SITEMAP["sitemap.xml<br/>(git dates)"]
+        LLMS["llms.txt + llms-*.md<br/>(from same parsed content)"]
+        VIRTUAL["virtual:content<br/>(typed JS constants)"]
+    end
+
+    subgraph Build Time — Prerender
+        PR["prerender.tsx<br/>renderToString per route"]
+        JSONLD["JSON-LD schemas<br/>Organization · WebSite · FAQPage · BlogPosting"]
+        META["Meta tags + canonical<br/>(from ROUTE_META)"]
+    end
+
+    subgraph Output — dist/
+        HTML["Prerendered HTML<br/>(full SEO + JSON-LD baked in)"]
+        ASSETS["CSS · JS · Images"]
     end
 
     subgraph Runtime — Cloudflare Pages Functions
-        MW["functions/_middleware.ts<br/>(Accept: text/markdown → llms-*.md)"]
+        MW["_middleware.ts<br/>Accept: text/markdown → content negotiation"]
     end
 
-    subgraph Pages
-        HOME["Home /"]
+    subgraph Pages — src/pages/*.tsx
+        HOME["Home"]
         HIW["How It Works"]
         PRICE["Pricing"]
         ABOUT["About"]
         FAQ["FAQ"]
-        BLOG["Blog + Blog Posts"]
-        LEGAL["Privacy / Terms / Notices"]
+        BLOG["Blog + Posts"]
+        LEGAL["Privacy · Terms · Notices"]
     end
 
+    SITE --> VCP
     MD --> VCP
-    VCP --> |"virtual:content"| HOME
-    VCP --> PRICE
-    VCP --> FAQ
-    VCP --> ABOUT
-    VCP --> BLOG
-    VP --> DIST
-    PR --> DIST
-    VITE --> PR
-    STATIC --> DIST
-    MW --> |"content negotiation"| STATIC
+    VCP --> ROUTE
+    VCP --> SITEMAP
+    VCP --> LLMS
+    VCP --> VIRTUAL
+    VIRTUAL --> HOME
+    VIRTUAL --> HIW
+    VIRTUAL --> PRICE
+    VIRTUAL --> ABOUT
+    VIRTUAL --> FAQ
+    VIRTUAL --> BLOG
+    VIRTUAL --> LEGAL
+    ROUTE --> PR
+    PR --> JSONLD
+    PR --> META
+    META --> HTML
+    JSONLD --> HTML
+    ASSETS --> HTML
+    STATIC --> HTML
+    MW -->|"content negotiation"| HTML
 
     style VCP fill:#57AE7B,color:#071F16
     style PR fill:#57AE7B,color:#071F16
@@ -54,31 +76,59 @@ graph TD
 
 ### Content Pipeline
 
-1. **Author content** in `src/content/` as markdown files with YAML frontmatter
-2. **Build time**: `vite-content-plugin.ts` reads all markdown, parses frontmatter (gray-matter), renders HTML (marked), and emits a `virtual:content` module with typed JS constants
-3. **Page components** import constants from `virtual:content` via `src/data/load-content.ts`
-4. **Prerender**: `@preact/preset-vite` calls `src/prerender.tsx` for each route, producing static HTML with full SEO metadata
-5. **Deploy**: Cloudflare Pages auto-builds from `main` branch
+Everything visible on the site is derived from `src/content/*.md` at build time. Nothing is hardcoded in components.
+
+1. **Author content** in `src/content/` as markdown with YAML frontmatter
+2. **Build time**: `vite-content-plugin.ts` reads all markdown via `gray-matter`, renders HTML via `marked`, and emits:
+   - `virtual:content` — typed JS constants imported by page components
+   - `ROUTE_META` — per-route title/description/canonical from `seo_title`/`seo_description` frontmatter
+   - `SITE_CONFIG` — site identity (name, url, email, tagline) from `site.md`
+   - `llms.txt` + 5 `llms-*.md` files — AI agent content from the same parsed markdown
+   - `sitemap.xml` — all routes with git last-modified dates
+3. **Prerender**: `prerender.tsx` renders each route to static HTML with full meta tags and JSON-LD schemas
+4. **Deploy**: Push to `main` → Cloudflare Pages auto-builds and deploys
+
+### What's Derived vs. Authored
+
+| Source | Derived At Build Time | Used By |
+|--------|----------------------|---------|
+| `site.md` frontmatter | `SITE_CONFIG` constant | All pages, JSON-LD, llms files, seo.ts, Nav |
+| `seo_title` frontmatter | `<title>`, og:title, JSON-LD | prerender.tsx |
+| `seo_description` frontmatter | `<meta description>`, og:description | prerender.tsx |
+| Page content markdown | HTML for components | All page components |
+| `pricing.md` tiers | `PRICING_TIERS` | Pricing.tsx, llms-pricing.md |
+| `faq.md` Q&A | `FAQ_ITEMS` | FAQ.tsx, llms-faq.md, JSON-LD FAQPage |
+| Blog post files | `BLOG_POSTS_MAP` | BlogPost.tsx, sitemap, JSON-LD BlogPosting |
+| `nav.md` | `NAV_CONFIG` | Nav.tsx |
+| `footer.md` | `FOOTER_SECTIONS` | Footer.tsx |
+
+### JSON-LD Structured Data
+
+Generated exclusively in `prerender.tsx` — page components never construct schemas.
+
+| Schema | Where | Source |
+|--------|-------|--------|
+| Organization + WebSite | Every page (global) | `SITE_CONFIG` from `site.md` |
+| SoftwareApplication | Home only | `SITE_CONFIG` |
+| FAQPage | `/faq` only | `FAQ_ITEMS` from `faq.md` |
+| BlogPosting | Blog posts only | `BLOG_POSTS_MAP` from post frontmatter |
 
 ### Agent Accessibility
 
-- **Content negotiation**: `functions/_middleware.ts` serves markdown versions when `Accept: text/markdown` is sent
-- **llms.txt + llms-*.md**: Generated at build time by `vite-content-plugin.ts` from the same `src/content/` markdown files — no manual editing needed, one source of truth
+- **Content negotiation**: `_middleware.ts` serves markdown when `Accept: text/markdown` is sent
+- **llms.txt + llms-*.md**: Built by content plugin from same parsed markdown — one source of truth
 - **Agent Skills**: `/.well-known/agent-skills/` provides navigation skill for agents
-- **Content Signals**: `robots.txt` declares AI content preferences
+- **Content Signals**: `robots.txt` declares `ai-train=no, search=yes, ai-input=no`
+- **Link header**: `_headers` adds `Link: <llms.txt>; rel=describedby`
 
-### SEO
+### SPA Navigation
 
-- **Prerendered HTML**: Every page is pre-rendered with full meta tags, JSON-LD, and canonical URLs
-- **`src/data/route-meta.ts`**: Single source of truth for per-route title/description/canonical
-- **`src/components/seo/Head.tsx`**: Client-side head mutations for SPA navigation
-- **JSON-LD**: Organization, WebSite, SoftwareApplication schemas on homepage
-- **Sitemap**: Auto-generated from content markdown files with git last-modified dates
+After first page load, `Head.tsx` handles client-side meta tag mutations and JSON-LD updates on route changes. This is supplementary — all SEO-relevant data is already in the prerendered HTML.
 
 ## Project Structure
 
 ```
-├── functions/                    # Cloudflare Pages Functions
+├── functions/
 │   └── _middleware.ts            # Markdown content negotiation for AI agents
 ├── public/                       # Static assets (copied to dist/)
 │   ├── _headers                  # Cloudflare response headers
@@ -86,46 +136,46 @@ graph TD
 │   ├── robots.txt                # Crawler directives + Content Signals
 │   ├── sivussa-banner.webp       # Hero banner image
 │   └── .well-known/
-│       └── agent-skills/         # Agent Skills index + SKILL.md
+│       └── agent-skills/         # Agent Skills index + SKILL.md files
 ├── src/
 │   ├── app.tsx                   # Router — all routes defined here
 │   ├── index.tsx                 # Entry point (hydrate)
 │   ├── index.css                 # Tailwind theme + global styles
-│   ├── prerender.tsx             # Build-time prerender contract
+│   ├── prerender.tsx             # Build-time prerender + JSON-LD
 │   ├── components/
 │   │   ├── common/               # Accordion, Button, Section
-│   │   ├── content/              # FeatureCard, PricingCard, StepCard, TestimonialCard
+│   │   ├── content/              # FeatureCard, PricingCard, StepCard
 │   │   ├── layout/               # Layout, Nav, Footer, BreadcrumbNav
-│   │   └── seo/                  # Head (client-side meta mutations)
-│   ├── content/                  # Markdown content (single source of truth)
-│   │   ├── about.md
-│   │   ├── faq.md
-│   │   ├── footer.md
-│   │   ├── nav.md
-│   │   ├── home/                 # Homepage sections
-│   │   │   ├── hero.md           #   Title, subtitle, CTAs
+│   │   └── seo/                  # Head (client-side meta mutations for SPA)
+│   ├── content/                  # ← Single source of truth for all visible content
+│   │   ├── site.md               #   Site identity (name, url, email, tagline)
+│   │   ├── about.md              #   About page
+│   │   ├── faq.md                #   FAQ items
+│   │   ├── footer.md             #   Footer sections
+│   │   ├── nav.md                #   Navigation config
+│   │   ├── home/
+│   │   │   ├── hero.md           #   Title, subtitle, CTAs, seo_title, seo_description
 │   │   │   ├── problem.md        #   Problem statement
-│   │   │   ├── how-it-works.md   #   Process steps
+│   │   │   ├── how-it-works.md   #   Process steps + comparison
 │   │   │   ├── features.md       #   Feature cards
-│   │   │   ├── pricing.md        #   Pricing tiers
+│   │   │   ├── pricing.md        #   Pricing tiers + seo_title, seo_description
 │   │   │   ├── what-you-get.md   #   Deliverables
 │   │   │   ├── who-is-this-for.md
-│   │   │   └── *.md              #   Legal pages
+│   │   │   └── *.md              #   Legal pages (privacy, terms, notices)
 │   │   └── blog/
 │   │       ├── index.md          #   Blog index config
 │   │       └── posts/            #   Blog posts (slug = filename)
 │   ├── data/
-│   │   ├── load-content.ts       # Re-exports from virtual:content
-│   │   └── route-meta.ts         # Per-route SEO metadata
-│   ├── pages/                    # Page components (one per route)
+│   │   ├── load-content.ts       # Re-exports all constants from virtual:content
+│   │   └── route-meta.ts         # Re-exports build-time ROUTE_META (derived from frontmatter)
+│   ├── pages/                    # Page components (import from virtual:content, no hardcoded text)
 │   ├── styles/
 │   │   └── highlight.css         # Syntax highlighting theme
 │   └── utils/
 │       ├── routes.ts             # Nav links + route labels
-│       └── seo.ts                # JSON-LD schema builders
-├── vite-content-plugin.ts        # Markdown → typed JS (556 lines)
-├── vite-sitemap-plugin.ts        # Sitemap generator
-└── vite.config.ts                # Build config
+│       └── seo.ts                # JSON-LD schema builders (use SITE_CONFIG)
+├── vite-content-plugin.ts        # Content pipeline: markdown → JS + llms + sitemap
+└── vite.config.ts                # Build config (single plugin)
 ```
 
 ## Brand Colors
@@ -139,7 +189,7 @@ graph TD
 | Off-black | `#071F16` | Background (`dark-900`) |
 | Off-white | `#FFF7E3` | Light text (`dark-50`) |
 
-Defined in `src/index.css` `@theme` block. All Tailwind utilities (`text-primary`, `bg-dark-900`, etc.) derive from these.
+Defined in `src/index.css` `@theme` block. All Tailwind utilities derive from these.
 
 ## Deployment
 
@@ -156,39 +206,46 @@ Defined in `src/index.css` `@theme` block. All Tailwind utilities (`text-primary
 5. Merge → auto-deploys to production
 
 ### CMS
-Content can be edited via [Pages CMS](https://pagescms.org) connected to the repository. The `.pages.yml` file at the repository root configures the editor for every content file, organized into groups:
+Content editable via [Pages CMS](https://pagescms.org). The `.pages.yml` configures the editor for every content file, organized into groups:
 
-**What's editable via CMS:**
-- All homepage sections (hero, problem, how-it-works, features, pricing, who-is-this-for, what-you-get)
-- About page, FAQ page, blog posts
-- Navigation, footer, legal pages (privacy, terms, notices)
-- Agent content (llms.txt, llms-*.md)
-- Config files (robots.txt, _headers, _redirects)
+- **Homepage**: hero, problem, how-it-works, features, pricing, what-you-get, who-is-this-for
+- **Pages**: about, FAQ
+- **Blog**: posts (auto-discovered)
+- **Layout**: nav, footer
+- **Legal**: privacy, terms, notices
+- **Site Config**: site identity (name, url, email, tagline), robots.txt, _headers, _redirects
+- **Agent Content**: agent-skills SKILL.md files
 
-**How to use:**
-1. Open Pages CMS connected to the `negatrait/323-wolf-pages` repo
-2. Select the `main` branch (or `staging` for preview)
-3. Edit content through the visual editor
-4. Save — CMS commits directly to the branch
-5. Cloudflare auto-deploys
+CMS edits commit directly to the branch. Cloudflare auto-deploys.
 
-**What's NOT in the CMS:** Code files (components, plugins, styles) and auto-generated files (llms.txt, llms-*.md — generated at build time from the same content). Those require git/PR workflow.
+**What's NOT in the CMS:** Code files (components, plugins, styles) and auto-generated files (llms.txt, llms-*.md, sitemap.xml — built at build time from content). Those require git/PR workflow.
 
 ## Adding Content
 
-### New page
-1. Create component in `src/pages/`
-2. Add route in `src/app.tsx`
-3. Add SEO metadata in `src/data/route-meta.ts`
-4. Add route to `additionalPrerenderRoutes` in `vite.config.ts`
-5. Add sitemap entry in `vite-sitemap-plugin.ts`
-
 ### New blog post
-1. Create `src/content/blog/posts/<slug>.md` with frontmatter (`title`, `date`, `author`, etc.)
-2. The content plugin auto-discovers it, the sitemap plugin includes it
+1. Create `src/content/blog/posts/<slug>.md` with frontmatter:
+   ```yaml
+   ---
+   title: "Post Title"
+   seo_title: "Post Title — Sivussa Blog"
+   seo_description: "Brief description for search engines."
+   date: "2026-01-01"
+   category: "CATEGORY"
+   readTime: "3 MIN READ"
+   description: "Short description for blog index."
+   ---
+   ```
+2. Everything else is automatic: sitemap, JSON-LD (BlogPosting), route meta, llms files, prerendering
+
+### New page
+1. Create `src/content/<page>.md` with `seo_title` and `seo_description` frontmatter
+2. Create component in `src/pages/`, importing constants from `virtual:content`
+3. Add route in `src/app.tsx`
+4. Add route to `additionalPrerenderRoutes` in `vite.config.ts`
+5. Add sitemap entry in `vite-content-plugin.ts` generateBundle()
 
 ### Updating existing content
-Edit the markdown in `src/content/`. Frontmatter fields are documented in `vite-content-plugin.ts` interfaces. SEO metadata lives in `src/data/route-meta.ts`.
+Edit the markdown in `src/content/`. Build time pipeline picks it up automatically. SEO metadata comes from `seo_title`/`seo_description` frontmatter in the same file.
 
 ## Development
 
@@ -200,31 +257,33 @@ npm run preview    # Preview production build
 npm run check      # Biome lint + format check
 ```
 
-## Active Sprint
+## Constraints
 
-See [SPRINT.md](./SPRINT.md) for current work-in-progress: content de-jargon, hardcoded text removal, and code quality fixes.
+- **No hardcoded text** — all visible text comes from content markdown via `virtual:content`
+- **No hardcoded site data** — name, url, email, tagline come from `site.md`
+- **No SEO/GEO/AEO jargon** on customer-facing pages — allowed only in meta tags, JSON-LD, agent files, legal text
+- **No duplicate data** — every piece of information has one source; everything else derives from it
+- **JSON-LD in prerender only** — `prerender.tsx` is the single source; page components never construct schemas
+- **Single Vite plugin** — `vite-content-plugin.ts` handles content, route meta, llms files, and sitemap
 
 ## What Not To Do
 
-- Don't inject HTML into `dist/` post-build — use the prerender pipeline
-- Don't load JSON-LD via client-side JavaScript — must be in prerendered HTML
-- Don't hardcode titles/descriptions in JSX — use content frontmatter or `route-meta.ts`
-- Don't leave dead code or disabled files — delete, don't rename to `.disabled`
-- Don't use `pip install` or `sudo apt` for project dependencies — use `npm`
-- Don't run `wrangler pages deploy` — Cloudflare auto-deploys from git
+- Don't hardcode titles, descriptions, or site identity in JSX — use content frontmatter or `SITE_CONFIG`
+- Don't construct JSON-LD in page components — `prerender.tsx` owns all structured data
+- Don't create static files in `public/` for content that exists in `src/content/` — generate at build time
+- Don't load JSON-LD via client-side only — must be in prerendered HTML for crawlers
+- Don't use `wrangler pages deploy` — Cloudflare auto-deploys from git
+- Don't edit `route-meta.ts` manually — it's derived from content frontmatter at build time
 
 ## References
-
-These repositories are relevant for understanding the technologies used:
 
 - [Preact](https://github.com/preactjs/preact) — UI framework (3KB React alternative)
 - [Preact ISO](https://github.com/preactjs/preact-iso) — Isomorphic routing/hydration
 - [@preact/preset-vite](https://github.com/preactjs/preset-vite) — Vite integration + prerender
 - [Vite](https://github.com/vitejs/vite) — Build tool
-- [Tailwind CSS v4](https://github.com/tailwindlabs/tailwindcss) — Utility CSS with CSS-first config
+- [Tailwind CSS v4](https://github.com/tailwindlabs/tailwindcss) — Utility CSS
 - [Marked](https://github.com/markedjs/marked) — Markdown parser
 - [gray-matter](https://github.com/jonschlinkert/gray-matter) — YAML frontmatter parser
-- [highlight.js](https://github.com/highlightjs/highlight.js) — Syntax highlighting
 - [Biome](https://github.com/biomejs/biome) — Linter + formatter
 - [Cloudflare Pages](https://developers.cloudflare.com/pages/) — Hosting + CDN + Functions
 - [Agent Skills](https://github.com/agentskills/agentskills) — Agent skill specification
