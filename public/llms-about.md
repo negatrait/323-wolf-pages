@@ -15,10 +15,10 @@ We built Sivussa to solve **one** problem: the gap between finding issues and ac
 ### Search optimization
 Technical health, meta tags, structured data, page speed, content optimization — identifies what's burying your site in search engine results.
 
-### Geolocation optimization
-Google Business Profile, local pack rankings, NAP consistency, local citations — finds what's blocking your local visibility.
+### Generative engine optimization
+Optimizing for AI-generated responses, authority signals, and content that LLMs reference.
 
-### AI engine optimization
+### Answering engine optimization
 FAQ content, featured snippets, AI answer readiness — increases your likelihood of becoming the grounding truth in AI assistant answers.
 
 ## Built in Finland

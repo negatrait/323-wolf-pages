@@ -30,7 +30,7 @@ Yes. Upgrade or downgrade anytime. Prorated billing applies.
 ## Technical
 
 **What do you audit?**
-SEO (technical health, meta tags, structured data, page speed, content), GEO (Google Business Profile, local pack rankings, citations), and AEO (FAQ content, featured snippets, AI answer readiness).
+SEO (technical health, meta tags, structured data, page speed, content), GEO (generative engine optimization — AI-generated responses, authority signals), and AEO (answering engine optimization — FAQ content, featured snippets, AI answer readiness).
 
 **How long does an audit take?**
 Typically 1-2 hours. Our AI-native team of 20+ specialists works fast.
