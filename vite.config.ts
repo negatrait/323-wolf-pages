@@ -19,6 +19,8 @@ export default defineConfig({
           '/blog',
           '/blog/audited-ourselves',
           '/open-source-notices',
+          '/privacy',
+          '/terms',
         ],
       },
     }),
