@@ -11,7 +11,8 @@ intro: Using traditional crawling techniques, the domain provided by you, is
   reconnaisance, several AI agents, each specialising in very niche sectors of
   search engine optimization, analyse the results. Finally, a prioritised plan
   for improvement is produced. The plan is sent to you by email. You review and
-  implement. That's it.
+  implement. Next round, as your content evolves, new improvement opportunities
+  arise - we identify them, and propose new remedies. That's it.
 steps:
   - number: 1
     title: Complete the checkout flow
