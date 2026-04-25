@@ -126,7 +126,7 @@ competitors:
     desc: Full visibility audit. Every issue comes with prioritized, expert
       recommendations by AI specialists.
     highlight: true
-cta_title: Stop paying for checklists. Get recommendations.
+cta_title: Stop paying for checklists. We give you solutions to those lists.
 cta_text: Get Your Audit — €99
 cta_href: https://buy.stripe.com/cNi7sN0Kv3phb500GPcbC01
 ---
