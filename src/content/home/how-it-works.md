@@ -18,21 +18,22 @@ steps:
     description: Subscribe to either a one-time audit or a recurring subscription,
       based on your preferences. The audit is queued immediately after your
       purchase through Stripe is completed succesfully.
-  - number: 2
+  - number: 3
     title: Sivussa creates the remedy plan
     description: Our team crawls your site like the search engines would, reviewing
       the structure and content of the site, evaluating search engine
       visibility, AI search and citability readiness, and identifies what's
       holding you back. We focus on impactful issues, avoiding a 100-page list
       of minor items.
-  - number: 3
+  - number: 4
     title: Get your report
     description: PDF report with scored findings and specific recommendations
       delivered to your email.
-  - number: 4
+  - number: 5
     title: Apply and track
     description: Implement the recommendations. Run follow-up audits to track your
       progress. Clear the brakes before stepping on the gas.
+  - number: 6
 comparison:
   other: '"Your meta description is missing." (Your problem now.)'
   sivussa: "\"Your meta description is missing on these pages. Here's why it
