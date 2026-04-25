@@ -17,8 +17,10 @@ steps:
   - number: 1
     title: Complete the checkout flow
     description: Subscribe to either a one-time audit or a recurring subscription,
-      based on your preferences. The audit is queued immediately after your
-      purchase through Stripe is completed succesfully.
+      based on your preferences. You provide a domain name you want audited and
+      an email adress you want the deliverables sent to, during the checkout
+      flow. The audit is queued immediately after your purchase through Stripe
+      is completed succesfully.
   - number: 3
     title: Sivussa creates the remedy plan
     description: Our team crawls your site like the search engines would, reviewing
@@ -29,8 +31,10 @@ steps:
       minor items.
   - number: 4
     title: Get your report
-    description: PDF report with scored findings and specific recommendations
-      delivered to your email.
+    description: The findings and remedies from step 2 are assembled in a PDF report
+      with specific recommendations a human can actually understand and
+      implement. The recommendations are delivered to your email - you provided
+      an email adress during the Stripe checkout flow.
   - number: 5
     title: Apply and track
     description: Implement the recommendations. Run follow-up audits to track your
