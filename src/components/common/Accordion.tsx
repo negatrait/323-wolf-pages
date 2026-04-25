@@ -1,6 +1,16 @@
 import { useState } from 'preact/hooks';
 
-export function Accordion({ question, answer, defaultOpen = false }) {
+interface AccordionProps {
+  question: string;
+  answer: string;
+  defaultOpen?: boolean;
+}
+
+export function Accordion({
+  question,
+  answer,
+  defaultOpen = false,
+}: AccordionProps) {
   const [open, setOpen] = useState(defaultOpen);
 
   return (

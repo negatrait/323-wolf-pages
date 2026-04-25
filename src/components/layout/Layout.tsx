@@ -1,7 +1,12 @@
+import type { ComponentChildren } from 'preact';
 import { Footer } from './Footer';
 import { Nav } from './Nav';
 
-export function Layout({ children }) {
+interface LayoutProps {
+  children: ComponentChildren;
+}
+
+export function Layout({ children }: LayoutProps) {
   return (
     <div class="min-h-screen flex flex-col bg-dark-900 text-dark-100">
       <Nav />

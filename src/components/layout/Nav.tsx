@@ -19,16 +19,16 @@ export function Nav() {
   }, [location.url]);
 
   useEffect(() => {
-    const onKey = (e) => {
+    const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setMobileOpen(false);
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, []);
 
-  const isActive = (href) => {
+  const isActive = (href: string): boolean => {
     if (href === '/') return location.url === '/';
-    return location.url?.startsWith(href);
+    return location.url?.startsWith(href) ?? false;
   };
 
   return (

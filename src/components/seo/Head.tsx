@@ -1,18 +1,20 @@
 import { useEffect } from 'preact/hooks';
 import { getRouteMeta, SITE_CONFIG } from '../../data/route-meta';
 
+interface HeadProps {
+  title: string;
+  description: string;
+  canonical: string;
+  ogImage?: string;
+  structuredData?: Record<string, unknown>;
+}
+
 /**
  * SEO head component. Works in two modes:
- * - SSR (prerender): renders nothing visible, metadata injected via prerender.jsx
+ * - SSR (prerender): renders nothing visible, metadata injected via prerender.tsx
  * - Client (SPA navigation): uses useEffect to mutate document.head on route change
  */
-export function Head({
-  title,
-  description,
-  canonical,
-  ogImage,
-  structuredData,
-}) {
+export function Head({ title, description, canonical, ogImage }: HeadProps) {
   // Client-side only: update document.head on SPA navigation
   if (typeof window !== 'undefined') {
     // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -28,25 +30,16 @@ export function Head({
       setMeta('twitter:title', title);
       setMeta('twitter:description', description);
 
-      let link = document.querySelector('link[rel="canonical"]');
+      let link = document.querySelector(
+        'link[rel="canonical"]',
+      ) as HTMLLinkElement | null;
       if (!link) {
-        link = document.createElement('link');
+        link = document.createElement('link') as HTMLLinkElement;
         link.rel = 'canonical';
         document.head.appendChild(link);
       }
       link.href = canonical;
-
-      if (structuredData) {
-        let script = document.getElementById('structured-data');
-        if (!script) {
-          script = document.createElement('script');
-          script.type = 'application/ld+json';
-          script.id = 'structured-data';
-          document.head.appendChild(script);
-        }
-        script.textContent = JSON.stringify(structuredData);
-      }
-    }, [title, description, canonical, ogImage, structuredData]);
+    }, [title, description, canonical, ogImage]);
   }
 
   return null;
@@ -56,12 +49,12 @@ export function Head({
  * Convenience: build Head props from a route path.
  * Used by page components that just need default route metadata.
  */
-export function useRouteMeta(path) {
+export function useRouteMeta(path: string) {
   return getRouteMeta(path);
 }
 
-function setMeta(prop, content) {
-  let el =
+function setMeta(prop: string, content: string): void {
+  let el: Element | null =
     document.querySelector(`meta[property="${prop}"]`) ||
     document.querySelector(`meta[name="${prop}"]`);
   if (!el) {
@@ -69,9 +62,9 @@ function setMeta(prop, content) {
     if (prop.startsWith('og:') || prop.startsWith('twitter:')) {
       el.setAttribute('property', prop);
     } else {
-      el.name = prop;
+      (el as HTMLMetaElement).name = prop;
     }
     document.head.appendChild(el);
   }
-  el.content = content;
+  el.setAttribute('content', content);
 }

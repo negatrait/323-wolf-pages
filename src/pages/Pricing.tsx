@@ -19,9 +19,9 @@ export function Pricing() {
   return (
     <>
       <Head
-        title={meta.title}
-        description={meta.description}
-        canonical={meta.canonical}
+        title={meta!.title}
+        description={meta!.description}
+        canonical={meta!.canonical}
       />
       <Section>
         <BreadcrumbNav currentPage="Pricing" />
@@ -84,7 +84,7 @@ export function Pricing() {
               {i === 3 ? (
                 <span
                   dangerouslySetInnerHTML={{
-                    __html: term.tos_pp
+                    __html: (term.tos_pp ?? '')
                       .replace(
                         'Terms of Service',
                         '<a href="/terms" class="text-primary hover:underline">Terms of Service</a>',
@@ -96,7 +96,7 @@ export function Pricing() {
                   }}
                 />
               ) : (
-                term.timing || term.consumers || term.withdrawal
+                (term.timing ?? term.consumers ?? term.withdrawal ?? '')
               )}
             </p>
           ))}

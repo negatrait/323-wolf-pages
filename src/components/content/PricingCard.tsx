@@ -1,3 +1,13 @@
+interface PricingCardProps {
+  name: string;
+  price: string;
+  period: string;
+  features: string[];
+  popular: boolean;
+  ctaText: string;
+  ctaHref: string;
+}
+
 export function PricingCard({
   name,
   price,
@@ -6,7 +16,7 @@ export function PricingCard({
   popular,
   ctaText,
   ctaHref,
-}) {
+}: PricingCardProps) {
   return (
     <div
       class={`relative rounded-2xl p-8 border ${popular ? 'border-primary shadow-glow bg-dark-800' : 'border-dark-600 bg-dark-800'} flex flex-col`}
@@ -22,7 +32,7 @@ export function PricingCard({
         {period && <span class="text-dark-300 ml-1">{period}</span>}
       </div>
       <ul class="space-y-3 mb-8 flex-1">
-        {features.map((f, i) => (
+        {features.map((f: string, i: number) => (
           <li key={i} class="flex items-start gap-2 text-dark-200">
             <span class="material-symbols-outlined text-primary text-lg mt-0.5">
               check_circle

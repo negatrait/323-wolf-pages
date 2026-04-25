@@ -25,9 +25,9 @@ export function Home() {
   return (
     <>
       <Head
-        title={getRouteMeta('/').title}
-        description={getRouteMeta('/').description}
-        canonical={getRouteMeta('/').canonical}
+        title={getRouteMeta('/')!.title}
+        description={getRouteMeta('/')!.description}
+        canonical={getRouteMeta('/')!.canonical}
       />
 
       {/* Hero */}

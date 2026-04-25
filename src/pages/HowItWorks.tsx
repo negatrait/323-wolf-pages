@@ -12,9 +12,9 @@ export function HowItWorks() {
   return (
     <>
       <Head
-        title={meta.title}
-        description={meta.description}
-        canonical={meta.canonical}
+        title={meta!.title}
+        description={meta!.description}
+        canonical={meta!.canonical}
       />
       <Section>
         <BreadcrumbNav currentPage="How It Works" />
@@ -50,7 +50,7 @@ export function HowItWorks() {
             <table class="w-full text-sm">
               <thead>
                 <tr class="border-b border-dark-600">
-                  {HW.comparisonTable.headers.map((h, i) => (
+                  {HW.comparisonTable?.headers.map((h, i) => (
                     <th
                       key={i}
                       class={`py-3 px-4 ${i === 0 ? 'text-left text-dark-300' : 'text-center text-dark-300'}`}
@@ -61,7 +61,7 @@ export function HowItWorks() {
                 </tr>
               </thead>
               <tbody class="text-dark-200">
-                {HW.comparisonTable.rows.map((row, i) => (
+                {HW.comparisonTable?.rows.map((row, i) => (
                   <tr key={i} class="border-b border-dark-700">
                     {row.map((cell, j) => (
                       <td
@@ -85,7 +85,7 @@ export function HowItWorks() {
           What you get
         </h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
-          {HW.whatYouGet.map((t, i) => (
+          {HW.whatYouGet?.map((t, i) => (
             <div
               key={i}
               class="rounded-xl p-5 bg-dark-900 border border-dark-600"

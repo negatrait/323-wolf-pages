@@ -6,7 +6,9 @@
     "enabled": true,
     "rules": {
       "recommended": true,
-      "suspicious": { "noAssignInExpressions": "error" }
+      "suspicious": { "noAssignInExpressions": "error" },
+      "style": { "noNonNullAssertion": "off" },
+      "correctness": { "noUnusedImports": "warn" }
     }
   },
   "formatter": {
