@@ -23,9 +23,10 @@ steps:
     title: Sivussa creates the remedy plan
     description: Our team crawls your site like the search engines would, reviewing
       the structure and content of the site, evaluating search engine
-      visibility, AI search and citability readiness, and identifies what's
-      holding you back. We focus on impactful issues, avoiding a 100-page list
-      of minor items.
+      visibility, AI search and citability readiness. The team identifies what's
+      holding your organic visibility back, and proposes the most impactful
+      improvements. We focus on impactful issues, avoiding a 100-page list of
+      minor items.
   - number: 4
     title: Get your report
     description: PDF report with scored findings and specific recommendations
