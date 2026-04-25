@@ -1,6 +1,6 @@
 ---
-name: "Sivussa"
-url: "https://sivussa.com"
-email: "sivussa@sivussa.com"
-tagline: "AI-native visibility specialists clearing your structural blockers"
+name: Sivussa
+url: https://sivussa.com
+email: sivussa@sivussa.com
+tagline: Search engine optimization made easy
 ---
