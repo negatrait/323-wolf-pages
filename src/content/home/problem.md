@@ -10,9 +10,9 @@ The problem isn't that you lack a great site. The problem is that **structural b
 
 ## Search engines can't find you
 
-- No structured data? Search engines can't understand your content properly.
+- No structured data? Search engines can't parse your content properly.
 - Missing meta descriptions? Your search result is empty and unappealing.
-- Slow pages? Users abandon before they see anything.
+- Slow pages? Users give up before they get to your point.
 
 ## AI assistants skip over you
 
