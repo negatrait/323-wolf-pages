@@ -14,14 +14,17 @@ intro: Using traditional crawling techniques, the domain provided by you, is
   implement. That's it.
 steps:
   - number: 1
-    title: Purchase your audit
-    description: Choose a one-time audit or subscribe for recurring audits. Payments
-      and subscription data handled via Stripe.
+    title: Complete the checkout flow
+    description: Subscribe to either a one-time audit or a recurring subscription,
+      based on your preferences. The audit is queued immediately after your
+      purchase through Stripe is completed succesfully.
   - number: 2
-    title: Identify the issues
-    description: Our team crawls your site, checks geographic visibility, evaluates
-      AI readiness, and identifies what's holding you back. We focus on
-      impactful issues, not a 100-page list of minor items.
+    title: Sivussa creates the remedy plan
+    description: Our team crawls your site like the search engines would, reviewing
+      the structure and content of the site, evaluating search engine
+      visibility, AI search and citability readiness, and identifies what's
+      holding you back. We focus on impactful issues, avoiding a 100-page list
+      of minor items.
   - number: 3
     title: Get your report
     description: PDF report with scored findings and specific recommendations
