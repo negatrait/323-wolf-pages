@@ -30,20 +30,27 @@ steps:
       improvements. We focus on impactful issues, avoiding a 100-page list of
       minor items.
   - number: 4
-    title: Get your report
+    title: You recieve your report
     description: The findings and remedies from step 2 are assembled in a PDF report
       with specific recommendations a human can actually understand and
       implement. The recommendations are delivered to your email - you provided
       an email adress during the Stripe checkout flow.
   - number: 5
-    title: Apply and track
-    description: Implement the recommendations. Run follow-up audits to track your
-      progress. Clear the brakes before stepping on the gas.
+    title: You implement
+    description: You (or your technical team) **implement the recommended changes**
+      to your site. Or, if this was competitive intel, you might be looking into
+      how to position your site compared to your direct competitors, resellers,
+      subsidies, and so on.
   - number: 6
+    title: Repeat
+    description: Depending on how often your content changes - subscribe to
+      quarterly or monthly audit cadence. This allows you to keep the
+      structural, machine readable and machine useable parts of your site
+      structure in pitch perfect order even when your site evolves.
 comparison:
-  other: '"Your meta description is missing." (Your problem now.)'
-  sivussa: "\"Your meta description is missing on these pages. Here's why it
-    matters, here's how you fix it.\""
+  other: '"Your meta description is missing." (Deal with it.)'
+  sivussa: '"Your meta description is missing on these pages. Based on your site
+    content, here’s a proposal for the description on this particular page.”'
 comparison_heading: "Other tools:"
 comparison_heading_highlight: "Sivussa:"
 comparison_table:
@@ -64,18 +71,18 @@ comparison_table:
     - "0": Prioritized recommendations
       "1": No
       "2": Yes
-    - "0": Specific guidance for your site
-      "1": Sometimes generic
-      "2": Tailored to your content
+    - "0": Guidance tailored for your business, your site
+      "1": Rarely
+      "2": Yes
     - "0": Content suggestions
       "1": No
-      "2": AI-generated for your niche
+      "2": Yes
     - "0": Schema markup guidance
-      "1": '"You should add it"'
-      "2": Explained with examples
+      "1": '"Deal with it”'
+      "2": Proposal tailored to your site
     - "0": Ongoing audits
       "1": No
-      "2": Yes, on schedule
+      "2": Yes
 what_you_get:
   - title: Full visibility audit
     desc: Comprehensive analysis across search engines, local visibility, and AI
