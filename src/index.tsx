@@ -3,5 +3,5 @@ import { App } from './app';
 import './index.css';
 
 if (typeof window !== 'undefined') {
-  hydrate(<App />);
+  hydrate(<App />, document.getElementById('app'));
 }
