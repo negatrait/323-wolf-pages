@@ -5,6 +5,16 @@ AI-native website visibility audit service. Preact SPA with build-time content p
 > Staging site: https://staging.323-wolf-pages.pages.dev/
 > Staging CMS link: https://app.pagescms.org/negatrait/323-wolf-pages/staging/
 
+## Hard Laws
+
+Current implementation sprint is allways outlined in `SPRINT.md` - it is the definitive guide and scratchpad that must be followed strictly!
+1. **Plan first:** Outline the plan in `SPRINT.md` - what is the goal of this sprint?
+2. **Review code second:** By reviewing and citing the codebase against the sprint plan, identify the gaps that need to be refactored and implemented to accomplish the sprint goals - what can be removed entirely, what needs to be refactored, what new features need to be implemented?
+3. **Implement:** Only when you understand the codebase, implement the steps in the plan. Which step is best implemented first?
+4. **Review the implementation:** Follow the natural progression of the code - what are your findings?
+5. **Simplify and correct based on your findings:** Complex, sprawling code is strictly forbidden in this codebase, only simple textbook best practices are allowed - could you have made it simpler?
+6. **Verify the commit:** The CI pipeline must pass - did you try to take shortcuts?
+
 ## Architecture
 
 ```mermaid
