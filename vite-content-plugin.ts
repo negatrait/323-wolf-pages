@@ -705,7 +705,7 @@ Visit ${SITE.url} for more information.
         .map((s: StepItem) => `${s.number}. **${s.title}** — ${s.description}`)
         .join('\n');
       const _tableRows = (hw.comparison_table?.rows || [])
-        .map((r: string[]) => `| ${r.join(' | ')} |`)
+        .map((r: string[]) => `| ${r} |`)
         .join('\n');
       const _tableHeaders =
         (hw.comparison_table?.headers || [])
