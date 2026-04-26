@@ -9,7 +9,7 @@ AI-native website visibility audit service. Preact SPA with build-time content p
 
 ```mermaid
 graph TD
-    subgraph Sources — Single Source of Truth
+    subgraph Sources - Single Source of Truth
         SITE["site.md<br/>name · url · email · tagline"]
         MD["src/content/*.md<br/>(Markdown + YAML frontmatter)"]
         STATIC["public/<br/>robots.txt · _headers · banner"]
