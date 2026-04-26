@@ -38,7 +38,7 @@ graph TD
         MW["_middleware.ts<br/>Accept: text/markdown -> content negotiation"]
     end
 
-    subgraph Pages — src/pages/*.tsx
+    subgraph Pages - src/pages/*.tsx
         HOME["Home"]
         HIW["How It Works"]
         PRICE["Pricing"]
