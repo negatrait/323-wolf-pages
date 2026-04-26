@@ -10,32 +10,32 @@ AI-native website visibility audit service. Preact SPA with build-time content p
 ```mermaid
 graph TD
     subgraph Sources - Single Source of Truth
-        SITE["site.md<br/>name · url · email · tagline"]
+        SITE["site.md<br/>name - url - email - tagline"]
         MD["src/content/*.md<br/>(Markdown + YAML frontmatter)"]
-        STATIC["public/<br/>robots.txt · _headers · banner"]
+        STATIC["public/<br/>robots.txt - _headers - banner"]
     end
 
-    subgraph Build Time — vite-content-plugin.ts
-        VCP["Content Plugin<br/>gray-matter → marked → JS"]
+    subgraph Build Time - vite-content-plugin.ts
+        VCP["Content Plugin<br/>gray-matter -> marked -> JS"]
         ROUTE["ROUTE_META<br/>(from frontmatter seo_title/seo_description)"]
         SITEMAP["sitemap.xml<br/>(git dates)"]
         LLMS["llms.txt + llms-*.md<br/>(from same parsed content)"]
         VIRTUAL["virtual:content<br/>(typed JS constants)"]
     end
 
-    subgraph Build Time — Prerender
+    subgraph Build Time - Prerender
         PR["prerender.tsx<br/>renderToString per route"]
-        JSONLD["JSON-LD schemas<br/>Organization · WebSite · FAQPage · BlogPosting"]
+        JSONLD["JSON-LD schemas<br/>Organization - WebSite - FAQPage - BlogPosting"]
         META["Meta tags + canonical<br/>(from ROUTE_META)"]
     end
 
-    subgraph Output — dist/
+    subgraph Output - dist/
         HTML["Prerendered HTML<br/>(full SEO + JSON-LD baked in)"]
-        ASSETS["CSS · JS · Images"]
+        ASSETS["CSS - JS - Images"]
     end
 
-    subgraph Runtime — Cloudflare Pages Functions
-        MW["_middleware.ts<br/>Accept: text/markdown → content negotiation"]
+    subgraph Runtime - Cloudflare Pages Functions
+        MW["_middleware.ts<br/>Accept: text/markdown -> content negotiation"]
     end
 
     subgraph Pages — src/pages/*.tsx
@@ -45,7 +45,7 @@ graph TD
         ABOUT["About"]
         FAQ["FAQ"]
         BLOG["Blog + Posts"]
-        LEGAL["Privacy · Terms · Notices"]
+        LEGAL["Privacy - Terms - Notices"]
     end
 
     SITE --> VCP
@@ -83,13 +83,13 @@ Everything visible on the site is derived from `src/content/*.md` at build time.
 
 1. **Author content** in `src/content/` as markdown with YAML frontmatter
 2. **Build time**: `vite-content-plugin.ts` reads all markdown via `gray-matter`, renders HTML via `marked`, and emits:
-   - `virtual:content` — typed JS constants imported by page components
-   - `ROUTE_META` — per-route title/description/canonical from `seo_title`/`seo_description` frontmatter
-   - `SITE_CONFIG` — site identity (name, url, email, tagline) from `site.md`
-   - `llms.txt` + 5 `llms-*.md` files — AI agent content from the same parsed markdown
-   - `sitemap.xml` — all routes with git last-modified dates
+   - `virtual:content` - typed JS constants imported by page components
+   - `ROUTE_META` - per-route title/description/canonical from `seo_title`/`seo_description` frontmatter
+   - `SITE_CONFIG` - site identity (name, url, email, tagline) from `site.md`
+   - `llms.txt` + 5 `llms-*.md` files - AI agent content from the same parsed markdown
+   - `sitemap.xml` - all routes with git last-modified dates
 3. **Prerender**: `prerender.tsx` renders each route to static HTML with full meta tags and JSON-LD schemas
-4. **Deploy**: Push to `main` → Cloudflare Pages auto-builds and deploys
+4. **Deploy**: Push to `main` -> Cloudflare Pages auto-builds and deploys
 
 ### What's Derived vs. Authored
 
@@ -107,7 +107,7 @@ Everything visible on the site is derived from `src/content/*.md` at build time.
 
 ### JSON-LD Structured Data
 
-Generated exclusively in `prerender.tsx` — page components never construct schemas.
+Generated exclusively in `prerender.tsx` - page components never construct schemas.
 
 | Schema | Where | Source |
 |--------|-------|--------|
