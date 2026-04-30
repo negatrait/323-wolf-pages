@@ -2,21 +2,25 @@ name: Code quality
 
 on:
   push:
+    branches:
+      - main
   pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
 
 jobs:
   quality:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
     steps:
-      - name: Checkout
-        uses: actions/checkout@v6
+      - uses: actions/checkout@v6
         with:
           persist-credentials: false
-      - name: Setup Biome
-        uses: biomejs/setup-biome@v2
+
+      - uses: biomejs/setup-biome@v2
         with:
-          version: 2.4.12
-      - name: Run Biome
-        run: biome ci .
+          version: 2.4.13
+
+      - run: biome ci .
