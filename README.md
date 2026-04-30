@@ -5,6 +5,10 @@ AI-native website visibility audit service. Preact SPA with build-time content p
 > Staging site: https://staging.323-wolf-pages.pages.dev/
 > Staging CMS link: https://app.pagescms.org/negatrait/323-wolf-pages/staging/
 
+>- **If you are an agent reading this document:** The following sections must guide your every action and decision when working in this repo - read and obey them.
+
+***
+
 ## Hard Laws
 
 Current implementation sprint is allways outlined in `SPRINT.md` - it is the definitive guide and scratchpad that must be followed strictly!
