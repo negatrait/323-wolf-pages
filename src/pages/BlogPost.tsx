@@ -5,11 +5,11 @@ import { BLOG_POSTS_MAP } from '../data/load-content';
 import { getRouteMeta } from '../data/route-meta';
 
 interface BlogPostProps {
-  slug: string;
+  slug?: string;
 }
 
 export function BlogPost({ slug }: BlogPostProps) {
-  const post = BLOG_POSTS_MAP[slug];
+  const post = slug ? BLOG_POSTS_MAP[slug] : undefined;
   const meta = getRouteMeta(`/blog/${slug}`);
 
   if (!post) {

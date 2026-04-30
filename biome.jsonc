@@ -26,6 +26,7 @@
     "includes": [
       "src/**/*.tsx",
       "src/**/*.ts",
+      "functions/**/*.ts",
       "vite-content-plugin.ts",
       "index.html",
       "vite.config.ts"

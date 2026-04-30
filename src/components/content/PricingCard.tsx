@@ -4,8 +4,8 @@ interface PricingCardProps {
   period: string;
   features: string[];
   popular: boolean;
-  ctaText: string;
-  ctaHref: string;
+  cta_text: string;
+  cta_href: string;
 }
 
 export function PricingCard({
@@ -14,8 +14,8 @@ export function PricingCard({
   period,
   features,
   popular,
-  ctaText,
-  ctaHref,
+  cta_text: ctaText,
+  cta_href: ctaHref,
 }: PricingCardProps) {
   return (
     <div

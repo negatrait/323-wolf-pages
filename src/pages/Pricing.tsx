@@ -64,12 +64,12 @@ export function Pricing() {
                 ))}
               </ul>
               <a
-                href={t.ctaHref}
+                href={t.cta_href}
                 target="_blank"
                 rel="noopener noreferrer"
                 class="w-full block text-center px-8 py-4 bg-gradient-to-br from-primary to-primary-light text-dark-900 font-black uppercase tracking-widest text-sm hover:shadow-[0_0_20px_rgba(87,174,123,0.15)] transition-all"
               >
-                {t.ctaText}
+                {t.cta_text}
               </a>
             </div>
           ))}
@@ -123,21 +123,18 @@ export function Pricing() {
               </tr>
             </thead>
             <tbody class="text-dark-200">
-              {PT.rows.map((row, i) => (
-                <tr key={i} class="border-b border-dark-700">
-                  {row.map((cell, j) => (
-                    <td
-                      key={j}
-                      class={`py-3 px-4 ${j === 0 ? '' : 'text-center'}`}
-                    >
-                      {cell === true ? (
-                        <span class="text-primary">✓</span>
-                      ) : cell === false ? (
-                        <span class="text-dark-500">—</span>
-                      ) : (
+              {PT.rows.map((row, i) => {
+                const cells = Object.values(row);
+                return (
+                  <tr key={i} class="border-b border-dark-700">
+                    {cells.map((cell, j) => (
+                      <td
+                        key={j}
+                        class={`py-3 px-4 ${j === 0 ? '' : 'text-center'}`}
+                      >
                         <span
                           class={
-                            j === row.length - 1
+                            j === cells.length - 1
                               ? 'text-primary font-medium'
                               : j > 0
                                 ? 'text-dark-300'
@@ -146,11 +143,11 @@ export function Pricing() {
                         >
                           {String(cell)}
                         </span>
-                      )}
-                    </td>
-                  ))}
-                </tr>
-              ))}
+                      </td>
+                    ))}
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>

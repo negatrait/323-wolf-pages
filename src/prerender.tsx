@@ -1,4 +1,3 @@
-import { h } from 'preact';
 import { renderToString } from 'preact-render-to-string';
 import { App } from './app';
 import { BLOG_POSTS_MAP, FAQ_ITEMS, SITE_CONFIG } from './data/load-content';
@@ -18,8 +17,7 @@ interface PrerenderData {
 }
 
 export async function prerender(data: PrerenderData) {
-  // @ts-expect-error preact-render-to-string accepts (vnode, context?)
-  const html = renderToString(h(App) as preact.VNode, {});
+  const html = renderToString(<App />);
   const route = data.url || '/';
   const meta = getRouteMeta(route);
 

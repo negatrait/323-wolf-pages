@@ -1,8 +1,11 @@
 import type { ComponentChildren, JSX } from 'preact';
 
+type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost';
+type ButtonSize = 'sm' | 'md' | 'lg';
+
 interface ButtonProps {
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost';
-  size?: 'sm' | 'md' | 'lg';
+  variant?: ButtonVariant;
+  size?: ButtonSize;
   href?: string;
   onClick?: JSX.MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>;
   disabled?: boolean;
@@ -22,13 +25,13 @@ export function Button({
   const base =
     'inline-flex items-center justify-center font-semibold rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50';
 
-  const sizes: Record<string, string> = {
+  const sizes: Record<ButtonSize, string> = {
     sm: 'px-3 py-1.5 text-sm',
     md: 'px-4 py-2.5 text-sm',
     lg: 'px-6 py-3 text-base',
   };
 
-  const variants: Record<string, string> = {
+  const variants: Record<ButtonVariant, string> = {
     primary: 'bg-primary text-dark-900 hover:bg-primary-dark',
     secondary: 'bg-dark-600 text-white hover:bg-dark-500',
     outline: 'border-2 border-primary text-primary hover:bg-primary/10',

@@ -14,7 +14,13 @@ interface HeadProps {
  * - SSR (prerender): renders nothing visible, metadata injected via prerender.tsx
  * - Client (SPA navigation): uses useEffect to mutate document.head on route change
  */
-export function Head({ title, description, canonical, ogImage }: HeadProps) {
+export function Head({
+  title,
+  description,
+  canonical,
+  ogImage,
+  structuredData,
+}: HeadProps) {
   // Client-side only: update document.head on SPA navigation
   if (typeof window !== 'undefined') {
     // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -39,7 +45,20 @@ export function Head({ title, description, canonical, ogImage }: HeadProps) {
         document.head.appendChild(link);
       }
       link.href = canonical;
-    }, [title, description, canonical, ogImage]);
+
+      if (structuredData) {
+        let script = document.getElementById(
+          'structured-data',
+        ) as HTMLScriptElement | null;
+        if (!script) {
+          script = document.createElement('script');
+          script.type = 'application/ld+json';
+          script.id = 'structured-data';
+          document.head.appendChild(script);
+        }
+        script.textContent = JSON.stringify(structuredData);
+      }
+    }, [title, description, canonical, ogImage, structuredData]);
   }
 
   return null;
@@ -54,15 +73,14 @@ export function useRouteMeta(path: string) {
 }
 
 function setMeta(prop: string, content: string): void {
-  let el: Element | null =
-    document.querySelector(`meta[property="${prop}"]`) ||
-    document.querySelector(`meta[name="${prop}"]`);
+  let el = (document.querySelector(`meta[property="${prop}"]`) ||
+    document.querySelector(`meta[name="${prop}"]`)) as HTMLMetaElement | null;
   if (!el) {
     el = document.createElement('meta');
     if (prop.startsWith('og:') || prop.startsWith('twitter:')) {
       el.setAttribute('property', prop);
     } else {
-      (el as HTMLMetaElement).name = prop;
+      el.name = prop;
     }
     document.head.appendChild(el);
   }

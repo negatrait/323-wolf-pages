@@ -1,6 +1,6 @@
 interface BreadcrumbNavProps {
   currentPage: string;
-  extraLink?: { href: string; label: string };
+  extraLink?: { label: string; href: string };
 }
 
 export function BreadcrumbNav({ currentPage, extraLink }: BreadcrumbNavProps) {

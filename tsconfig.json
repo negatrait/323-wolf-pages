@@ -13,8 +13,11 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "types": ["node"]
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "allowImportingTsExtensions": true,
+    "types": ["node", "@cloudflare/workers-types"]
   },
-  "include": ["src"],
-  "exclude": ["node_modules", "dist", "functions"]
+  "include": ["src", "functions"],
+  "exclude": ["node_modules", "dist", "vite-content-plugin.ts", "vite.config.ts"]
 }
