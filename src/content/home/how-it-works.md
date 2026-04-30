@@ -37,8 +37,8 @@ steps:
       an email adress during the Stripe checkout flow.
   - number: 5
     title: You implement
-    description: You (or your technical team) **implement the recommended changes**
-      to your site. Or, if this was competitive intel, you might be looking into
+    description: You (or your technical team) implement the recommended changes to
+      your site. Or, if this was competitive intel, you might be looking into
       how to position your site compared to your direct competitors, resellers,
       subsidies, and so on.
   - number: 6
