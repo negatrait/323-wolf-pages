@@ -10,6 +10,7 @@ export default defineConfig({
     preact({
       prerender: {
         enabled: true,
+        renderTarget: '#app',
         prerenderScript: '/src/prerender.tsx',
         additionalPrerenderRoutes: [
           '/how-it-works',
