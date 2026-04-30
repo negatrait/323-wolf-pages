@@ -81,8 +81,8 @@ declare module 'virtual:content' {
     period: string;
     features: string[];
     popular: boolean;
-    cta_text: string;
-    cta_href: string;
+    ctaText: string;
+    ctaHref: string;
   }>;
 
   export const PRICING_FAQ: Array<{ question: string; answer: string }>;
