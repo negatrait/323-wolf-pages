@@ -1,12 +1,22 @@
+interface PricingCardProps {
+  name: string;
+  price: string;
+  period: string;
+  features: string[];
+  popular: boolean;
+  cta_text: string;
+  cta_href: string;
+}
+
 export function PricingCard({
   name,
   price,
   period,
   features,
   popular,
-  ctaText,
-  ctaHref,
-}) {
+  cta_text: ctaText,
+  cta_href: ctaHref,
+}: PricingCardProps) {
   return (
     <div
       class={`relative rounded-2xl p-8 border ${popular ? 'border-primary shadow-glow bg-dark-800' : 'border-dark-600 bg-dark-800'} flex flex-col`}

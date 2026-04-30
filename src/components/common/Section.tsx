@@ -1,4 +1,16 @@
-export function Section({ children, dark = true, class: cls = '' }) {
+import type { ComponentChildren } from 'preact';
+
+interface SectionProps {
+  children?: ComponentChildren;
+  dark?: boolean;
+  class?: string;
+}
+
+export function Section({
+  children,
+  dark = true,
+  class: cls = '',
+}: SectionProps) {
   return (
     <section
       class={`py-20 lg:py-28 ${dark ? 'bg-dark-900' : 'bg-dark-800'} ${cls}`}

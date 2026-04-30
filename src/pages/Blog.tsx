@@ -48,7 +48,9 @@ export function Blog() {
                 placeholder={BLOG_CONFIG.searchPlaceholder}
                 type="text"
                 value={searchQuery}
-                onInput={(e) => setSearchQuery(e.target.value)}
+                onInput={(e) =>
+                  setSearchQuery((e.target as HTMLInputElement).value)
+                }
               />
               <span class="absolute right-0 top-4 material-symbols-outlined text-dark-400">
                 search

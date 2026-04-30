@@ -1,4 +1,9 @@
-export function BreadcrumbNav({ currentPage, extraLink }) {
+interface BreadcrumbNavProps {
+  currentPage: string;
+  extraLink?: { label: string; href: string };
+}
+
+export function BreadcrumbNav({ currentPage, extraLink }: BreadcrumbNavProps) {
   return (
     <nav aria-label="breadcrumb" class="text-sm text-dark-400 mb-6">
       <a href="/" class="hover:text-primary transition-colors">

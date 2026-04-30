@@ -1,4 +1,10 @@
-export function TestimonialCard({ quote, name, role }) {
+interface TestimonialCardProps {
+  quote: string;
+  name: string;
+  role: string;
+}
+
+export function TestimonialCard({ quote, name, role }: TestimonialCardProps) {
   return (
     <div class="rounded-2xl p-6 bg-dark-800 border border-dark-600">
       <p class="text-dark-200 leading-relaxed mb-4">"{quote}"</p>

@@ -1,3 +1,18 @@
+import type { ComponentChildren } from 'preact';
+
+type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost';
+type ButtonSize = 'sm' | 'md' | 'lg';
+
+interface ButtonProps {
+  variant?: ButtonVariant;
+  size?: ButtonSize;
+  href?: string;
+  onClick?: (e: Event) => void;
+  disabled?: boolean;
+  children?: ComponentChildren;
+  class?: string;
+}
+
 export function Button({
   variant = 'primary',
   size = 'md',
@@ -6,7 +21,7 @@ export function Button({
   disabled,
   children,
   class: cls = '',
-}) {
+}: ButtonProps) {
   const base =
     'inline-flex items-center justify-center font-semibold rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50';
 
@@ -23,7 +38,7 @@ export function Button({
     ghost: 'text-dark-300 hover:text-white hover:bg-dark-700',
   };
 
-  const classes = `${base} ${sizes[size]} ${variants[variant]} ${disabled ? 'opacity-50 cursor-not-allowed' : ''} ${cls}`;
+  const classes = `${base} ${sizes[size as ButtonSize]} ${variants[variant as ButtonVariant]} ${disabled ? 'opacity-50 cursor-not-allowed' : ''} ${cls}`;
 
   if (href) {
     return (

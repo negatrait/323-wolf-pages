@@ -1,4 +1,10 @@
-export function StepCard({ number, title, description }) {
+interface StepCardProps {
+  number: string | number;
+  title: string;
+  description: string;
+}
+
+export function StepCard({ number, title, description }: StepCardProps) {
   return (
     <div class="flex gap-4">
       <div class="flex-shrink-0 w-12 h-12 rounded-full bg-primary/20 border border-primary flex items-center justify-center">

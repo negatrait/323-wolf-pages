@@ -1,4 +1,3 @@
-import { h } from 'preact';
 import { renderToString } from 'preact-render-to-string';
 import { App } from './app';
 import { BLOG_POSTS_MAP, FAQ_ITEMS, SITE_CONFIG } from './data/load-content';
@@ -13,8 +12,8 @@ import {
 // Global schemas on every page
 const globalSchemas = [organizationJsonLd(), websiteJsonLd()];
 
-export async function prerender(data) {
-  const html = renderToString(h(App));
+export async function prerender(data: { url?: string }) {
+  const html = renderToString(<App />);
   const route = data.url || '/';
   const meta = getRouteMeta(route);
 

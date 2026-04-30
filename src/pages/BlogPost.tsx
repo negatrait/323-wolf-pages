@@ -4,14 +4,18 @@ import { Head } from '../components/seo/Head';
 import { BLOG_POSTS_MAP } from '../data/load-content';
 import { getRouteMeta } from '../data/route-meta';
 
-export function BlogPost({ slug }) {
-  const post = BLOG_POSTS_MAP[slug];
+interface BlogPostProps {
+  slug?: string;
+}
+
+export function BlogPost({ slug }: BlogPostProps) {
+  const post = slug ? BLOG_POSTS_MAP[slug] : undefined;
   const meta = getRouteMeta(`/blog/${slug}`);
 
   if (!post) {
     return (
       <>
-        <Head title="Post Not Found" />
+        <Head title="Post Not Found" description="" canonical="" />
         <Section>
           <div class="max-w-4xl mx-auto py-20 text-center">
             <h1 class="text-4xl font-bold text-white mb-4">Post Not Found</h1>
@@ -25,7 +29,7 @@ export function BlogPost({ slug }) {
   }
 
   // Format date nicely
-  const formatDate = (dateStr) => {
+  const formatDate = (dateStr: string) => {
     const date = new Date(dateStr);
     return date.toLocaleDateString('en-US', {
       year: 'numeric',

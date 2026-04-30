@@ -33,7 +33,7 @@ export function About() {
           </h2>
           <div
             class="prose prose-invert max-w-none text-dark-300 leading-relaxed"
-            dangerouslySetInnerHTML={{ __html: ABOUT.sections[0].contentHtml }}
+            dangerouslySetInnerHTML={{ __html: ABOUT.sections[0].contentHtml! }}
           />
         </div>
       </Section>
@@ -48,7 +48,7 @@ export function About() {
             {ABOUT.sections[1].intro}
           </p>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            {ABOUT.sections[1].agents.map((a, i) => (
+            {ABOUT.sections[1].agents!.map((a, i) => (
               <div
                 key={i}
                 class="rounded-xl p-5 bg-dark-800 border border-dark-600"
@@ -56,7 +56,7 @@ export function About() {
                 <h3 class="text-primary font-semibold mb-2">{a.title}</h3>
                 <p
                   class="text-dark-300 text-sm"
-                  dangerouslySetInnerHTML={{ __html: a.descHtml }}
+                  dangerouslySetInnerHTML={{ __html: a.descHtml! }}
                 />
               </div>
             ))}
@@ -71,7 +71,7 @@ export function About() {
           </h2>
           <div
             class="prose prose-invert max-w-none text-dark-300 leading-relaxed"
-            dangerouslySetInnerHTML={{ __html: ABOUT.sections[2].contentHtml }}
+            dangerouslySetInnerHTML={{ __html: ABOUT.sections[2].contentHtml! }}
           />
         </div>
       </Section>
@@ -82,14 +82,14 @@ export function About() {
             {ABOUT.sections[3].title}
           </h2>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {ABOUT.sections[3].values.map((v, i) => (
+            {ABOUT.sections[3].values!.map((v, i) => (
               <div key={i} class="flex gap-4">
                 <span class="text-primary font-bold text-lg">{v.num}</span>
                 <div>
                   <h3 class="text-white font-semibold mb-1">{v.title}</h3>
                   <p
                     class="text-dark-300 text-sm"
-                    dangerouslySetInnerHTML={{ __html: v.descHtml }}
+                    dangerouslySetInnerHTML={{ __html: v.descHtml! }}
                   />
                 </div>
               </div>
@@ -104,12 +104,12 @@ export function About() {
             {ABOUT.sections[4].title}
           </h2>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {ABOUT.sections[4].timeline.map((item, i) => (
+            {ABOUT.sections[4].timeline!.map((item, i) => (
               <div key={i}>
                 <h3 class="text-primary font-semibold mb-2">{item.title}</h3>
                 <p
                   class="text-dark-300 text-sm"
-                  dangerouslySetInnerHTML={{ __html: item.contentHtml }}
+                  dangerouslySetInnerHTML={{ __html: item.contentHtml! }}
                 />
               </div>
             ))}
