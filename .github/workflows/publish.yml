@@ -1,0 +1,56 @@
+name: Publish to production
+
+on:
+  workflow_dispatch:
+    inputs:
+      payload:
+        description: Pages CMS payload as JSON
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  create-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Check for differences
+        id: diff
+        run: |
+          DIFF=$(git log origin/main..origin/staging --oneline)
+          if [ -z "$DIFF" ]; then
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+            echo "No changes to publish"
+          else
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+            echo "Changes to publish:"
+            echo "$DIFF"
+          fi
+
+      - name: Create pull request
+        if: steps.diff.outputs.has_changes == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # Check for existing open PR
+          EXISTING=$(gh pr list --base main --head staging --state open --json number --jq '.[0].number')
+          if [ -n "$EXISTING" ]; then
+            echo "PR #$EXISTING already exists — no new PR created"
+            exit 0
+          fi
+
+          gh pr create \
+            --base main \
+            --head staging \
+            --title "Publish: staging content updates" \
+            --body "Automated PR created via Pages CMS publish action.
+
+          Staging changes since last publish:
+
+          $(git log origin/main..origin/staging --oneline --no-decorate)"
