@@ -10,9 +10,9 @@ export function Privacy() {
   return (
     <>
       <Head
-        title={meta.title}
-        description={meta.description}
-        canonical={meta.canonical}
+        title={meta!.title}
+        description={meta!.description}
+        canonical={meta!.canonical}
       />
 
       <Section>

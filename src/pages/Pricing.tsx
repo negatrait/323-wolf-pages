@@ -19,9 +19,9 @@ export function Pricing() {
   return (
     <>
       <Head
-        title={meta.title}
-        description={meta.description}
-        canonical={meta.canonical}
+        title={meta!.title}
+        description={meta!.description}
+        canonical={meta!.canonical}
       />
       <Section>
         <BreadcrumbNav currentPage="Pricing" />
@@ -84,7 +84,7 @@ export function Pricing() {
               {i === 3 ? (
                 <span
                   dangerouslySetInnerHTML={{
-                    __html: term.tos_pp
+                    __html: (term.tos_pp ?? '')
                       .replace(
                         'Terms of Service',
                         '<a href="/terms" class="text-primary hover:underline">Terms of Service</a>',
@@ -96,7 +96,7 @@ export function Pricing() {
                   }}
                 />
               ) : (
-                term.timing || term.consumers || term.withdrawal
+                (term.timing ?? term.consumers ?? term.withdrawal ?? '')
               )}
             </p>
           ))}
@@ -123,21 +123,18 @@ export function Pricing() {
               </tr>
             </thead>
             <tbody class="text-dark-200">
-              {PT.rows.map((row, i) => (
-                <tr key={i} class="border-b border-dark-700">
-                  {row.map((cell, j) => (
-                    <td
-                      key={j}
-                      class={`py-3 px-4 ${j === 0 ? '' : 'text-center'}`}
-                    >
-                      {cell === true ? (
-                        <span class="text-primary">✓</span>
-                      ) : cell === false ? (
-                        <span class="text-dark-500">—</span>
-                      ) : (
+              {PT.rows.map((row, i) => {
+                const cells = Object.values(row);
+                return (
+                  <tr key={i} class="border-b border-dark-700">
+                    {cells.map((cell, j) => (
+                      <td
+                        key={j}
+                        class={`py-3 px-4 ${j === 0 ? '' : 'text-center'}`}
+                      >
                         <span
                           class={
-                            j === row.length - 1
+                            j === cells.length - 1
                               ? 'text-primary font-medium'
                               : j > 0
                                 ? 'text-dark-300'
@@ -146,11 +143,11 @@ export function Pricing() {
                         >
                           {String(cell)}
                         </span>
-                      )}
-                    </td>
-                  ))}
-                </tr>
-              ))}
+                      </td>
+                    ))}
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>

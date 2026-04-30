@@ -1,18 +1,23 @@
 {
   "compilerOptions": {
-    "target": "ES2022",
-    "module": "ESNext",
-    "moduleResolution": "bundler",
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noEmit": true,
     "jsx": "react-jsx",
     "jsxImportSource": "preact",
-    "strict": true,
-    "noEmit": true,
+    "moduleResolution": "bundler",
+    "target": "ES2022",
+    "module": "ES2022",
     "skipLibCheck": true,
     "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "allowImportingTsExtensions": true,
-    "types": ["@cloudflare/workers-types"]
+    "types": ["node", "@cloudflare/workers-types"]
   },
-  "include": ["src", "functions"]
+  "include": ["src", "functions"],
+  "exclude": ["node_modules", "dist", "vite-content-plugin.ts", "vite.config.ts"]
 }

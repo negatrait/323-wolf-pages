@@ -32,7 +32,7 @@ export function PricingCard({
         {period && <span class="text-dark-300 ml-1">{period}</span>}
       </div>
       <ul class="space-y-3 mb-8 flex-1">
-        {features.map((f, i) => (
+        {features.map((f: string, i: number) => (
           <li key={i} class="flex items-start gap-2 text-dark-200">
             <span class="material-symbols-outlined text-primary text-lg mt-0.5">
               check_circle

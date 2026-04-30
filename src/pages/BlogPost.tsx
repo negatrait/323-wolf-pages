@@ -28,8 +28,7 @@ export function BlogPost({ slug }: BlogPostProps) {
     );
   }
 
-  // Format date nicely
-  const formatDate = (dateStr: string) => {
+  const formatDate = (dateStr: string): string => {
     const date = new Date(dateStr);
     return date.toLocaleDateString('en-US', {
       year: 'numeric',
@@ -41,9 +40,9 @@ export function BlogPost({ slug }: BlogPostProps) {
   return (
     <>
       <Head
-        title={meta.title}
-        description={meta.description}
-        canonical={meta.canonical}
+        title={meta!.title}
+        description={meta!.description}
+        canonical={meta!.canonical}
       />
 
       <Section>
@@ -53,7 +52,6 @@ export function BlogPost({ slug }: BlogPostProps) {
         />
 
         <article class="max-w-4xl mx-auto">
-          {/* Category & Date */}
           <div class="flex items-center gap-4 mb-6">
             <span class="bg-primary/10 text-primary px-3 py-1 text-[10px] font-black uppercase tracking-widest border border-primary/20">
               {post.category}
@@ -66,17 +64,14 @@ export function BlogPost({ slug }: BlogPostProps) {
             </span>
           </div>
 
-          {/* Title */}
           <h1 class="text-2xl md:text-3xl font-bold text-white mb-8 leading-tight">
             {post.title}
           </h1>
 
-          {/* Article Body */}
           <div class="prose prose-invert prose-lg max-w-none">
             <div dangerouslySetInnerHTML={{ __html: post.html }} />
           </div>
 
-          {/* Back to Blog */}
           <div class="mt-16 pt-8 border-t border-dark-700/30">
             <a
               href="/blog"

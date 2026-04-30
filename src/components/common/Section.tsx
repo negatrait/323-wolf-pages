@@ -1,7 +1,7 @@
 import type { ComponentChildren } from 'preact';
 
 interface SectionProps {
-  children?: ComponentChildren;
+  children: ComponentChildren;
   dark?: boolean;
   class?: string;
 }

@@ -19,15 +19,23 @@ import { Marked } from 'marked';
 // ─── Site Configuration ───────────────────────────────────────
 // Loaded from src/content/site.md frontmatter at build time.
 // Edit there — or via Pages CMS.
-let SITE: { name: string; url: string; email: string; tagline: string };
 
-function loadSiteConfig(contentDir: string) {
-  const siteMd = loadMd(contentDir, 'site.md');
+interface SiteConfig {
+  name: string;
+  url: string;
+  email: string;
+  tagline: string;
+}
+
+let SITE: SiteConfig;
+
+function loadSiteConfig(contentDir: string): void {
+  const siteMd = loadMd<SiteConfig>(contentDir, 'site.md');
   SITE = {
-    name: siteMd.frontmatter.name as string,
-    url: siteMd.frontmatter.url as string,
-    email: siteMd.frontmatter.email as string,
-    tagline: siteMd.frontmatter.tagline as string,
+    name: siteMd.frontmatter.name,
+    url: siteMd.frontmatter.url,
+    email: siteMd.frontmatter.email,
+    tagline: siteMd.frontmatter.tagline,
   };
 }
 
@@ -46,6 +54,39 @@ interface HeroFrontmatter {
 }
 
 /** What-You-Get frontmatter (home/what-you-get.md) */
+interface StepItem {
+  number: number;
+  title: string;
+  description: string;
+}
+interface PricingTier {
+  name: string;
+  price: string;
+  period: string;
+  popular: boolean;
+  cta_text: string;
+  cta_href: string;
+  features: string[];
+}
+
+interface PricingFaqItem {
+  question: string;
+  answer: string;
+}
+
+interface CompetitorItem {
+  name: string;
+  price: string;
+  desc: string;
+  highlight?: boolean;
+}
+
+interface FaqItemWithCategory {
+  question: string;
+  answer: string;
+  category: string;
+}
+
 interface WhatYouGetFrontmatter {
   title: string;
 }
@@ -62,7 +103,7 @@ interface HowItWorksFrontmatter {
   heading?: string;
   heading_highlight?: string;
   intro?: string;
-  steps: Array<{ number: number; title: string; description: string }>;
+  steps: Array<StepItem>;
   comparison: { other: string; sivussa: string };
   comparison_heading?: string;
   comparison_heading_highlight?: string;
@@ -91,24 +132,11 @@ interface WhoIsThisForFrontmatter {
 interface PricingFrontmatter {
   title: string;
   subtitle: string;
-  tiers: Array<{
-    name: string;
-    price: string;
-    period: string;
-    popular: boolean;
-    cta_text: string;
-    cta_href: string;
-    features: string[];
-  }>;
+  tiers: Array<PricingTier>;
   terms?: string[];
-  faq?: Array<{ question: string; answer: string }>;
+  faq?: Array<PricingFaqItem>;
   feature_table?: { headers: string[]; rows: (string | boolean)[][] };
-  competitors?: Array<{
-    name: string;
-    price: string;
-    desc: string;
-    highlight?: boolean;
-  }>;
+  competitors?: Array<CompetitorItem>;
   cta_title?: string;
   cta_text?: string;
   cta_href?: string;
@@ -117,7 +145,7 @@ interface PricingFrontmatter {
 /** FAQ frontmatter */
 interface FaqFrontmatter {
   title: string;
-  faqs: Array<{ question: string; answer: string }>;
+  faqs: Array<FaqItemWithCategory>;
 }
 
 /** Blog post frontmatter */
@@ -147,6 +175,18 @@ interface PageFrontmatter {
   subtitle?: string;
   seo_title?: string;
   seo_description?: string;
+}
+
+/** Blog post as stored in BLOG_POSTS_MAP */
+interface BlogPostParsed {
+  title: string;
+  description: string;
+  seo_title?: string;
+  seo_description?: string;
+  date: string;
+  category: string;
+  readTime: string;
+  html: string;
 }
 
 /** About section parsed from markdown body */
@@ -244,21 +284,32 @@ function loadMd<T = Record<string, unknown>>(
 
 function buildRouteMeta(
   contentDir: string,
-  hero: any,
-  pricingMd: any,
-  faqMd: any,
-  aboutMd: any,
-  blogPostsMap: Record<string, any>,
+  hero: HeroFrontmatter,
+  pricingMd: PricingFrontmatter,
+  faqMd: FaqFrontmatter,
+  aboutMd: PageFrontmatter,
+  blogPostsMap: Record<string, BlogPostParsed>,
 ): Record<string, { title: string; description: string; canonical: string }> {
-  const howItWorksMd = loadMd(contentDir, 'home/how-it-works.md');
-  const blogConfigMd = loadMd(contentDir, 'blog/index.md');
+  const howItWorksMd = loadMd<HowItWorksFrontmatter>(
+    contentDir,
+    'home/how-it-works.md',
+  );
+  const blogConfigMd = loadMd<BlogIndexFrontmatter>(
+    contentDir,
+    'blog/index.md',
+  );
 
   const routes: Record<
     string,
     { title: string; description: string; canonical: string }
   > = {};
 
-  const routeSources: Array<{ path: string; fm: any }> = [
+  interface SeoFrontmatter {
+    seo_title?: string;
+    seo_description?: string;
+  }
+
+  const routeSources: Array<{ path: string; fm?: SeoFrontmatter }> = [
     { path: '/', fm: hero },
     { path: '/how-it-works', fm: howItWorksMd.frontmatter },
     { path: '/pricing', fm: pricingMd },
@@ -278,11 +329,8 @@ function buildRouteMeta(
   for (const [slug, post] of Object.entries(blogPostsMap)) {
     const postPath = `/blog/${slug}`;
     routes[postPath] = {
-      title:
-        (post as any)?.seo_title ||
-        `${(post as any).title} — ${SITE.name} Blog`,
-      description:
-        (post as any)?.seo_description || (post as any).description || '',
+      title: post.seo_title || `${post.title} — ${SITE.name} Blog`,
+      description: post.seo_description || post.description || '',
       canonical: `${SITE.url}${postPath}`,
     };
   }
@@ -510,7 +558,7 @@ export default function contentPlugin() {
           (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
         );
 
-      const blogPostsMap: Record<string, unknown> = {};
+      const blogPostsMap: Record<string, BlogPostParsed> = {};
       for (const post of posts) {
         blogPostsMap[post.slug] = {
           title: post.title,
@@ -627,7 +675,7 @@ export default function contentPlugin() {
       const pm = pricingMd.frontmatter;
       const faqMd = loadMd(contentDir, 'faq.md');
       const aboutMd = loadMd(contentDir, 'about.md');
-      const aboutSections = parseAboutSections(aboutMd.raw);
+      const _aboutSections = parseAboutSections(aboutMd.raw);
 
       // llms.txt — site index
       const llmsTxt = `# ${hero.seo_title || SITE.name}
@@ -654,12 +702,12 @@ Visit ${SITE.url} for more information.
 
       // llms-how-it-works.md
       const stepsList = (hw.steps || [])
-        .map((s: any) => `${s.number}. **${s.title}** — ${s.description}`)
+        .map((s: StepItem) => `${s.number}. **${s.title}** — ${s.description}`)
         .join('\n');
-      const tableRows = (hw.comparison_table?.rows || [])
-        .map((r: string[]) => `| ${r.join(' | ')} |`)
+      const _tableRows = (hw.comparison_table?.rows || [])
+        .map((r: string[]) => `| ${r} |`)
         .join('\n');
-      const tableHeaders =
+      const _tableHeaders =
         (hw.comparison_table?.headers || [])
           .map((h: string) => `| ${h} |`)
           .join('\n') +
@@ -680,12 +728,12 @@ Starting at EUR 89/99. Visit [sivussa.com](${SITE.url}) to get started.
       // llms-pricing.md
       const tierLines = (pm.tiers || [])
         .map(
-          (t: any) =>
+          (t: PricingTier) =>
             `### ${t.name} — ${t.price} (${t.period})\n- ${t.features.join('\n- ')}\n- [${t.cta_text}](${t.cta_href})`,
         )
         .join('\n\n');
       const pricingFaqLines = (pm.faq || [])
-        .map((f: any) => `**${f.question}**\n${f.answer}`)
+        .map((f: PricingFaqItem) => `**${f.question}**\n${f.answer}`)
         .join('\n\n');
       const llmsPricing = `# Pricing — ${SITE.name}
 
@@ -703,7 +751,7 @@ Visit [sivussa.com/pricing](${SITE.url}/pricing) for full details.
 `;
 
       // llms-faq.md
-      const faqCategories: Record<string, any[]> = {};
+      const faqCategories: Record<string, Array<FaqItemWithCategory>> = {};
       for (const item of faqMd.frontmatter.faqs || []) {
         const cat = item.category || 'General';
         if (!faqCategories[cat]) faqCategories[cat] = [];
@@ -712,7 +760,7 @@ Visit [sivussa.com/pricing](${SITE.url}/pricing) for full details.
       const faqSections = Object.entries(faqCategories)
         .map(([cat, items]) => {
           const qas = items
-            .map((i: any) => `**${i.question}**\n${i.answer}`)
+            .map((i: FaqItemWithCategory) => `**${i.question}**\n${i.answer}`)
             .join('\n\n');
           return `## ${cat}\n\n${qas}`;
         })

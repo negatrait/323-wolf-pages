@@ -12,41 +12,45 @@ import {
 // Global schemas on every page
 const globalSchemas = [organizationJsonLd(), websiteJsonLd()];
 
-export async function prerender(data: { url?: string }) {
+interface PrerenderData {
+  url?: string;
+}
+
+export async function prerender(data: PrerenderData) {
   const html = renderToString(<App />);
   const route = data.url || '/';
   const meta = getRouteMeta(route);
 
-  const headElements = new Set();
+  const headElements = new Set<Record<string, unknown>>();
 
   // Core meta
   headElements.add({
     type: 'meta',
-    props: { name: 'description', content: meta.description },
+    props: { name: 'description', content: meta!.description },
   });
   headElements.add({
     type: 'meta',
-    props: { property: 'og:title', content: meta.title },
+    props: { property: 'og:title', content: meta!.title },
   });
   headElements.add({
     type: 'meta',
-    props: { property: 'og:description', content: meta.description },
+    props: { property: 'og:description', content: meta!.description },
   });
   headElements.add({
     type: 'meta',
-    props: { property: 'og:url', content: meta.canonical },
+    props: { property: 'og:url', content: meta!.canonical },
   });
   headElements.add({
     type: 'link',
-    props: { rel: 'canonical', href: meta.canonical },
+    props: { rel: 'canonical', href: meta!.canonical },
   });
   headElements.add({
     type: 'meta',
-    props: { property: 'twitter:title', content: meta.title },
+    props: { property: 'twitter:title', content: meta!.title },
   });
   headElements.add({
     type: 'meta',
-    props: { property: 'twitter:description', content: meta.description },
+    props: { property: 'twitter:description', content: meta!.description },
   });
 
   // Global JSON-LD on every page
@@ -113,7 +117,7 @@ export async function prerender(data: { url?: string }) {
     links: new Set(),
     head: {
       lang: 'en',
-      title: meta.title,
+      title: meta!.title,
       elements: headElements,
     },
   };

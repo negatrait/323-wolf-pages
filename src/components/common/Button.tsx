@@ -1,4 +1,4 @@
-import type { ComponentChildren } from 'preact';
+import type { ComponentChildren, JSX } from 'preact';
 
 type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost';
 type ButtonSize = 'sm' | 'md' | 'lg';
@@ -7,9 +7,9 @@ interface ButtonProps {
   variant?: ButtonVariant;
   size?: ButtonSize;
   href?: string;
-  onClick?: (e: Event) => void;
+  onClick?: JSX.MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>;
   disabled?: boolean;
-  children?: ComponentChildren;
+  children: ComponentChildren;
   class?: string;
 }
 
@@ -25,20 +25,20 @@ export function Button({
   const base =
     'inline-flex items-center justify-center font-semibold rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50';
 
-  const sizes = {
+  const sizes: Record<ButtonSize, string> = {
     sm: 'px-3 py-1.5 text-sm',
     md: 'px-4 py-2.5 text-sm',
     lg: 'px-6 py-3 text-base',
   };
 
-  const variants = {
+  const variants: Record<ButtonVariant, string> = {
     primary: 'bg-primary text-dark-900 hover:bg-primary-dark',
     secondary: 'bg-dark-600 text-white hover:bg-dark-500',
     outline: 'border-2 border-primary text-primary hover:bg-primary/10',
     ghost: 'text-dark-300 hover:text-white hover:bg-dark-700',
   };
 
-  const classes = `${base} ${sizes[size as ButtonSize]} ${variants[variant as ButtonVariant]} ${disabled ? 'opacity-50 cursor-not-allowed' : ''} ${cls}`;
+  const classes = `${base} ${sizes[size]} ${variants[variant]} ${disabled ? 'opacity-50 cursor-not-allowed' : ''} ${cls}`;
 
   if (href) {
     return (

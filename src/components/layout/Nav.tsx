@@ -26,9 +26,9 @@ export function Nav() {
     return () => window.removeEventListener('keydown', onKey);
   }, []);
 
-  const isActive = (href: string) => {
+  const isActive = (href: string): boolean => {
     if (href === '/') return location.url === '/';
-    return location.url?.startsWith(href);
+    return location.url?.startsWith(href) ?? false;
   };
 
   return (

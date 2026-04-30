@@ -2,4 +2,6 @@ import { hydrate } from 'preact-iso';
 import { App } from './app';
 import './index.css';
 
-hydrate(<App />);
+if (typeof window !== 'undefined') {
+  hydrate(<App />, document.getElementById('app')!);
+}

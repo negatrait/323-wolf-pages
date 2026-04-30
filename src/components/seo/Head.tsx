@@ -1,19 +1,19 @@
 import { useEffect } from 'preact/hooks';
 import { getRouteMeta, SITE_CONFIG } from '../../data/route-meta';
 
-/**
- * SEO head component. Works in two modes:
- * - SSR (prerender): renders nothing visible, metadata injected via prerender.jsx
- * - Client (SPA navigation): uses useEffect to mutate document.head on route change
- */
 interface HeadProps {
   title: string;
   description: string;
   canonical: string;
   ogImage?: string;
-  structuredData?: unknown;
+  structuredData?: Record<string, unknown>;
 }
 
+/**
+ * SEO head component. Works in two modes:
+ * - SSR (prerender): renders nothing visible, metadata injected via prerender.tsx
+ * - Client (SPA navigation): uses useEffect to mutate document.head on route change
+ */
 export function Head({
   title,
   description,
@@ -40,7 +40,7 @@ export function Head({
         'link[rel="canonical"]',
       ) as HTMLLinkElement | null;
       if (!link) {
-        link = document.createElement('link');
+        link = document.createElement('link') as HTMLLinkElement;
         link.rel = 'canonical';
         document.head.appendChild(link);
       }
@@ -72,7 +72,7 @@ export function useRouteMeta(path: string) {
   return getRouteMeta(path);
 }
 
-function setMeta(prop: string, content: string) {
+function setMeta(prop: string, content: string): void {
   let el = (document.querySelector(`meta[property="${prop}"]`) ||
     document.querySelector(`meta[name="${prop}"]`)) as HTMLMetaElement | null;
   if (!el) {
@@ -84,5 +84,5 @@ function setMeta(prop: string, content: string) {
     }
     document.head.appendChild(el);
   }
-  el.content = content;
+  el.setAttribute('content', content);
 }

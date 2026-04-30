@@ -3,7 +3,7 @@ import { Footer } from './Footer';
 import { Nav } from './Nav';
 
 interface LayoutProps {
-  children?: ComponentChildren;
+  children: ComponentChildren;
 }
 
 export function Layout({ children }: LayoutProps) {

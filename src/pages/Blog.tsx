@@ -1,3 +1,4 @@
+import type { JSX } from 'preact';
 import { useState } from 'preact/hooks';
 import { Section } from '../components/common/Section';
 import { BreadcrumbNav } from '../components/layout/BreadcrumbNav';
@@ -23,9 +24,9 @@ export function Blog() {
   return (
     <>
       <Head
-        title={meta.title}
-        description={meta.description}
-        canonical={meta.canonical}
+        title={meta!.title}
+        description={meta!.description}
+        canonical={meta!.canonical}
       />
 
       <Section>
@@ -48,7 +49,7 @@ export function Blog() {
                 placeholder={BLOG_CONFIG.searchPlaceholder}
                 type="text"
                 value={searchQuery}
-                onInput={(e) =>
+                onInput={(e: JSX.TargetedEvent<HTMLInputElement>) =>
                   setSearchQuery((e.target as HTMLInputElement).value)
                 }
               />
