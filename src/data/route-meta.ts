@@ -5,7 +5,10 @@
  */
 import { ROUTE_META, SITE_CONFIG } from './load-content';
 
-const routes = ROUTE_META as Record<string, { title: string; description: string; canonical: string }>;
+const routes = ROUTE_META as Record<
+  string,
+  { title: string; description: string; canonical: string }
+>;
 
 export function getRouteMeta(path: string) {
   return routes[path] || routes['/'];

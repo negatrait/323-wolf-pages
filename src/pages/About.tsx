@@ -1,8 +1,8 @@
 import { Section } from '../components/common/Section';
 import { BreadcrumbNav } from '../components/layout/BreadcrumbNav';
 import { Head } from '../components/seo/Head';
-import { getRouteMeta } from '../data/route-meta';
 import { ABOUT } from '../data/load-content';
+import { getRouteMeta } from '../data/route-meta';
 
 const meta = getRouteMeta('/about');
 

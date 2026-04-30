@@ -9,12 +9,13 @@
  * with typed JS constants that page components import.
  */
 
-import fs from 'node:fs';
 import { execSync } from 'node:child_process';
+import fs from 'node:fs';
 import path from 'node:path';
 import matter from 'gray-matter';
 import hljs from 'highlight.js';
 import { Marked } from 'marked';
+
 // ─── Site Configuration ───────────────────────────────────────
 // Loaded from src/content/site.md frontmatter at build time.
 // Edit there — or via Pages CMS.
@@ -29,8 +30,6 @@ function loadSiteConfig(contentDir: string) {
     tagline: siteMd.frontmatter.tagline as string,
   };
 }
-
-
 
 // ─── Interfaces ───────────────────────────────────────────────
 
@@ -104,7 +103,12 @@ interface PricingFrontmatter {
   terms?: string[];
   faq?: Array<{ question: string; answer: string }>;
   feature_table?: { headers: string[]; rows: (string | boolean)[][] };
-  competitors?: Array<{ name: string; price: string; desc: string; highlight?: boolean }>;
+  competitors?: Array<{
+    name: string;
+    price: string;
+    desc: string;
+    highlight?: boolean;
+  }>;
   cta_title?: string;
   cta_text?: string;
   cta_href?: string;
@@ -249,7 +253,10 @@ function buildRouteMeta(
   const howItWorksMd = loadMd(contentDir, 'home/how-it-works.md');
   const blogConfigMd = loadMd(contentDir, 'blog/index.md');
 
-  const routes: Record<string, { title: string; description: string; canonical: string }> = {};
+  const routes: Record<
+    string,
+    { title: string; description: string; canonical: string }
+  > = {};
 
   const routeSources: Array<{ path: string; fm: any }> = [
     { path: '/', fm: hero },
@@ -271,16 +278,32 @@ function buildRouteMeta(
   for (const [slug, post] of Object.entries(blogPostsMap)) {
     const postPath = `/blog/${slug}`;
     routes[postPath] = {
-      title: (post as any)?.seo_title || `${(post as any).title} — ${SITE.name} Blog`,
-      description: (post as any)?.seo_description || (post as any).description || '',
+      title:
+        (post as any)?.seo_title ||
+        `${(post as any).title} — ${SITE.name} Blog`,
+      description:
+        (post as any)?.seo_description || (post as any).description || '',
       canonical: `${SITE.url}${postPath}`,
     };
   }
 
   // Legal pages have no frontmatter — derive from site config
-  routes['/open-source-notices'] = { title: `Open Source Notices — ${SITE.name}`, description: 'Third-party software licenses and acknowledgments.', canonical: `${SITE.url}/open-source-notices` };
-  routes['/privacy'] = { title: `Privacy Policy — ${SITE.name}`, description: 'How your data is collected, used, and protected. GDPR compliant.', canonical: `${SITE.url}/privacy` };
-  routes['/terms'] = { title: `Terms of Service — ${SITE.name}`, description: 'Terms and conditions for using the audit service.', canonical: `${SITE.url}/terms` };
+  routes['/open-source-notices'] = {
+    title: `Open Source Notices — ${SITE.name}`,
+    description: 'Third-party software licenses and acknowledgments.',
+    canonical: `${SITE.url}/open-source-notices`,
+  };
+  routes['/privacy'] = {
+    title: `Privacy Policy — ${SITE.name}`,
+    description:
+      'How your data is collected, used, and protected. GDPR compliant.',
+    canonical: `${SITE.url}/privacy`,
+  };
+  routes['/terms'] = {
+    title: `Terms of Service — ${SITE.name}`,
+    description: 'Terms and conditions for using the audit service.',
+    canonical: `${SITE.url}/terms`,
+  };
 
   return routes;
 }
@@ -371,7 +394,8 @@ export default function contentPlugin() {
         steps: howItWorks.frontmatter.steps,
         comparison: howItWorks.frontmatter.comparison,
         comparisonHeading: howItWorks.frontmatter.comparison_heading,
-        comparisonHeadingHighlight: howItWorks.frontmatter.comparison_heading_highlight,
+        comparisonHeadingHighlight:
+          howItWorks.frontmatter.comparison_heading_highlight,
         comparisonTable: howItWorks.frontmatter.comparison_table,
         whatYouGet: howItWorks.frontmatter.what_you_get,
         ctaTitle: howItWorks.frontmatter.cta_title,
@@ -421,7 +445,10 @@ export default function contentPlugin() {
       }));
 
       const PRICING_FAQ = pricing.frontmatter.faq || [];
-      const PRICING_FEATURE_TABLE = pricing.frontmatter.feature_table || { headers: [], rows: [] };
+      const PRICING_FEATURE_TABLE = pricing.frontmatter.feature_table || {
+        headers: [],
+        rows: [],
+      };
       const PRICING_COMPETITORS = pricing.frontmatter.competitors || [];
       const PRICING_CTA = {
         title: pricing.frontmatter.cta_title || '',
@@ -559,13 +586,26 @@ export default function contentPlugin() {
         ['PRICING_FEATURE_TABLE', PRICING_FEATURE_TABLE],
         ['PRICING_COMPETITORS', PRICING_COMPETITORS],
         ['PRICING_CTA', PRICING_CTA],
-        ['SITE_CONFIG', {
-          name: SITE.name,
-          url: SITE.url,
-          email: SITE.email,
-          tagline: hero.seo_title || SITE.name,
-        }],
-        ['ROUTE_META', buildRouteMeta(contentDir, hero.frontmatter, pricing.frontmatter, faq.frontmatter, about.frontmatter, blogPostsMap)],
+        [
+          'SITE_CONFIG',
+          {
+            name: SITE.name,
+            url: SITE.url,
+            email: SITE.email,
+            tagline: hero.seo_title || SITE.name,
+          },
+        ],
+        [
+          'ROUTE_META',
+          buildRouteMeta(
+            contentDir,
+            hero.frontmatter,
+            pricing.frontmatter,
+            faq.frontmatter,
+            about.frontmatter,
+            blogPostsMap,
+          ),
+        ],
       ]
         .map(([name, val]) => `export const ${name} = ${JSON.stringify(val)};`)
         .join('\n');
@@ -619,9 +659,13 @@ Visit ${SITE.url} for more information.
       const tableRows = (hw.comparison_table?.rows || [])
         .map((r: string[]) => `| ${r.join(' | ')} |`)
         .join('\n');
-      const tableHeaders = (hw.comparison_table?.headers || [])
-        .map((h: string) => `| ${h} |`)
-        .join('\n') + '\n' + (hw.comparison_table?.headers || []).map(() => '| --- ').join('') + '|';
+      const tableHeaders =
+        (hw.comparison_table?.headers || [])
+          .map((h: string) => `| ${h} |`)
+          .join('\n') +
+        '\n' +
+        (hw.comparison_table?.headers || []).map(() => '| --- ').join('') +
+        '|';
       const llmsHowItWorks = `# How It Works — ${SITE.name}
 
 ${problemMd.raw.split('---').slice(2).join('---').trim()}
@@ -635,7 +679,10 @@ Starting at EUR 89/99. Visit [sivussa.com](${SITE.url}) to get started.
 
       // llms-pricing.md
       const tierLines = (pm.tiers || [])
-        .map((t: any) => `### ${t.name} — ${t.price} (${t.period})\n- ${t.features.join('\n- ')}\n- [${t.cta_text}](${t.cta_href})`)
+        .map(
+          (t: any) =>
+            `### ${t.name} — ${t.price} (${t.period})\n- ${t.features.join('\n- ')}\n- [${t.cta_text}](${t.cta_href})`,
+        )
         .join('\n\n');
       const pricingFaqLines = (pm.faq || [])
         .map((f: any) => `**${f.question}**\n${f.answer}`)
@@ -664,7 +711,9 @@ Visit [sivussa.com/pricing](${SITE.url}/pricing) for full details.
       }
       const faqSections = Object.entries(faqCategories)
         .map(([cat, items]) => {
-          const qas = items.map((i: any) => `**${i.question}**\n${i.answer}`).join('\n\n');
+          const qas = items
+            .map((i: any) => `**${i.question}**\n${i.answer}`)
+            .join('\n\n');
           return `## ${cat}\n\n${qas}`;
         })
         .join('\n\n');
@@ -697,7 +746,9 @@ ${aboutBody}
       // ── SITEMAP ──────────────────────────────────────────
       const gitLogDate = (filePath: string): string => {
         try {
-          const date = execSync(`git log -1 --format=%as -- "${filePath}"`, { encoding: 'utf-8' }).trim();
+          const date = execSync(`git log -1 --format=%as -- "${filePath}"`, {
+            encoding: 'utf-8',
+          }).trim();
           return date || new Date().toISOString().split('T')[0];
         } catch {
           return new Date().toISOString().split('T')[0];
@@ -705,20 +756,69 @@ ${aboutBody}
       };
 
       const sitemapPages = [
-        { loc: '/', lastmod: gitLogDate('src/content/home/hero.md'), changefreq: 'weekly', priority: '1.0' },
-        { loc: '/how-it-works', lastmod: gitLogDate('src/content/home/how-it-works.md'), changefreq: 'monthly', priority: '0.5' },
-        { loc: '/pricing', lastmod: gitLogDate('src/content/home/pricing.md'), changefreq: 'monthly', priority: '0.8' },
-        { loc: '/about', lastmod: gitLogDate('src/content/about.md'), changefreq: 'monthly', priority: '0.6' },
-        { loc: '/faq', lastmod: gitLogDate('src/content/faq.md'), changefreq: 'monthly', priority: '0.7' },
-        { loc: '/blog', lastmod: gitLogDate('src/content/blog/index.md'), changefreq: 'weekly', priority: '0.8' },
-        { loc: '/open-source-notices', lastmod: gitLogDate('src/content/home/sivussa_open_source_notices.md'), changefreq: 'yearly', priority: '0.1' },
-        { loc: '/privacy', lastmod: gitLogDate('src/content/home/sivussa_privacy_policy.md'), changefreq: 'yearly', priority: '0.1' },
-        { loc: '/terms', lastmod: gitLogDate('src/content/home/sivussa_terms_of_service.md'), changefreq: 'yearly', priority: '0.1' },
+        {
+          loc: '/',
+          lastmod: gitLogDate('src/content/home/hero.md'),
+          changefreq: 'weekly',
+          priority: '1.0',
+        },
+        {
+          loc: '/how-it-works',
+          lastmod: gitLogDate('src/content/home/how-it-works.md'),
+          changefreq: 'monthly',
+          priority: '0.5',
+        },
+        {
+          loc: '/pricing',
+          lastmod: gitLogDate('src/content/home/pricing.md'),
+          changefreq: 'monthly',
+          priority: '0.8',
+        },
+        {
+          loc: '/about',
+          lastmod: gitLogDate('src/content/about.md'),
+          changefreq: 'monthly',
+          priority: '0.6',
+        },
+        {
+          loc: '/faq',
+          lastmod: gitLogDate('src/content/faq.md'),
+          changefreq: 'monthly',
+          priority: '0.7',
+        },
+        {
+          loc: '/blog',
+          lastmod: gitLogDate('src/content/blog/index.md'),
+          changefreq: 'weekly',
+          priority: '0.8',
+        },
+        {
+          loc: '/open-source-notices',
+          lastmod: gitLogDate(
+            'src/content/home/sivussa_open_source_notices.md',
+          ),
+          changefreq: 'yearly',
+          priority: '0.1',
+        },
+        {
+          loc: '/privacy',
+          lastmod: gitLogDate('src/content/home/sivussa_privacy_policy.md'),
+          changefreq: 'yearly',
+          priority: '0.1',
+        },
+        {
+          loc: '/terms',
+          lastmod: gitLogDate('src/content/home/sivussa_terms_of_service.md'),
+          changefreq: 'yearly',
+          priority: '0.1',
+        },
       ];
 
       const postsDir = path.join(contentDir, 'blog/posts');
       if (fs.existsSync(postsDir)) {
-        for (const f of fs.readdirSync(postsDir).filter((f: string) => f.endsWith('.md'))) {
+        for (const f of fs
+          .readdirSync(postsDir)
+          .filter((f: string) => f.endsWith('.md'))) {
           sitemapPages.push({
             loc: `/blog/${f.replace('.md', '')}`,
             lastmod: gitLogDate(`src/content/blog/posts/${f}`),
@@ -730,8 +830,9 @@ ${aboutBody}
       const sitemapXml = [
         '<?xml version="1.0" encoding="UTF-8"?>',
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
-        ...sitemapPages.map((p) =>
-          `  <url><loc>${SITE.url}${p.loc}</loc><lastmod>${p.lastmod}</lastmod>${p.changefreq ? `<changefreq>${p.changefreq}</changefreq>` : ''}${p.priority ? `<priority>${p.priority}</priority>` : ''}</url>`
+        ...sitemapPages.map(
+          (p) =>
+            `  <url><loc>${SITE.url}${p.loc}</loc><lastmod>${p.lastmod}</lastmod>${p.changefreq ? `<changefreq>${p.changefreq}</changefreq>` : ''}${p.priority ? `<priority>${p.priority}</priority>` : ''}</url>`,
         ),
         '</urlset>',
         '',

@@ -2,8 +2,8 @@ import { Accordion } from '../components/common/Accordion';
 import { Section } from '../components/common/Section';
 import { BreadcrumbNav } from '../components/layout/BreadcrumbNav';
 import { Head } from '../components/seo/Head';
-import { getRouteMeta } from '../data/route-meta';
 import { FAQ_ITEMS, SITE_CONFIG } from '../data/load-content';
+import { getRouteMeta } from '../data/route-meta';
 
 const meta = getRouteMeta('/faq');
 const CATEGORIES = ['General', 'Pricing', 'How It Works', 'Technical'];
@@ -24,8 +24,8 @@ export function FAQ() {
             Frequently asked questions
           </h1>
           <p class="text-lg text-dark-300">
-            Everything you need to know about {SITE_CONFIG.name}. Can't find your answer?
-            Email{' '}
+            Everything you need to know about {SITE_CONFIG.name}. Can't find
+            your answer? Email{' '}
             <a
               href={`mailto:${SITE_CONFIG.email}`}
               class="text-primary hover:underline"

@@ -3,8 +3,8 @@ import { Section } from '../components/common/Section';
 import { BreadcrumbNav } from '../components/layout/BreadcrumbNav';
 import { Head } from '../components/seo/Head';
 import {
-  PRICING_CTA,
   PRICING_COMPETITORS,
+  PRICING_CTA,
   PRICING_FAQ,
   PRICING_FEATURE_TABLE,
   PRICING_TERMS,
@@ -126,13 +126,26 @@ export function Pricing() {
               {PT.rows.map((row, i) => (
                 <tr key={i} class="border-b border-dark-700">
                   {row.map((cell, j) => (
-                    <td key={j} class={`py-3 px-4 ${j === 0 ? '' : 'text-center'}`}>
+                    <td
+                      key={j}
+                      class={`py-3 px-4 ${j === 0 ? '' : 'text-center'}`}
+                    >
                       {cell === true ? (
                         <span class="text-primary">✓</span>
                       ) : cell === false ? (
                         <span class="text-dark-500">—</span>
                       ) : (
-                        <span class={j === row.length - 1 ? 'text-primary font-medium' : j > 0 ? 'text-dark-300' : ''}>{String(cell)}</span>
+                        <span
+                          class={
+                            j === row.length - 1
+                              ? 'text-primary font-medium'
+                              : j > 0
+                                ? 'text-dark-300'
+                                : ''
+                          }
+                        >
+                          {String(cell)}
+                        </span>
                       )}
                     </td>
                   ))}

@@ -47,7 +47,9 @@ export function websiteJsonLd() {
   };
 }
 
-export function faqPageJsonLd(items: Array<{ question: string; answer: string }>) {
+export function faqPageJsonLd(
+  items: Array<{ question: string; answer: string }>,
+) {
   return {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',

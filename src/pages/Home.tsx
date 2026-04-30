@@ -4,7 +4,6 @@ import { FeatureCard } from '../components/content/FeatureCard';
 import { PricingCard } from '../components/content/PricingCard';
 import { StepCard } from '../components/content/StepCard';
 import { Head } from '../components/seo/Head';
-import { getRouteMeta } from '../data/route-meta';
 import {
   FAQ_ITEMS,
   FEATURES,
@@ -20,9 +19,9 @@ import {
   PRICING_TIERS,
   SITE_CONFIG,
 } from '../data/load-content';
+import { getRouteMeta } from '../data/route-meta';
 
 export function Home() {
-
   return (
     <>
       <Head
