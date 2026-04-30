@@ -13,7 +13,7 @@ Current implementation sprint is allways outlined in `SPRINT.md` - it is the def
 3. **Implement:** Only when you understand the codebase, implement the steps in the plan. Which step is best implemented first?
 4. **Review the implementation:** Follow the natural progression of the code - what are your findings?
 5. **Simplify and correct based on your findings:** Complex, sprawling code is strictly forbidden in this codebase, only simple textbook best practices are allowed - could you have made it simpler?
-6. **Verify the commit:** The CI pipeline must pass - did you try to take shortcuts?
+6. **Verify the commit:** The CI/CD pipeline must pass - did you try to take shortcuts?
 
 ## Architecture
 
