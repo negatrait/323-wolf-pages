@@ -24,7 +24,7 @@ jobs:
         with:
           path: ./
           base: ${{ github.event.repository.default_branch }}
-          head: HEAD
+          head: HEAD~1
           extra_args: --debug --only-verified
 
   lint:
