@@ -7,9 +7,9 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "biome lint .",
-    "format": "biome format --write .",
-    "check": "biome check .",
+    "lint": "biome lint . --write",
+    "format": "biome format . --write",
+    "check": "biome check . --write",
     "test:snapshots": "bash scripts/snapshot-test.sh",
     "test:snapshots:update": "bash scripts/snapshot-test.sh --update",
     "typecheck": "tsc --noEmit"
