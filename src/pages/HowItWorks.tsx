@@ -61,21 +61,18 @@ export function HowItWorks() {
                 </tr>
               </thead>
               <tbody class="text-dark-200">
-                {HW.comparisonTable?.rows.map((row, i) => {
-                  const cells = Object.values(row);
-                  return (
-                    <tr key={i} class="border-b border-dark-700">
-                      {cells.map((cell, j) => (
-                        <td
-                          key={j}
-                          class={`py-3 px-4 ${j === 0 ? '' : 'text-center'} ${j === cells.length - 1 ? 'text-primary font-medium' : j > 0 && j < cells.length - 1 ? 'text-dark-400' : ''}`}
-                        >
-                          {String(cell)}
-                        </td>
-                      ))}
-                    </tr>
-                  );
-                })}
+                {HW.comparisonTable?.rows.map((row, i) => (
+                  <tr key={i} class="border-b border-dark-700">
+                    {row.map((cell, j) => (
+                      <td
+                        key={j}
+                        class={`py-3 px-4 ${j === 0 ? '' : 'text-center'} ${j === row.length - 1 ? 'text-primary font-medium' : j > 0 && j < row.length - 1 ? 'text-dark-400' : ''}`}
+                      >
+                        {cell}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

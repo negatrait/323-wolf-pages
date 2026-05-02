@@ -9,5 +9,7 @@ seo_title: Sivussa — AI-native visibility specialists clearing your structural
 seo_description: AI specialists audit your site and provide copy-paste ready
   remedies to clear structural blockers preventing your ranking from rising.
   Starting at EUR 99.
+final_cta_title: Stop guessing. Start with a real audit.
+final_cta_subtitle: Get a comprehensive visibility audit with prioritized recommendations.
 ---
 Sivussa crawls your site, analyses the content and technical details, delivers a copy-paste ready, prioritised remedy plan.

@@ -7,9 +7,11 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "biome lint .",
-    "format": "biome format --write .",
-    "check": "biome check .",
+    "lint": "biome lint . --write",
+    "format": "biome format . --write",
+    "check": "biome check . --write",
+    "test:snapshots": "bash scripts/snapshot-test.sh",
+    "test:snapshots:update": "bash scripts/snapshot-test.sh --update",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -20,7 +22,8 @@
     "preact": "^10.29.1",
     "preact-iso": "^2.11.1",
     "preact-render-to-string": "^6.6.7",
-    "tailwindcss": "^4.2.2"
+    "tailwindcss": "^4.2.2",
+    "sanitize-html": "^2.17.3"
   },
   "devDependencies": {
     "@biomejs/biome": "2.4.13",
@@ -28,6 +31,7 @@
     "@preact/preset-vite": "^2.10.5",
     "@tailwindcss/typography": "^0.5.19",
     "@types/node": "^25.6.0",
+    "@types/sanitize-html": "^2.16.1",
     "typescript": "^6.0.3",
     "vite": "^8.0.10"
   }
