@@ -7,7 +7,7 @@ import path from 'node:path';
 import matter from 'gray-matter';
 import hljs from 'highlight.js';
 import { Marked } from 'marked';
-import sanitizeHtml from 'sanitize-html'; // <-- Added
+import sanitizeHtml from 'sanitize-html';
 
 /**
  * Custom Marked instance: escapes only HTML-significant chars (& < >).
@@ -46,22 +46,26 @@ export function loadMd<T = Record<string, unknown>>(
 ): ParsedMd<T> {
   const raw = fs.readFileSync(path.join(contentDir, filePath), 'utf-8');
   const { data, content } = matter(raw);
-  
+
   const rawHtml = marked.parse(content) as string;
 
   // Sanitize the HTML output from Marked to prevent XSS.
   const safeHtml = sanitizeHtml(rawHtml, {
-    // Add missing tags like headers, images, code blocks, and spans
-    allowedTags: sanitizeHtml.defaults.allowedTags.concat([
-      'img', 'h1', 'h2', 'pre', 'code', 'span'
-    ]),
+    allowedTags:[
+      ...sanitizeHtml.defaults.allowedTags,
+      'img',
+      'h1',
+      'h2',
+      'pre',
+      'code',
+      'span',
+    ],
     allowedAttributes: {
       ...sanitizeHtml.defaults.allowedAttributes,
-      // highlight.js requires `class` attributes to apply styles
-      'span': ['class'],
-      'code':['class'],
-      'pre': ['class'],
-      'img': ['src', 'alt', 'title']
+      span: ['class'],
+      code: ['class'],
+      pre: ['class'],
+      img: ['src', 'alt', 'title'],
     },
   });
 
@@ -74,14 +78,11 @@ export function loadMd<T = Record<string, unknown>>(
 
 // ─── HTML helpers (operate on marked output) ───────────────────
 
-/** 
- * Strip all HTML tags and trim safely using the sanitizer.
- * This satisfies CodeQL and protects against malformed tags. 
- */
+/** Strip all HTML tags and trim */
 export function stripTags(html: string): string {
   return sanitizeHtml(html, {
-    allowedTags:[], // Strip absolutely all HTML tags
-    allowedAttributes: {} // Strip all attributes
+    allowedTags:[],
+    allowedAttributes: {},
   }).trim();
 }
 
@@ -105,7 +106,7 @@ export function findParagraph(
 export function extractH2UlSections(
   html: string,
 ): Array<{ title: string; items: string[] }> {
-  const sections: Array<{ title: string; items: string[] }> = [];
+  const sections: Array<{ title: string; items: string[] }> =[];
   const re = /<h2>([^<]+)<\/h2>\s*<ul>(.+?)<\/ul>/gs;
   for (const m of html.matchAll(re)) {
     sections.push({ title: m[1]!.trim(), items: extractLiText(m[2]!) });
