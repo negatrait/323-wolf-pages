@@ -11,4 +11,6 @@ links:
     href: "/faq"
   - label: "Blog"
     href: "/blog"
+  - label: "Manage Subscription"
+    href: "https://billing.stripe.com/p/login/bJe00l64P8JBc9489hcbC00"
 ---

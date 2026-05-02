@@ -23,7 +23,10 @@ export function About() {
             {ABOUT.title}
             <span class="text-primary">{ABOUT.subtitle}</span>
           </h1>
-          <p class="text-xl text-dark-300">{ABOUT.intro}</p>
+          <div
+            class="text-xl text-dark-300"
+            dangerouslySetInnerHTML={{ __html: ABOUT.introHtml }}
+          />
         </div>
       </Section>
 
@@ -41,9 +44,14 @@ export function About() {
         <div class="max-w-4xl mx-auto">
           <h2 class="text-2xl font-bold text-white mb-6">
             {s1!.title}
-            <span class="text-primary">{s1!.subtitle}</span>
+            {s1!.subtitle && <span class="text-primary"> {s1!.subtitle}</span>}
           </h2>
-          <p class="text-dark-300 leading-relaxed mb-8">{s1!.intro}</p>
+          {s1!.contentHtml && (
+            <div
+              class="text-dark-300 leading-relaxed mb-8"
+              dangerouslySetInnerHTML={{ __html: s1!.contentHtml }}
+            />
+          )}
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             {s1!.agents!.map((a, i) => (
               <div
@@ -51,7 +59,7 @@ export function About() {
                 class="rounded-xl p-5 bg-dark-800 border border-dark-600"
               >
                 <h3 class="text-primary font-semibold mb-2">{a.title}</h3>
-                <p
+                <div
                   class="text-dark-300 text-sm"
                   dangerouslySetInnerHTML={{ __html: a.descHtml! }}
                 />
@@ -80,7 +88,7 @@ export function About() {
                 <span class="text-primary font-bold text-lg">{v.num}</span>
                 <div>
                   <h3 class="text-white font-semibold mb-1">{v.title}</h3>
-                  <p
+                  <div
                     class="text-dark-300 text-sm"
                     dangerouslySetInnerHTML={{ __html: v.descHtml! }}
                   />

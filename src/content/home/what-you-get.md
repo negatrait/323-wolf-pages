@@ -1,5 +1,11 @@
 ---
 title: "What you get"
+icon_map:
+  Full visibility audit: search
+  Prioritized findings: assignment
+  Specific guidance: psychology
+  PDF report: email
+default_icon: check_circle
 ---
 
 - **Full visibility audit**: Comprehensive analysis across search engines, geolocation services, and AI summaries.

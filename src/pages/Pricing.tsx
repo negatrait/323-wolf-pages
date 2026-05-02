@@ -84,7 +84,7 @@ export function Pricing() {
               {i === 3 ? (
                 <span
                   dangerouslySetInnerHTML={{
-                    __html: (term.tos_pp ?? '')
+                    __html: (term.tosPp ?? '')
                       .replace(
                         'Terms of Service',
                         '<a href="/terms" class="text-primary hover:underline">Terms of Service</a>',
@@ -123,31 +123,28 @@ export function Pricing() {
               </tr>
             </thead>
             <tbody class="text-dark-200">
-              {PT.rows.map((row, i) => {
-                const cells = Object.values(row);
-                return (
-                  <tr key={i} class="border-b border-dark-700">
-                    {cells.map((cell, j) => (
-                      <td
-                        key={j}
-                        class={`py-3 px-4 ${j === 0 ? '' : 'text-center'}`}
+              {PT.rows.map((row, i) => (
+                <tr key={i} class="border-b border-dark-700">
+                  {row.map((cell, j) => (
+                    <td
+                      key={j}
+                      class={`py-3 px-4 ${j === 0 ? '' : 'text-center'}`}
+                    >
+                      <span
+                        class={
+                          j === row.length - 1
+                            ? 'text-primary font-medium'
+                            : j > 0
+                              ? 'text-dark-300'
+                              : ''
+                        }
                       >
-                        <span
-                          class={
-                            j === cells.length - 1
-                              ? 'text-primary font-medium'
-                              : j > 0
-                                ? 'text-dark-300'
-                                : ''
-                          }
-                        >
-                          {String(cell)}
-                        </span>
-                      </td>
-                    ))}
-                  </tr>
-                );
-              })}
+                        {cell}
+                      </span>
+                    </td>
+                  ))}
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>

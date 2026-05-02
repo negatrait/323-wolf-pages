@@ -1,7 +1,7 @@
 import preact from '@preact/preset-vite';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'vite';
-import contentPlugin from './vite-content-plugin.ts';
+import contentPlugin from './vite-content-plugin';
 
 export default defineConfig({
   plugins: [

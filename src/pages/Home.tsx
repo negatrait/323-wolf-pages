@@ -50,22 +50,22 @@ export function Home() {
             </h1>
             <p
               class="text-lg md:text-xl text-dark-300 mb-10"
-              dangerouslySetInnerHTML={{ __html: HOME_HERO.content }}
+              dangerouslySetInnerHTML={{ __html: HOME_HERO.contentHtml }}
             />
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
               <a
-                href={HOME_HERO.cta_primary_href}
+                href={HOME_HERO.ctaPrimaryHref}
                 target="_blank"
                 rel="noopener"
                 class="px-8 py-4 bg-primary text-dark-900 font-bold rounded-lg hover:bg-primary-dark transition-colors text-center"
               >
-                {HOME_HERO.cta_primary}
+                {HOME_HERO.ctaPrimary}
               </a>
               <a
-                href={HOME_HERO.cta_secondary_href}
+                href={HOME_HERO.ctaSecondaryHref}
                 class="px-8 py-4 border border-dark-600 text-white font-semibold rounded-lg hover:border-primary hover:text-primary transition-colors text-center"
               >
-                {HOME_HERO.cta_secondary}
+                {HOME_HERO.ctaSecondary}
               </a>
             </div>
           </div>
@@ -111,7 +111,7 @@ export function Home() {
           </h2>
           <p
             class="text-dark-300 text-center max-w-2xl mx-auto mb-12"
-            dangerouslySetInnerHTML={{ __html: HOME_PROBLEM.intro }}
+            dangerouslySetInnerHTML={{ __html: HOME_PROBLEM.introHtml }}
           />
           <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             {HOME_PROBLEM.sections.map((section, i) => (
@@ -234,12 +234,12 @@ export function Home() {
           </h2>
           <p class="text-dark-300 mb-8">{HOME_FINAL_CTA.subtitle}</p>
           <a
-            href={HOME_FINAL_CTA.cta_href}
+            href={HOME_FINAL_CTA.ctaHref}
             target="_blank"
             rel="noopener"
             class="inline-block px-8 py-4 bg-primary text-dark-900 font-bold rounded-lg hover:bg-primary-dark transition-colors"
           >
-            {HOME_FINAL_CTA.cta}
+            {HOME_FINAL_CTA.ctaText}
           </a>
         </div>
       </Section>

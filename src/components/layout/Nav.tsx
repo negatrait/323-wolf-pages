@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'preact/hooks';
 import { useLocation } from 'preact-iso';
 import { NAV_CONFIG } from '../../data/load-content';
-import { NAV_LINKS } from '../../utils/routes';
 
 export function Nav() {
   const location = useLocation();
@@ -38,12 +37,12 @@ export function Nav() {
       >
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
           <a href="/" class="text-xl font-bold text-primary">
-            {NAV_CONFIG.logo_text}
+            {NAV_CONFIG.logoText}
           </a>
 
           {/* Desktop nav */}
           <div class="hidden md:flex items-center gap-6">
-            {NAV_LINKS.map((link) => {
+            {NAV_CONFIG.links.map((link) => {
               const external = link.href.startsWith('http');
               return (
                 <a
@@ -90,7 +89,7 @@ export function Nav() {
               <span class="material-symbols-outlined text-2xl">close</span>
             </button>
             <nav class="mt-12 flex flex-col gap-2">
-              {NAV_LINKS.map((link) => {
+              {NAV_CONFIG.links.map((link) => {
                 const external = link.href.startsWith('http');
                 return (
                   <a
