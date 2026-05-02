@@ -51,7 +51,7 @@ export function loadMd<T = Record<string, unknown>>(
 
   // Sanitize the HTML output from Marked to prevent XSS.
   const safeHtml = sanitizeHtml(rawHtml, {
-    allowedTags:[
+    allowedTags: [
       ...sanitizeHtml.defaults.allowedTags,
       'img',
       'h1',
@@ -63,7 +63,7 @@ export function loadMd<T = Record<string, unknown>>(
     allowedAttributes: {
       ...sanitizeHtml.defaults.allowedAttributes,
       span: ['class'],
-      code:['class'],
+      code: ['class'],
       pre: ['class'],
       img: ['src', 'alt', 'title'],
     },
@@ -81,7 +81,7 @@ export function loadMd<T = Record<string, unknown>>(
 /** Strip all HTML tags and trim */
 export function stripTags(html: string): string {
   return sanitizeHtml(html, {
-    allowedTags:[],
+    allowedTags: [],
     allowedAttributes: {},
   }).trim();
 }
