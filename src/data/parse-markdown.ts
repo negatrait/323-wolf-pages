@@ -7,6 +7,7 @@ import path from 'node:path';
 import matter from 'gray-matter';
 import hljs from 'highlight.js';
 import { Marked } from 'marked';
+import sanitizeHtml from 'sanitize-html'; // <-- Added
 
 /**
  * Custom Marked instance: escapes only HTML-significant chars (& < >).
@@ -45,18 +46,43 @@ export function loadMd<T = Record<string, unknown>>(
 ): ParsedMd<T> {
   const raw = fs.readFileSync(path.join(contentDir, filePath), 'utf-8');
   const { data, content } = matter(raw);
+  
+  const rawHtml = marked.parse(content) as string;
+
+  // Sanitize the HTML output from Marked to prevent XSS.
+  const safeHtml = sanitizeHtml(rawHtml, {
+    // Add missing tags like headers, images, code blocks, and spans
+    allowedTags: sanitizeHtml.defaults.allowedTags.concat([
+      'img', 'h1', 'h2', 'pre', 'code', 'span'
+    ]),
+    allowedAttributes: {
+      ...sanitizeHtml.defaults.allowedAttributes,
+      // highlight.js requires `class` attributes to apply styles
+      'span': ['class'],
+      'code':['class'],
+      'pre': ['class'],
+      'img': ['src', 'alt', 'title']
+    },
+  });
+
   return {
     frontmatter: data as T,
-    html: marked.parse(content) as string,
+    html: safeHtml,
     raw: content,
   };
 }
 
 // ─── HTML helpers (operate on marked output) ───────────────────
 
-/** Strip all HTML tags and trim */
+/** 
+ * Strip all HTML tags and trim safely using the sanitizer.
+ * This satisfies CodeQL and protects against malformed tags. 
+ */
 export function stripTags(html: string): string {
-  return html.replace(/<[^>]+>/g, '').trim();
+  return sanitizeHtml(html, {
+    allowedTags:[], // Strip absolutely all HTML tags
+    allowedAttributes: {} // Strip all attributes
+  }).trim();
 }
 
 /** Extract text content from <li> elements */
