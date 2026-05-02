@@ -14,18 +14,19 @@ permissions:
 jobs:
   secret-scan:
     name: Secret Scanning
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
         with:
-          fetch-depth: 0 # Required to scan all commits in the PR
+          fetch-depth: 0
       - name: TruffleHog OSS
-        uses: trufflesecurity/trufflehog@main
+        uses: trufflesecurity/trufflehog@v3.88.34
         with:
           path: ./
-          base: ${{ github.event.repository.default_branch }}
-          head: ${{ github.head_ref }}
-          extra_args: --debug --only-verified
+          base: ${{ github.event.pull_request.base.sha }}
+          head: ${{ github.event.pull_request.head.sha }}
+          extra_args: --only-verified
 
   lint:
     name: Lint (Biome)
