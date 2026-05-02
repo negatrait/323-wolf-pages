@@ -113,4 +113,3 @@ export function extractH2UlSections(
   }
   return sections;
 }
-
