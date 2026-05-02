@@ -63,7 +63,7 @@ export function loadMd<T = Record<string, unknown>>(
     allowedAttributes: {
       ...sanitizeHtml.defaults.allowedAttributes,
       span: ['class'],
-      code: ['class'],
+      code:['class'],
       pre: ['class'],
       img: ['src', 'alt', 'title'],
     },
@@ -106,7 +106,7 @@ export function findParagraph(
 export function extractH2UlSections(
   html: string,
 ): Array<{ title: string; items: string[] }> {
-  const sections: Array<{ title: string; items: string[] }> =[];
+  const sections: Array<{ title: string; items: string[] }> = [];
   const re = /<h2>([^<]+)<\/h2>\s*<ul>(.+?)<\/ul>/gs;
   for (const m of html.matchAll(re)) {
     sections.push({ title: m[1]!.trim(), items: extractLiText(m[2]!) });
