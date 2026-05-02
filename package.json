@@ -10,6 +10,8 @@
     "lint": "biome lint .",
     "format": "biome format --write .",
     "check": "biome check .",
+    "test:snapshots": "bash scripts/snapshot-test.sh",
+    "test:snapshots:update": "bash scripts/snapshot-test.sh --update",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
