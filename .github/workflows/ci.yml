@@ -53,7 +53,7 @@ jobs:
           node-version-file: .node-version
           cache: npm
           
-      - run: npm install
+      - run: npm ci
       
       - run: npx tsc --noEmit
       
