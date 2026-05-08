@@ -7,7 +7,7 @@
     "module": "ES2022",
     "skipLibCheck": true,
     "esModuleInterop": true,
-    "types": ["node"]
+    "types": ["node", "sanitize-html", "@cloudflare/workers-types"]
   },
   "include": ["vite-content-plugin.ts", "vite.config.ts"],
   "exclude": ["node_modules", "dist"]
