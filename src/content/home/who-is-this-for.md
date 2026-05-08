@@ -4,8 +4,8 @@ subtitle: " We're here for you at Sivussa."
 cards:
   - title: Small to Large Companies
     description: You built a website and pay for hosting, but customers aren't
-      finding you. Without organic discovery, your marketing dollars are wasted
-      on ads while your site remains invisible in search results.
+      finding you. Without organic discovery, your marketing is wasted on ads
+      while your site remains invisible in search results.
   - title: Freelancers & Solopreneurs
     description: Your portfolio is your resume. If clients can't find you through
       organic search, you don't exist. Your time is too valuable for manual

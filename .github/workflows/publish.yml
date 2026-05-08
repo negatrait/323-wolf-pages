@@ -54,3 +54,9 @@ jobs:
           Staging changes since last publish:
 
           $(git log origin/main..origin/staging --oneline --no-decorate)"
+
+          echo "Created PR: $PR_URL"
+
+          # 2. Enable Auto-merge on that specific PR
+          # (You can change --merge to --squash if you prefer squash merging)
+          gh pr merge "$PR_URL" --auto --merge

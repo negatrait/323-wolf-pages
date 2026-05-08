@@ -1,10 +1,11 @@
 ---
-title: "AI-native visibility specialists"
-subtitle: "We bridge the gap between finding issues and clearing them."
-seo_title: "About Sivussa — AI-Native Visibility Specialists from Finland"
-seo_description: "Meet the team behind Sivussa. AI-native specialists from Finland providing actionable recommendations to clear your visibility blockers."
+title: AI-native visibility specialists
+subtitle: We bridge the gap between finding issues and clearing them.
+seo_title: About Sivussa — AI-Native Visibility Specialists from Finland
+seo_description: Meet the team behind Sivussa. AI-native specialists from
+  Finland providing actionable recommendations to clear your visibility
+  blockers.
 ---
-
 Visibility tools usually simply point out problems. We provide solutions instead.
 
 ## We believe a thorough audit has less value than a couple of actionable instructions.
@@ -18,12 +19,15 @@ You need specific guidance on what's holding you back and how to address it. Add
 We built Sivussa to solve **one** problem: the gap between finding issues and actually clearing them.
 
 ### Search optimization
+
 Technical health, meta tags, structured data, page speed, content optimization — identifies what's burying your site in search engine results.
 
 ### Geolocation optimization
+
 Google Business Profile, local pack rankings, NAP consistency, local citations — finds what's blocking your local visibility.
 
 ### AI engine optimization
+
 FAQ content, featured snippets, AI answer readiness — increases your likelihood of becoming the grounding truth in AI assistant answers.
 
 ## Built in Finland
@@ -36,30 +40,34 @@ We started Sivussa because we needed this service for ourselves: needed the visi
 
 ## Our Values
 
-01. **Do the work**
-   Every issue should come with a solution. That's our minimum standard.
+1. **Do the work**
 
-02. **Simplicity over spam**
-   You don't need 100 metrics. You need specific recommendations you can implement.
+  Every issue should come with a solution. That's our minimum standard.
+2. **Simplicity over spam**
 
-03. **Transparency always**
-   No hidden fees. No surprise charges. No selling your data. No hiding the fact we're AI native. What you see is what you get.
+  You don't need 100 metrics. You need specific recommendations you can implement.
+3. **Transparency always**
 
-04. **Privacy first**
-   Your data is yours. We only see and need what you provide in public.
+  No hidden fees. No surprise charges. No selling your data. No hiding the fact we're AI native. What you see is what you get.
+4. **Privacy first**
 
-05. **No BS**
-   We don't promise #1 rankings. We don't say you'll "dominate Google in 24 hours." We identify and recommend what we believe is the least effort maximum impact solution for you right now - sometimes it might be content, sometimes it's a technical detail.
+  Your data is yours. We only see and need what you provide in public.
+5. **No BS**
+
+  We don't promise #1 rankings. We don't say you'll "dominate Google in 24 hours." We identify and recommend what we believe is the least effort maximum impact solution for you right now - sometimes it might be content, sometimes it's a technical detail. Examples will be in the blog.
 
 ## What we're building
 
 ### Short term
+
 Launch. Help businesses identify and clear issues with specific recommendations. Prove that addressing what matters works better than endless checklists.
 
 ### Medium term
+
 Expand specialist agents, even more specialised than now. Build more tools for them. Get better data. Learn, adapt, improve the actionable recommendations.
 
 ### Long term
+
 Become the go-to AI visibility team for everyone who wants organic reach without ad spend. Make clearing issues as easy as spell-check.
 
 ## Questions? Want to say hello?
