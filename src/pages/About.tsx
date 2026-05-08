@@ -83,7 +83,7 @@ export function About() {
         <div class="max-w-4xl mx-auto">
           <h2 class="text-2xl font-bold text-white mb-8">{s3!.title}</h2>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {s3!.values!.map((v, i) => (
+            {s3?.values?.map((v, i) => (
               <div key={i} class="flex gap-4">
                 <span class="text-primary font-bold text-lg">{v.num}</span>
                 <div>

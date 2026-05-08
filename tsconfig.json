@@ -16,7 +16,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "allowImportingTsExtensions": true,
-    "types": ["node", "sanitize-html"]
+    "types": ["node", "sanitize-html", "@cloudflare/workers-types"]
   },
   "include": ["src", "functions"],
   "exclude": ["node_modules", "dist", "vite-content-plugin.ts", "vite.config.ts"]
