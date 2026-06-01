@@ -11,7 +11,7 @@
  * - Lines containing site email = email section
  */
 
-import { parseAndSanitizeMarkdown } from './parse-markdown';
+import { parseMarkdown } from './parse-markdown';
 import type { AboutSection } from './types';
 
 interface RawAboutSection {
@@ -86,7 +86,7 @@ export function parseAbout(
   // Render markdown → HTML for all text fields
   const mappedSections: AboutSection[] = sections.map((s) => {
     const content = s.content.trim();
-    const contentHtml = content ? parseAndSanitizeMarkdown(content) : '';
+    const contentHtml = content ? parseMarkdown(content) : '';
     const base: AboutSection = { title: s.title };
 
     // Sections with agents get subtitle + intro from the section content
@@ -99,7 +99,7 @@ export function parseAbout(
         agents: s.agents.map((a) => ({
           title: a.title,
           desc: a.desc.trim(),
-          descHtml: parseAndSanitizeMarkdown(a.desc.trim()),
+          descHtml: parseMarkdown(a.desc.trim()),
         })),
       };
     }
@@ -111,7 +111,7 @@ export function parseAbout(
           num: v.num,
           title: v.title,
           desc: v.desc.trim(),
-          descHtml: parseAndSanitizeMarkdown(v.desc.trim()),
+          descHtml: parseMarkdown(v.desc.trim()),
         })),
       };
     }
@@ -122,7 +122,7 @@ export function parseAbout(
         timeline: s.timeline.map((t) => ({
           title: t.title,
           content: t.content.trim(),
-          contentHtml: parseAndSanitizeMarkdown(t.content.trim()),
+          contentHtml: parseMarkdown(t.content.trim()),
         })),
       };
     }
@@ -137,7 +137,7 @@ export function parseAbout(
   const introText = introLines.join('\n').trim();
   return {
     intro: introText,
-    introHtml: introText ? parseAndSanitizeMarkdown(introText) : '',
+    introHtml: introText ? parseMarkdown(introText) : '',
     sections: mappedSections,
   };
 }

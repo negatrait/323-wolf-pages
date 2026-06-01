@@ -56,7 +56,7 @@ export function Home() {
               <a
                 href={HOME_HERO.ctaPrimaryHref}
                 target="_blank"
-                rel="noopener"
+                rel="noopener noreferrer"
                 class="px-8 py-4 bg-primary text-dark-900 font-bold rounded-lg hover:bg-primary-dark transition-colors text-center"
               >
                 {HOME_HERO.ctaPrimary}
@@ -236,7 +236,7 @@ export function Home() {
           <a
             href={HOME_FINAL_CTA.ctaHref}
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
             class="inline-block px-8 py-4 bg-primary text-dark-900 font-bold rounded-lg hover:bg-primary-dark transition-colors"
           >
             {HOME_FINAL_CTA.ctaText}

@@ -39,29 +39,29 @@ export interface ParsedMd<T = Record<string, unknown>> {
   raw: string;
 }
 
-/** Parse markdown content and sanitize the resulting HTML to prevent XSS. */
-export function parseAndSanitizeMarkdown(content: string): string {
-  const rawHtml = marked.parse(content) as string;
+const SANITIZE_OPTIONS = {
+  allowedTags: [
+    ...sanitizeHtml.defaults.allowedTags,
+    'img',
+    'h1',
+    'h2',
+    'pre',
+    'code',
+    'span',
+  ],
+  allowedAttributes: {
+    ...sanitizeHtml.defaults.allowedAttributes,
+    span: ['class'],
+    code: ['class'],
+    pre: ['class'],
+    img: ['src', 'alt', 'title'],
+  },
+};
 
-  // Sanitize the HTML output from Marked to prevent XSS.
-  return sanitizeHtml(rawHtml, {
-    allowedTags: [
-      ...sanitizeHtml.defaults.allowedTags,
-      'img',
-      'h1',
-      'h2',
-      'pre',
-      'code',
-      'span',
-    ],
-    allowedAttributes: {
-      ...sanitizeHtml.defaults.allowedAttributes,
-      span: ['class'],
-      code: ['class'],
-      pre: ['class'],
-      img: ['src', 'alt', 'title'],
-    },
-  });
+/** Parse markdown string to sanitized HTML */
+export function parseMarkdown(text: string): string {
+  const rawHtml = marked.parse(text) as string;
+  return sanitizeHtml(rawHtml, SANITIZE_OPTIONS);
 }
 
 /** Load and parse a markdown file. Single pass per file. */
@@ -72,9 +72,11 @@ export function loadMd<T = Record<string, unknown>>(
   const raw = fs.readFileSync(path.join(contentDir, filePath), 'utf-8');
   const { data, content } = matter(raw);
 
+  const safeHtml = parseMarkdown(content);
+
   return {
     frontmatter: data as T,
-    html: parseAndSanitizeMarkdown(content),
+    html: safeHtml,
     raw: content,
   };
 }
