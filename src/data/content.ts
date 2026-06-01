@@ -213,7 +213,6 @@ export function loadAllContent(contentDir: string): AllContent {
   const heroMd = loadMd<HeroFm>(contentDir, 'home/hero.md');
   const hf = heroMd.frontmatter;
 
-  // Fix: tagline reads from hero seo_title via frontmatter, not bare object
   const siteConfig: SiteConfig = {
     name: site.name,
     url: site.url,
@@ -267,8 +266,7 @@ export function loadAllContent(contentDir: string): AllContent {
   };
 
   // ── Problem ──
-  // Fix: intro was double-parsed through marked. Now we split raw markdown
-  // before first ## and render once.
+  // Split raw markdown before first ## and render once.
   const problemMd = loadMd<ProblemFm>(contentDir, 'home/problem.md');
   const rawIntro = problemMd.raw.split(/^## /m)[0]?.trim() || '';
   const homeProblem: ProblemContent = {
@@ -406,7 +404,6 @@ export function loadAllContent(contentDir: string): AllContent {
     })
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
-  // Fix: blogPostsMap now includes seoTitle/seoDescription from frontmatter
   const blogPostsMap: Record<string, BlogPostMapEntry> = {};
   for (const post of posts) {
     blogPostsMap[post.slug] = {
