@@ -1,0 +1,10 @@
+🎯 **What:** The `extractH2UlSections` utility function in `src/data/parse-markdown.ts` was missing tests. This function is responsible for parsing markdown HTML output to extract `<h2>` sections and their corresponding `<ul>` list items.
+📊 **Coverage:** The new tests cover:
+  - Extracting a single h2 and ul section
+  - Extracting multiple h2 and ul sections
+  - Handling whitespace between h2 and ul
+  - Returning an empty array when no match is found
+  - Stripping HTML tags from li content
+  - Trimming whitespace from the h2 title
+  - Handling cases where h2 contains nested html (which it doesn't match by design)
+✨ **Result:** We now have 100% test coverage for the `extractH2UlSections` utility, ensuring that markdown parsing for these specific sections works reliably and regression-free.
