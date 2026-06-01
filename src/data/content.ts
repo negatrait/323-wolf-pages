@@ -9,11 +9,11 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { parseAbout } from './parse-about';
 import {
-  parseMarkdown,
   extractH2UlSections,
   extractLiText,
   findParagraph,
   loadMd,
+  parseMarkdown,
   stripTags,
 } from './parse-markdown';
 import type {
