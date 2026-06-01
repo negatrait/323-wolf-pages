@@ -25,11 +25,11 @@ export default function contentPlugin(): Plugin {
       if (id === virtualModuleId) return resolvedVirtualModuleId;
     },
 
-    load(id: string) {
+    async load(id: string) {
       if (id !== resolvedVirtualModuleId) return;
 
       const contentDir = path.resolve(process.cwd(), 'src/content');
-      const content: AllContent = loadAllContent(contentDir);
+      const content: AllContent = await loadAllContent(contentDir);
 
       // Serialize each export as a named constant
       const exports: Array<[string, unknown]> = [
@@ -68,9 +68,9 @@ export default function contentPlugin(): Plugin {
         .join('\n');
     },
 
-    generateBundle() {
+    async generateBundle() {
       const contentDir = path.resolve(process.cwd(), 'src/content');
-      const content = loadAllContent(contentDir);
+      const content = await loadAllContent(contentDir);
       const files = generateStaticFiles(content, contentDir);
 
       for (const [fileName, source] of Object.entries(files)) {

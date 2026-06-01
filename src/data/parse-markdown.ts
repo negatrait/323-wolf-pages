@@ -81,6 +81,26 @@ export function loadMd<T = Record<string, unknown>>(
   };
 }
 
+/** Load and parse a markdown file asynchronously. Single pass per file. */
+export async function loadMdAsync<T = Record<string, unknown>>(
+  contentDir: string,
+  filePath: string,
+): Promise<ParsedMd<T>> {
+  const raw = await fs.promises.readFile(
+    path.join(contentDir, filePath),
+    'utf-8',
+  );
+  const { data, content } = matter(raw);
+
+  const safeHtml = parseMarkdown(content);
+
+  return {
+    frontmatter: data as T,
+    html: safeHtml,
+    raw: content,
+  };
+}
+
 // ─── HTML helpers (operate on marked output) ───────────────────
 
 /** Strip all HTML tags and trim */
