@@ -59,7 +59,7 @@ const SANITIZE_OPTIONS = {
 };
 
 /** Parse markdown string to sanitized HTML */
-export function parseMarkdown(text: string): string {
+export function parseAndSanitizeMarkdown(text: string): string {
   const rawHtml = marked.parse(text) as string;
   return sanitizeHtml(rawHtml, SANITIZE_OPTIONS);
 }
@@ -72,7 +72,7 @@ export function loadMd<T = Record<string, unknown>>(
   const raw = fs.readFileSync(path.join(contentDir, filePath), 'utf-8');
   const { data, content } = matter(raw);
 
-  const safeHtml = parseMarkdown(content);
+  const safeHtml = parseAndSanitizeMarkdown(content);
 
   return {
     frontmatter: data as T,

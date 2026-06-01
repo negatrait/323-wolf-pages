@@ -13,7 +13,7 @@ import {
   extractLiText,
   findParagraph,
   loadMd,
-  parseMarkdown,
+  parseAndSanitizeMarkdown,
   stripTags,
 } from './parse-markdown';
 import type {
@@ -267,14 +267,12 @@ export function loadAllContent(contentDir: string): AllContent {
   };
 
   // ── Problem ──
-  // Fix: intro was double-parsed through marked. Now we split raw markdown
-  // before first ## and render once.
   const problemMd = loadMd<ProblemFm>(contentDir, 'home/problem.md');
   const rawIntro = problemMd.raw.split(/^## /m)[0]?.trim() || '';
   const homeProblem: ProblemContent = {
     title: problemMd.frontmatter.title,
     subtitle: problemMd.frontmatter.subtitle,
-    introHtml: parseMarkdown(rawIntro),
+    introHtml: parseAndSanitizeMarkdown(rawIntro),
     sections: extractH2UlSections(problemMd.html),
   };
 
