@@ -66,13 +66,13 @@ export function parseAbout(
       const text = line.trim();
       if (current.timeline.length > 0) {
         // Append to last timeline entry
-        current.timeline[current.timeline.length - 1]!.content += `${text} `;
+        current.timeline[current.timeline.length - 1]!.content += `${line}\n`;
       } else if (current.agents.length > 0) {
         // Append to last agent desc — include all lines (fix: was dropping lines starting with -)
-        current.agents[current.agents.length - 1]!.desc += `${text} `;
+        current.agents[current.agents.length - 1]!.desc += `${line}\n`;
       } else if (current.values.length > 0) {
         // Append to last value desc
-        current.values[current.values.length - 1]!.desc += `${text} `;
+        current.values[current.values.length - 1]!.desc += `${line}\n`;
       } else if (text.includes(siteEmail)) {
         current.email = siteEmail;
       } else {
