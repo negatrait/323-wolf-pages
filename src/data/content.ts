@@ -13,6 +13,7 @@ import {
   extractLiText,
   findParagraph,
   loadMd,
+  loadMdAsync,
   parseMarkdown,
   stripTags,
 } from './parse-markdown';
@@ -204,7 +205,7 @@ function tableRowsToArrays(
 // ─── Main loader ────────────────────────────────────────────
 
 /** Load all content from markdown files. Pure, synchronous, single pass per file. */
-export function loadAllContent(contentDir: string): AllContent {
+export async function loadAllContent(contentDir: string): Promise<AllContent> {
   // ── Site config ──
   const siteMd = loadMd<SiteFm>(contentDir, 'site.md');
   const site = siteMd.frontmatter;
@@ -379,30 +380,31 @@ export function loadAllContent(contentDir: string): AllContent {
   // ── Blog ──
   const blogMd = loadMd<BlogIndexFm>(contentDir, 'blog/index.md');
   const postsDir = path.join(contentDir, 'blog/posts');
-  const posts = fs
-    .readdirSync(postsDir)
-    .filter((f) => f.endsWith('.md'))
-    .map((filename) => {
-      const slug = filename.replace('.md', '');
-      const post = loadMd<BlogPostFm>(
-        contentDir,
-        path.join('blog/posts', filename),
-      );
-      const pf = post.frontmatter;
-      return {
-        slug,
-        title: pf.title,
-        description: pf.description || '',
-        seoTitle: pf.seo_title,
-        seoDescription: pf.seo_description,
-        date: pf.date,
-        category: pf.category,
-        readTime: pf.readTime,
-        html: post.html,
-        excerpt: `${stripTags(post.html).substring(0, 200)}...`,
-      };
-    })
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  const postFiles = fs.readdirSync(postsDir).filter((f) => f.endsWith('.md'));
+  const posts = (
+    await Promise.all(
+      postFiles.map(async (filename) => {
+        const slug = filename.replace('.md', '');
+        const post = await loadMdAsync<BlogPostFm>(
+          contentDir,
+          path.join('blog/posts', filename),
+        );
+        const pf = post.frontmatter;
+        return {
+          slug,
+          title: pf.title,
+          description: pf.description || '',
+          seoTitle: pf.seo_title,
+          seoDescription: pf.seo_description,
+          date: pf.date,
+          category: pf.category,
+          readTime: pf.readTime,
+          html: post.html,
+          excerpt: `${stripTags(post.html).substring(0, 200)}...`,
+        };
+      }),
+    )
+  ).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
   const blogPostsMap: Record<string, BlogPostMapEntry> = {};
   for (const post of posts) {
