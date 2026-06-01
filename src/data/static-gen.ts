@@ -15,15 +15,50 @@ interface SitemapEntry {
   priority?: string;
 }
 
-function gitLogDate(filePath: string): string {
+function gitLogDates(filePaths: string[]): Record<string, string> {
+  const dates: Record<string, string> = {};
+  const defaultDate = new Date().toISOString().split('T')[0]!;
+  if (!filePaths.length) return dates;
+
   try {
-    const date = execSync(`git log -1 --format=%as -- "${filePath}"`, {
-      encoding: 'utf-8',
-    }).trim();
-    return date || new Date().toISOString().split('T')[0]!;
+    // We run git log for all requested files
+    // --format="COMMIT:%as" outputs a marker with the date
+    // --name-only outputs the files modified in that commit
+    const cmd = `git log --format="COMMIT:%as" --name-only -- ${filePaths.map((f) => `"${f}"`).join(' ')}`;
+    const output = execSync(cmd, { encoding: 'utf-8' });
+
+    let currentDate = defaultDate;
+    for (const line of output.split('\n')) {
+      const trimmed = line.trim();
+      if (!trimmed) continue;
+
+      if (trimmed.startsWith('COMMIT:')) {
+        currentDate = trimmed.substring(7);
+      } else {
+        // match the git output path to the requested file paths
+        for (const file of filePaths) {
+          if (file.endsWith(trimmed)) {
+            if (!dates[file]) {
+              dates[file] = currentDate;
+            }
+          }
+        }
+      }
+    }
+
+    // Fill missing dates
+    for (const file of filePaths) {
+      if (!dates[file]) {
+        dates[file] = defaultDate;
+      }
+    }
   } catch {
-    return new Date().toISOString().split('T')[0]!;
+    for (const file of filePaths) {
+      dates[file] = defaultDate;
+    }
   }
+
+  return dates;
 }
 
 export function generateStaticFiles(
@@ -138,58 +173,58 @@ ${aboutBody}
 `;
 
   // ── sitemap.xml ──
-  const sitemapPages: SitemapEntry[] = [
+  const sitemapConfig = [
     {
       loc: '/',
-      lastmod: gitLogDate('src/content/home/hero.md'),
+      file: 'src/content/home/hero.md',
       changefreq: 'weekly',
       priority: '1.0',
     },
     {
       loc: '/how-it-works',
-      lastmod: gitLogDate('src/content/home/how-it-works.md'),
+      file: 'src/content/home/how-it-works.md',
       changefreq: 'monthly',
       priority: '0.5',
     },
     {
       loc: '/pricing',
-      lastmod: gitLogDate('src/content/home/pricing.md'),
+      file: 'src/content/home/pricing.md',
       changefreq: 'monthly',
       priority: '0.8',
     },
     {
       loc: '/about',
-      lastmod: gitLogDate('src/content/about.md'),
+      file: 'src/content/about.md',
       changefreq: 'monthly',
       priority: '0.6',
     },
     {
       loc: '/faq',
-      lastmod: gitLogDate('src/content/faq.md'),
+      file: 'src/content/faq.md',
       changefreq: 'monthly',
       priority: '0.7',
     },
     {
       loc: '/blog',
-      lastmod: gitLogDate('src/content/blog/index.md'),
+      file: 'src/content/blog/index.md',
       changefreq: 'weekly',
       priority: '0.8',
     },
     {
       loc: '/open-source-notices',
-      lastmod: gitLogDate('src/content/home/sivussa_open_source_notices.md'),
+      file: 'src/content/home/sivussa_open_source_notices.md',
       changefreq: 'yearly',
       priority: '0.1',
     },
     {
       loc: '/privacy',
-      lastmod: gitLogDate('src/content/home/sivussa_privacy_policy.md'),
+      file: 'src/content/home/sivussa_privacy_policy.md',
       changefreq: 'yearly',
       priority: '0.1',
     },
     {
       loc: '/terms',
-      lastmod: gitLogDate('src/content/home/sivussa_terms_of_service.md'),
+      file: 'src/content/home/sivussa_terms_of_service.md',
       changefreq: 'yearly',
       priority: '0.1',
     },
@@ -201,14 +236,24 @@ ${aboutBody}
     for (const f of fs
       .readdirSync(postsDir)
       .filter((f: string) => f.endsWith('.md'))) {
-      sitemapPages.push({
+      sitemapConfig.push({
         loc: `/blog/${f.replace('.md', '')}`,
-        lastmod: gitLogDate(`src/content/blog/posts/${f}`),
+        file: `src/content/blog/posts/${f}`,
         changefreq: 'monthly',
         priority: '0.5',
       });
     }
   }
+
+  const allFilesToLog = sitemapConfig.map((c) => c.file);
+  const fileDates = gitLogDates(allFilesToLog);
+
+  const sitemapPages: SitemapEntry[] = sitemapConfig.map((c) => ({
+    loc: c.loc,
+    lastmod: fileDates[c.file] || new Date().toISOString().split('T')[0]!,
+    changefreq: c.changefreq,
+    priority: c.priority,
+  }));
 
   const sitemapXml = [
     '<?xml version="1.0" encoding="UTF-8"?>',
