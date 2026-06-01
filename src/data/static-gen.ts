@@ -195,7 +195,7 @@ ${aboutBody}
     },
   ];
 
-  // Blog posts — fix: now include priority
+  // Blog posts
   const postsDir = path.join(contentDir, 'blog/posts');
   if (fs.existsSync(postsDir)) {
     for (const f of fs
