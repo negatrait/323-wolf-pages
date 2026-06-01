@@ -9,11 +9,11 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { parseAbout } from './parse-about';
 import {
+  parseMarkdown,
   extractH2UlSections,
   extractLiText,
   findParagraph,
   loadMd,
-  marked,
   stripTags,
 } from './parse-markdown';
 import type {
@@ -274,7 +274,7 @@ export function loadAllContent(contentDir: string): AllContent {
   const homeProblem: ProblemContent = {
     title: problemMd.frontmatter.title,
     subtitle: problemMd.frontmatter.subtitle,
-    introHtml: marked.parse(rawIntro) as string,
+    introHtml: parseMarkdown(rawIntro),
     sections: extractH2UlSections(problemMd.html),
   };
 
