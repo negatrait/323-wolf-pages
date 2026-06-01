@@ -132,7 +132,7 @@ export function Blog() {
             <a
               href={BLOG_CONFIG.loadMoreLink}
               target="_blank"
-              rel="noopener"
+              rel="noopener noreferrer"
               class="bg-gradient-to-br from-primary to-primary-light text-dark-900 px-12 py-4 text-[0.6875rem] font-black uppercase tracking-[0.2em] hover:shadow-[0_0_20px_rgba(87,174,123,0.15)] transition-all"
             >
               {BLOG_CONFIG.loadMoreText}
