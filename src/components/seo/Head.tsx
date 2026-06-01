@@ -22,9 +22,8 @@ export function Head({
   structuredData,
 }: HeadProps) {
   // Client-side only: update document.head on SPA navigation
-  if (typeof window !== 'undefined') {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    useEffect(() => {
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
       document.title = title;
       setMeta('description', description);
       setMeta('og:title', title);
@@ -58,8 +57,8 @@ export function Head({
         }
         script.textContent = JSON.stringify(structuredData);
       }
-    }, [title, description, canonical, ogImage, structuredData]);
-  }
+    }
+  }, [title, description, canonical, ogImage, structuredData]);
 
   return null;
 }
