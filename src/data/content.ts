@@ -13,7 +13,7 @@ import {
   extractLiText,
   findParagraph,
   loadMd,
-  marked,
+  parseMarkdown,
   stripTags,
 } from './parse-markdown';
 import type {
@@ -274,7 +274,7 @@ export function loadAllContent(contentDir: string): AllContent {
   const homeProblem: ProblemContent = {
     title: problemMd.frontmatter.title,
     subtitle: problemMd.frontmatter.subtitle,
-    introHtml: marked.parse(rawIntro) as string,
+    introHtml: parseMarkdown(rawIntro),
     sections: extractH2UlSections(problemMd.html),
   };
 
