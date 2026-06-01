@@ -39,18 +39,12 @@ export interface ParsedMd<T = Record<string, unknown>> {
   raw: string;
 }
 
-/** Load and parse a markdown file. Single pass per file. */
-export function loadMd<T = Record<string, unknown>>(
-  contentDir: string,
-  filePath: string,
-): ParsedMd<T> {
-  const raw = fs.readFileSync(path.join(contentDir, filePath), 'utf-8');
-  const { data, content } = matter(raw);
-
+/** Parse markdown content and sanitize the resulting HTML to prevent XSS. */
+export function parseAndSanitizeMarkdown(content: string): string {
   const rawHtml = marked.parse(content) as string;
 
   // Sanitize the HTML output from Marked to prevent XSS.
-  const safeHtml = sanitizeHtml(rawHtml, {
+  return sanitizeHtml(rawHtml, {
     allowedTags: [
       ...sanitizeHtml.defaults.allowedTags,
       'img',
@@ -68,10 +62,19 @@ export function loadMd<T = Record<string, unknown>>(
       img: ['src', 'alt', 'title'],
     },
   });
+}
+
+/** Load and parse a markdown file. Single pass per file. */
+export function loadMd<T = Record<string, unknown>>(
+  contentDir: string,
+  filePath: string,
+): ParsedMd<T> {
+  const raw = fs.readFileSync(path.join(contentDir, filePath), 'utf-8');
+  const { data, content } = matter(raw);
 
   return {
     frontmatter: data as T,
-    html: safeHtml,
+    html: parseAndSanitizeMarkdown(content),
     raw: content,
   };
 }
